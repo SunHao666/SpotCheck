@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SpotCheck</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_confirm">确定</string>
+    <string name="main_home">首页</string>
+    <string name="main_spotcheck">点检信息</string>
+    <string name="main_lubrication">润滑信息</string>
+    <string name="main_mine">我的</string>
+</resources>
