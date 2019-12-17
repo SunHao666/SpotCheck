@@ -4,6 +4,8 @@ import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
 
 public class HomeFragment extends BaseFragment {
+
+
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
