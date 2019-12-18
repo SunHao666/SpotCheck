@@ -1,6 +1,5 @@
 package com.app.spotcheck.moudle;
 
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
@@ -18,7 +17,6 @@ import com.app.spotcheck.moudle.spotcheck.SpotCheckFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
