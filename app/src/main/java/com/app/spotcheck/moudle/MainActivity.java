@@ -1,5 +1,8 @@
 package com.app.spotcheck.moudle;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
@@ -10,7 +13,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
+import com.app.spotcheck.base.BasePresenter;
 import com.app.spotcheck.moudle.home.HomeFragment;
+import com.app.spotcheck.moudle.login.LoginActivity;
 import com.app.spotcheck.moudle.lubrication.LubricationFragment;
 import com.app.spotcheck.moudle.mine.MineFragment;
 import com.app.spotcheck.moudle.spotcheck.SpotCheckFragment;
@@ -30,6 +35,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private MineFragment mMineFragment;
     // 当前正在显示的Fragment
     private Fragment mCurrentFragment;
+
+
+    @Override
+    protected BasePresenter initPresenter() {
+        return null;
+    }
 
     @Override
     public int getContentViewLayout() {

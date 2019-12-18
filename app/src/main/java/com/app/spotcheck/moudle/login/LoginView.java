@@ -8,7 +8,7 @@ import com.app.spotcheck.base.BaseView;
  * @Author: 作者名
  * @CreateDate: 2019/12/18 14:43
  */
-public interface LoginView<T> extends BaseView {
+public interface LoginView<T>{
 
     void showResult(T t);
 

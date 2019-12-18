@@ -10,7 +10,7 @@ import java.lang.ref.WeakReference;
  * @Author: 作者名
  * @CreateDate: 2019/12/18 14:35
  */
-public class BasePresenter<V extends BaseView> {
+public class BasePresenter<V> {
 
     public V mView;
     private WeakReference<V> weakReference;
