@@ -9,6 +9,11 @@ public class MineFragment extends BaseFragment<MinePresenter> {
     }
 
     @Override
+    protected void initData() {
+
+    }
+
+    @Override
     protected MinePresenter initPresenter() {
         return new MinePresenter();
     }

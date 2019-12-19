@@ -5,6 +5,8 @@ import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
 
+import java.util.List;
+
 /**
  * @ClassName: SpotCheckPresenter
  * @Description: java类作用描述
@@ -18,7 +20,12 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
                 .enqueue(new BaseCallback<SpotCheckAllBean>() {
                     @Override
                     protected void onSuccess(SpotCheckAllBean bean) {
-                        mView.showSuccess(bean);
+                        SpotCheckAllBean bean1 = new SpotCheckAllBean();
+                        List<SpotCheckAllBean.SearchListBean> searchList = bean1.getSearchList();
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
+                        mView.showSuccess(bean1);
                     }
 
                     @Override
@@ -33,7 +40,12 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
                 .enqueue(new BaseCallback<SpotCheckAllBean>() {
                     @Override
                     protected void onSuccess(SpotCheckAllBean bean) {
-                        mView.showSuccess(bean);
+                        SpotCheckAllBean bean1 = new SpotCheckAllBean();
+                        List<SpotCheckAllBean.SearchListBean> searchList = bean1.getSearchList();
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
+                        mView.showSuccess(bean1);
                     }
 
                     @Override
@@ -49,7 +61,12 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
                 .enqueue(new BaseCallback<SpotCheckAllBean>() {
                     @Override
                     protected void onSuccess(SpotCheckAllBean bean) {
-                        mView.showSuccess(bean);
+                        SpotCheckAllBean bean1 = new SpotCheckAllBean();
+                        List<SpotCheckAllBean.SearchListBean> searchList = bean1.getSearchList();
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
+                        mView.showSuccess(bean1);
                     }
 
                     @Override

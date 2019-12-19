@@ -22,4 +22,6 @@
     <string name="home_check_place">点检部位:</string>
     <string name="home_wait_event">代办事项</string>
     <string name="lub">润滑</string>
+    <string name="item_check_place">部位:</string>
+    <string name="item_check_plan">计算点检时间:</string>
 </resources>

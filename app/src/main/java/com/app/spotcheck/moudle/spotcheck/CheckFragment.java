@@ -1,6 +1,7 @@
 package com.app.spotcheck.moudle.spotcheck;
 
 import android.content.Context;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import com.app.spotcheck.base.utils.MultiItemCommonAdapter;
 import com.app.spotcheck.base.utils.MultiItemTypeSupport;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,6 +31,9 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     private int tab = 0;
+    List<SpotCheckAllBean.SearchListBean> datas = new ArrayList<>();
+    private MCheckAdapter adapter;
+
     public CheckFragment(int tab) {
         this.tab = tab;
     }
@@ -57,7 +62,8 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     @Override
     protected void initView() {
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerview.setAdapter(new MCheckAdapter(getActivity(),null,multiItemSupport));
+        adapter = new MCheckAdapter(getActivity(),R.layout.item_check,datas);
+        recyclerview.setAdapter(adapter);
     }
 
     @Override
@@ -70,26 +76,50 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
 
     }
 
-    MultiItemTypeSupport  multiItemSupport = new MultiItemTypeSupport<SpotCheckAllBean>() {
-        @Override
-        public int getLayoutId(int itemType) {
-            return 0;
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            initData();
+        }
+    }
+
+    private class MCheckAdapter extends CommonAdapter<SpotCheckAllBean.SearchListBean>{
+
+
+        public MCheckAdapter(Context context, int layoutId, List<SpotCheckAllBean.SearchListBean> datas) {
+            super(context, layoutId, datas);
         }
 
         @Override
-        public int getItemViewType(int position, SpotCheckAllBean bean) {
-            return 0;
-        }
-    };
-    private class MCheckAdapter extends MultiItemCommonAdapter<SpotCheckAllBean>{
+        public void convert(ViewHolder holder, SpotCheckAllBean.SearchListBean bean) {
+            if(tab == 0){
+                holder.setText(R.id.tv_title,bean.getMAINNAME());
 
-        public MCheckAdapter(Context context, List<SpotCheckAllBean> datas, MultiItemTypeSupport<SpotCheckAllBean> multiItemTypeSupport) {
-            super(context, datas, multiItemTypeSupport);
-        }
+                holder.getView(R.id.tv_checked_num).setVisibility(View.VISIBLE);
+                holder.setText(R.id.tv_checked_num,"已点检项目 "+bean.getCHECKNUM()+" 项");
 
-        @Override
-        public void convert(ViewHolder holder, SpotCheckAllBean bean) {
+                holder.getView(R.id.tv_uncheck_num).setVisibility(View.VISIBLE);
+                holder.setText(R.id.tv_uncheck_num,bean.getUNCHECKNUM()+"");
 
+                holder.setText(R.id.tv_check_place,bean.getPARTNAME());
+                holder.setText(R.id.tv_check_time,bean.getEXECSTARTTIME()+"~"+bean.getEXECENDTIME());
+            }else if(tab == 1){
+                holder.setText(R.id.tv_title,bean.getMAINNAME());
+                holder.getView(R.id.tv_uncheck_num).setVisibility(View.VISIBLE);
+                holder.setText(R.id.tv_uncheck_num,bean.getUNCHECKNUM()+"");
+
+                holder.setText(R.id.tv_check_place,bean.getPARTNAME());
+                holder.setText(R.id.tv_check_time,bean.getEXECSTARTTIME()+"~"+bean.getEXECENDTIME());
+            }else if(tab == 2){
+                holder.setText(R.id.tv_title,bean.getMAINNAME());
+
+                holder.getView(R.id.tv_checked_num).setVisibility(View.VISIBLE);
+                holder.setText(R.id.tv_checked_num,"已点检项目 "+bean.getCHECKNUM()+" 项");
+
+                holder.setText(R.id.tv_check_place,bean.getPARTNAME());
+                holder.setText(R.id.tv_check_time,bean.getEXECSTARTTIME()+"~"+bean.getEXECENDTIME());
+            }
         }
     }
 }

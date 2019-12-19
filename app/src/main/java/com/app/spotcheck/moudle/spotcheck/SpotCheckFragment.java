@@ -36,7 +36,7 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     ViewPager viewPager;
     public String[] tabNames = {"全部点检部位", "待检部位", "已检部位"};
     public List<Fragment> fragments = new ArrayList<>();
-    private PagerAdapter adapter;
+    private MViewPagerAdapter adapter;
 
     public static SpotCheckFragment newInstance() {
         return new SpotCheckFragment();
@@ -65,7 +65,7 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     private void initTablayout() {
         for (int i = 0; i < tabNames.length; i++) {
             tablayout.addTab(tablayout.newTab());
-            fragments.add(new CheckFragment());
+            fragments.add(new CheckFragment(i));
         }
         tablayout.addOnTabSelectedListener(this);
         tablayout.setupWithViewPager(viewPager);

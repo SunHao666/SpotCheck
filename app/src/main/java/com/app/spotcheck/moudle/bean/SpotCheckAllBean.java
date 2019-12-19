@@ -22,6 +22,13 @@ public class SpotCheckAllBean {
     }
 
     public static class SearchListBean {
+        public SearchListBean(String MAINNAME, String PARTNAME, int UNCHECKNUM, int CHECKNUM) {
+            this.MAINNAME = MAINNAME;
+            this.PARTNAME = PARTNAME;
+            this.UNCHECKNUM = UNCHECKNUM;
+            this.CHECKNUM = CHECKNUM;
+        }
+
         /**
          * PARTID : M04P003
          * MAINNAME : 测试卸船机
