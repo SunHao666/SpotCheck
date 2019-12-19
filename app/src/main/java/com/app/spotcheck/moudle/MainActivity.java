@@ -23,7 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity<BasePresenter> implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.layout_container)
     FrameLayout layoutContainer;
@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     protected BasePresenter initPresenter() {
-        return null;
+        return new BasePresenter();
     }
 
     @Override

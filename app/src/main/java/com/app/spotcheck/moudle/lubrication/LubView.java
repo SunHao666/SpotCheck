@@ -1,6 +1,5 @@
-package com.app.spotcheck.moudle.home;
+package com.app.spotcheck.moudle.lubrication;
 
-import com.app.spotcheck.base.BaseView;
 import com.app.spotcheck.moudle.bean.HomeBean;
 
 /**
@@ -9,7 +8,7 @@ import com.app.spotcheck.moudle.bean.HomeBean;
  * @Author: 作者名
  * @CreateDate: 2019/12/18 15:57
  */
-public interface HomeView {
+public interface LubView {
 
     void showSuccess(HomeBean bean);
 
