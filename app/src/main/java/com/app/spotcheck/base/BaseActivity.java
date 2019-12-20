@@ -34,7 +34,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends TransitionAc
         }
         mPresenter.attachView(this);
         initView();
+        initData();
     }
+
+    protected abstract void initData();
 
     protected abstract T initPresenter();
 

@@ -27,4 +27,5 @@
     <string name="plan_lub_time">计划润滑时间</string>
     <string name="item_lub_place">润滑部位</string>
     <string name="item_lub_time">润滑时间</string>
+    <string name="scan_check">设备点检项目</string>
 </resources>

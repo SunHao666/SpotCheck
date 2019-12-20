@@ -38,6 +38,11 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
 
 
     @Override
+    protected void initData() {
+
+    }
+
+    @Override
     protected BasePresenter initPresenter() {
         return new BasePresenter();
     }

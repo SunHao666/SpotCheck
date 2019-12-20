@@ -79,6 +79,14 @@ public class ToolbarWrapper {
         return this;
     }
 
+    public ToolbarWrapper setCustomTitle(String resId) {
+        if (mTvTitle == null) {
+            throw new UnsupportedOperationException("No title textview in toolbar.");
+        }
+        mTvTitle.setText(resId);
+        return this;
+    }
+
     /**
      * 初始化操作
      * @param toolbar

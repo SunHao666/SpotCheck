@@ -42,6 +42,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     TextView tvB2;
 
     @Override
+    protected void initData() {
+
+    }
+
+    @Override
     protected LoginPresenter initPresenter() {
         return new LoginPresenter();
     }
