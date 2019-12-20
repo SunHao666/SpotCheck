@@ -4,9 +4,7 @@ package com.app.spotcheck.network;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.LoginBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
-import com.app.spotcheck.moudle.mine.MineBean;
-
-import javax.security.auth.callback.Callback;
+import com.app.spotcheck.moudle.bean.MineBean;
 
 import retrofit2.Call;
 import retrofit2.http.Field;

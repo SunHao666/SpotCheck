@@ -293,7 +293,7 @@
                 android:layout_marginLeft="@dimen/dp_8"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_8"
-                android:background="@drawable/home_top_shape"
+                android:background="@drawable/home_top_shape_orange"
                 android:padding="@dimen/dp_1">
 
                 <LinearLayout

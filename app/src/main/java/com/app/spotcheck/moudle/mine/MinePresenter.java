@@ -1,6 +1,7 @@
 package com.app.spotcheck.moudle.mine;
 
 import com.app.spotcheck.base.BasePresenter;
+import com.app.spotcheck.moudle.bean.MineBean;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
 

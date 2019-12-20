@@ -59,7 +59,7 @@
         app:tabMode="fixed"
         app:tabTextColor="#515151"
         app:tabSelectedTextColor="#5099F8"
-        app:tabIndicatorColor="#515151"
+        app:tabIndicatorColor="#5099F8"
         app:tabIndicatorGravity="bottom"
         app:tabIndicatorFullWidth="false"/>
     <androidx.viewpager.widget.ViewPager

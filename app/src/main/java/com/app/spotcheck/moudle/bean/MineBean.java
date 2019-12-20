@@ -1,4 +1,4 @@
-package com.app.spotcheck.moudle.mine;
+package com.app.spotcheck.moudle.bean;
 
 /**
  * @ClassName: MineBean

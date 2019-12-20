@@ -24,4 +24,7 @@
     <string name="lub">润滑</string>
     <string name="item_check_place">部位:</string>
     <string name="item_check_plan">计算点检时间:</string>
+    <string name="plan_lub_time">计划润滑时间</string>
+    <string name="item_lub_place">润滑部位</string>
+    <string name="item_lub_time">润滑时间</string>
 </resources>

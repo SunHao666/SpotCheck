@@ -18,7 +18,7 @@ import java.util.List;
  * @Author: 作者名
  * @CreateDate: 2019/12/19 20:53
  */
-class MViewPagerAdapter extends FragmentPagerAdapter {
+public class MViewPagerAdapter extends FragmentPagerAdapter {
     private  List<Fragment> fragments;
     private String[] tabNames;
     private Context context;

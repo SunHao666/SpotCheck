@@ -1,6 +1,7 @@
 package com.app.spotcheck.moudle.mine;
 
 import com.app.spotcheck.base.BaseView;
+import com.app.spotcheck.moudle.bean.MineBean;
 
 /**
  * @ClassName: MineView

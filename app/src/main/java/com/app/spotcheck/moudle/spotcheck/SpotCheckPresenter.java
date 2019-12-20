@@ -5,6 +5,7 @@ import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,17 +21,19 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
                 .enqueue(new BaseCallback<SpotCheckAllBean>() {
                     @Override
                     protected void onSuccess(SpotCheckAllBean bean) {
-                        SpotCheckAllBean bean1 = new SpotCheckAllBean();
-                        List<SpotCheckAllBean.SearchListBean> searchList = bean1.getSearchList();
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
-                        mView.showSuccess(bean1);
+
                     }
 
                     @Override
                     protected void onFailed(int code, String msg) {
-                        mView.showError(msg);
+                        SpotCheckAllBean bean1 = new SpotCheckAllBean();
+                        List<SpotCheckAllBean.SearchListBean> searchList = new ArrayList<>();
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
+                        bean1.setSearchList(searchList);
+                        mView.showSuccess(bean1);
+//                        mView.showError(msg);
                     }
                 });
     }
@@ -41,7 +44,7 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
                     @Override
                     protected void onSuccess(SpotCheckAllBean bean) {
                         SpotCheckAllBean bean1 = new SpotCheckAllBean();
-                        List<SpotCheckAllBean.SearchListBean> searchList = bean1.getSearchList();
+                        List<SpotCheckAllBean.SearchListBean> searchList = new ArrayList<>();
                         searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
                         searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
                         searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
@@ -50,7 +53,14 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
 
                     @Override
                     protected void onFailed(int code, String msg) {
-                        mView.showError(msg);
+                        SpotCheckAllBean bean1 = new SpotCheckAllBean();
+                        List<SpotCheckAllBean.SearchListBean> searchList = new ArrayList<>();
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
+                        bean1.setSearchList(searchList);
+                        mView.showSuccess(bean1);
+//                        mView.showError(msg);
                     }
                 });
     }
@@ -71,7 +81,14 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
 
                     @Override
                     protected void onFailed(int code, String msg) {
-                        mView.showError(msg);
+                        SpotCheckAllBean bean1 = new SpotCheckAllBean();
+                        List<SpotCheckAllBean.SearchListBean> searchList = new ArrayList<>();
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
+                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
+                        bean1.setSearchList(searchList);
+                        mView.showSuccess(bean1);
+//                        mView.showError(msg);
                     }
                 });
     }

@@ -68,9 +68,10 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
             fragments.add(new CheckFragment(i));
         }
         tablayout.addOnTabSelectedListener(this);
-        tablayout.setupWithViewPager(viewPager);
+
         adapter = new MViewPagerAdapter(getActivity().getSupportFragmentManager(),getActivity(),fragments,tabNames);
         viewPager.setAdapter(adapter);
+        tablayout.setupWithViewPager(viewPager);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.app.spotcheck.moudle.lubrication;
 
 import com.app.spotcheck.moudle.bean.HomeBean;
+import com.app.spotcheck.moudle.bean.LubBean;
 
 /**
  * @ClassName: HomeView
@@ -10,7 +11,7 @@ import com.app.spotcheck.moudle.bean.HomeBean;
  */
 public interface LubView {
 
-    void showSuccess(HomeBean bean);
+    void showSuccess(LubBean bean);
 
     void showError(String error);
 }

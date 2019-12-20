@@ -1,19 +1,16 @@
-package com.app.spotcheck.moudle.spotcheck;
+package com.app.spotcheck.moudle.lubrication;
 
-import android.content.Context;
-import android.view.View;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
-import com.app.spotcheck.base.utils.CommonAdapter;
 import com.app.spotcheck.base.utils.LogUtils;
-import com.app.spotcheck.base.utils.MultiItemCommonAdapter;
-import com.app.spotcheck.base.utils.MultiItemTypeSupport;
+import com.app.spotcheck.moudle.bean.LubBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
+import com.app.spotcheck.moudle.spotcheck.MCheckAdapter;
+import com.app.spotcheck.moudle.spotcheck.SpotCheckPresenter;
+import com.app.spotcheck.moudle.spotcheck.SpotCheckView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +23,16 @@ import butterknife.BindView;
  * @Author: 作者名
  * @CreateDate: 2019/12/19 20:52
  */
-public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements SpotCheckView {
+public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
 
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     private int tab = 0;
-    List<SpotCheckAllBean.SearchListBean> datas = new ArrayList<>();
-    private MCheckAdapter adapter;
+    List<LubBean.LubSearchListBean> datas = new ArrayList<>();
+    private MLubAdapter adapter;
 
-    public CheckFragment(int tab) {
+    public LubFragment(int tab) {
         this.tab = tab;
     }
 
@@ -45,8 +42,8 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     }
 
     @Override
-    protected SpotCheckPresenter initPresenter() {
-        return new SpotCheckPresenter();
+    protected LubPresenter initPresenter() {
+        return new LubPresenter();
     }
 
     @Override
@@ -57,15 +54,14 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     @Override
     protected void initView() {
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new MCheckAdapter(getActivity(),datas,tab);
+        adapter = new MLubAdapter(getActivity(),datas,tab);
         recyclerview.setAdapter(adapter);
     }
 
+
     @Override
-    public void showSuccess(SpotCheckAllBean bean) {
-        LogUtils.error("bean size = "+bean.getSearchList().size());
-        datas.addAll(bean.getSearchList());
-        adapter.notifyDataSetChanged();
+    public void showSuccess(LubBean bean) {
+
     }
 
     @Override
@@ -78,7 +74,7 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
             if(mPresenter == null){
-                mPresenter = new SpotCheckPresenter();
+                mPresenter = new LubPresenter();
             }
             mPresenter.attachView(this);
             initRequest();
