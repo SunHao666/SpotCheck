@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -58,6 +59,7 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
         // 注意此方法只有在父类的onCreate(Bundle)调用之后才有效.
         retrieveFragments();
         bottomnavigationview.setOnNavigationItemSelectedListener(this);
+        toolbar.setVisibility(View.GONE);
     }
 
 

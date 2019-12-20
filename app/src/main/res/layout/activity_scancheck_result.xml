@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/home_top_shape_blue"
+        android:layout_marginTop="@dimen/dp_37"
+        android:layout_marginRight="@dimen/dp_58"
+        android:layout_marginLeft="@dimen/dp_58"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_31"
+            android:layout_marginRight="@dimen/dp_30"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设备名称:"
+                android:textColor="#515151"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_set_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#1F1F1F"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginRight="@dimen/dp_30"
+            android:layout_marginBottom="@dimen/dp_31"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="点检部位:"
+                android:textColor="#515151"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_set_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#1F1F1F"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/done"
+        android:layout_marginTop="@dimen/dp_39"
+        android:drawablePadding="@dimen/dp_22"
+        android:text="点检已经完成"
+        android:textColor="#1F1F1F"
+        android:textSize="@dimen/sp_20"
+        android:gravity="center_horizontal"/>
+
+</LinearLayout>

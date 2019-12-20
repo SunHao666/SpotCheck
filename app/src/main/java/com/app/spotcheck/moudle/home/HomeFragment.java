@@ -1,15 +1,19 @@
 package com.app.spotcheck.moudle.home;
 
+import android.content.Intent;
+import android.view.View;
 import android.widget.TextView;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.HomeBean;
+import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
-public class HomeFragment extends BaseFragment<HomePresenter> implements HomeView{
+public class HomeFragment extends BaseFragment<HomePresenter> implements HomeView {
 
 
     @BindView(R.id.home_check_noNum)
@@ -28,6 +32,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     TextView tvLubDaji;
     @BindView(R.id.tv_lub_place)
     TextView tvLubPlace;
+    @BindView(R.id.iv_home_check)
+    TextView ivHomeCheck;
+    @BindView(R.id.iv_home_setpro)
+    TextView ivHomeSetpro;
+    @BindView(R.id.iv_home_lub)
+    TextView ivHomeLub;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -59,12 +69,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
         HomeBean.CHKINFOBean chkinfo = bean.getCHKINFO();
         HomeBean.LUBINFOBean lubinfo = bean.getLUBINFO();
         homeCheckNoNum.setText(chkinfo.getCHK_UNNUM());
-        homePlanTime.setText(chkinfo.getCHK_EXECSTARTTIME()+"~"+chkinfo.getCHK_EXECENDTIME());
+        homePlanTime.setText(chkinfo.getCHK_EXECSTARTTIME() + "~" + chkinfo.getCHK_EXECENDTIME());
         tvDaji.setText(chkinfo.getCHK_MAINNAME());
         tvChecnkPlace.setText(chkinfo.getCHK_PARTNAME());
 
         homeLubNoNum.setText(lubinfo.getLUB_UNNUM());
-        homePlanLubTime.setText(lubinfo.getLUB_EXECSTARTTIME()+"~"+lubinfo.getLUB_EXECENDTIME());
+        homePlanLubTime.setText(lubinfo.getLUB_EXECSTARTTIME() + "~" + lubinfo.getLUB_EXECENDTIME());
         tvLubDaji.setText(lubinfo.getLUB_MAINNAME());
         tvLubPlace.setText(lubinfo.getLUB_PARTNAME());
     }
@@ -72,5 +82,18 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     @Override
     public void showError(String error) {
         ToastWrapper.show(error);
+    }
+
+    @OnClick({R.id.iv_home_check, R.id.iv_home_setpro, R.id.iv_home_lub})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_home_check:
+                startActivity(new Intent(getActivity(), ScanCheckActivity.class));
+                break;
+            case R.id.iv_home_setpro:
+                break;
+            case R.id.iv_home_lub:
+                break;
+        }
     }
 }

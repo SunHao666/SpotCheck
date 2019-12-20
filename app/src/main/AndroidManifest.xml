@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".moudle.scancheck.ScanCheckActivity" />
+        <activity android:name=".moudle.scancheck.scanresult.ScanCheckResultActivity" />
+        <activity android:name=".moudle.scancheck.checkexception.CheckExceptionActivity" />
     </application>
 
 </manifest>

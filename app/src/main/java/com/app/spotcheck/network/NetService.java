@@ -1,10 +1,14 @@
 package com.app.spotcheck.network;
 
 
+import com.app.spotcheck.moudle.bean.CheckExceptionBean;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.LoginBean;
+import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.bean.MineBean;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -18,7 +22,6 @@ public interface NetService {
     Call<LoginBean> login(@Field("userid") String userid, @Field("userpwd") String userpwd);
 
     //首页
-    @FormUrlEncoded
     @POST("main/getInfo")
     Call<BaseCallModel<HomeBean>> index();
 
@@ -37,6 +40,21 @@ public interface NetService {
     @POST("check/getCheckedPlanList")
     Call<BaseCallModel<SpotCheckAllBean>> getCheckedPlanList(@Field("mainid")String mainid,@Field("mainname")String mainname);
 
+    //点检扫描结果
+    @FormUrlEncoded
+    @POST("check/getUnCheckItemList")
+    Call<BaseCallModel<ScanCheckBean>> getUnCheckItemList(@Field("execid")String execid);
+
+    //点检扫描保存
+    @FormUrlEncoded
+    @POST("check/saveAllItem")
+    Call<LoginBean> saveAllItem(@Field("execid")String execid,@Field("execman")String execman,@Field("recidList") List<String> recidList);
+
+
+    //点检异常
+    @FormUrlEncoded
+    @POST("check/getUnCheckItemInfo")
+    Call<BaseCallModel<CheckExceptionBean>> getUnCheckItemInfo(@Field("id")int id);
 
     //个人工作信息
     @FormUrlEncoded

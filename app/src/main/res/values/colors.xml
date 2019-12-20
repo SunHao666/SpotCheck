@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#3489DA</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#3489DA</color>
     <!-- 灰度值(grayscale) -->
     <color name="white">#F6F6F6</color>
     <color name="gray_light">#EDE8E8</color>
@@ -17,5 +17,6 @@
     <color name="orange">#F16755</color>
     <color name="pink">#F06CA7</color>
     <color name="brown">#847534</color>
-
+    <color name="tab_checked">#3489DA</color>
+    <color name="tab_uncheck">#AAADB1</color>
 </resources>
