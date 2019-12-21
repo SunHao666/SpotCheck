@@ -19,6 +19,8 @@
         <activity android:name=".moudle.scancheck.ScanCheckActivity" />
         <activity android:name=".moudle.scancheck.scanresult.ScanCheckResultActivity" />
         <activity android:name=".moudle.scancheck.checkexception.CheckExceptionActivity" />
+        <activity android:name=".moudle.patralcheck.PatralCheckActivity" />
+        <activity android:name=".moudle.scanlub.ScanLubActivity" />
     </application>
 
 </manifest>

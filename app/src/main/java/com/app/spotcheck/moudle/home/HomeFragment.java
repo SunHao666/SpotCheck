@@ -8,7 +8,9 @@ import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.HomeBean;
+import com.app.spotcheck.moudle.patralcheck.PatralCheckActivity;
 import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
+import com.app.spotcheck.moudle.scanlub.ScanLubActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -91,8 +93,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
                 startActivity(new Intent(getActivity(), ScanCheckActivity.class));
                 break;
             case R.id.iv_home_setpro:
+                startActivity(new Intent(getActivity(), PatralCheckActivity.class));
                 break;
             case R.id.iv_home_lub:
+                startActivity(new Intent(getActivity(), ScanLubActivity.class));
                 break;
         }
     }
