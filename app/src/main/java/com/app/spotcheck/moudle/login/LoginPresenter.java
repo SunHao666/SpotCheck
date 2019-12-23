@@ -6,6 +6,13 @@ import com.app.spotcheck.network.BaseCallModel;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,11 +24,16 @@ import retrofit2.Response;
  * @CreateDate: 2019/12/18 14:42
  */
 public class LoginPresenter extends BasePresenter<LoginView> {
+    public static RequestBody convertMapToBody(Map<?,?> map) {
+        return RequestBody.create(MediaType.parse("application/json; charset=utf- 8"), new JSONObject(map).toString());
+    }
 
 
     public void login(String userid,String userpwd){
-
-        NetManager.getInstance().api().login(userid,userid)
+        Map<String,String> map = new HashMap<>();
+        map.put("userid",userid);
+        map.put("userpwd",userpwd);
+        NetManager.getInstance().api().login(convertMapToBody(map))
                 .enqueue(new Callback<LoginBean>() {
                     @Override
                     public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
