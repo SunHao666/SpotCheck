@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3489DA</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimaryDark">#3489DA</color>
     <color name="colorAccent">#3489DA</color>
     <!-- 灰度值(grayscale) -->
     <color name="white">#F6F6F6</color>
@@ -19,4 +19,5 @@
     <color name="brown">#847534</color>
     <color name="tab_checked">#3489DA</color>
     <color name="tab_uncheck">#AAADB1</color>
+    <color name="color_f6">#f6f6f6</color>
 </resources>
