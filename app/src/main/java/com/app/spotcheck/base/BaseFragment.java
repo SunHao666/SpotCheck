@@ -24,18 +24,17 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
 
     private Unbinder mUnbind;
     public T mPresenter;
-    @Nullable
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getContentViewLayout(), container, false);
         mUnbind = ButterKnife.bind(this, view);
         ToastWrapper.init(getActivity());
         mPresenter = initPresenter();
+
         if(mPresenter == null){
             throw new RuntimeException("mPresenter no init");
         }
         mPresenter.attachView(this);
-        initData();
         return view;
     }
 
@@ -47,6 +46,15 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     public final void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
+        initData();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+
+        }
     }
 
     @Override

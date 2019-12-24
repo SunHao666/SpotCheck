@@ -6,7 +6,9 @@ import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: SpotCheckPresenter
@@ -16,79 +18,57 @@ import java.util.List;
  */
 public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
 
-    public void getCheckPlanList(String mainid,String mainname){
-        NetManager.getInstance().api().getCheckPlanList(mainid,mainname)
+    public void getCheckPlanList(String qrcode,String mainname){
+        Map<String,String> map = new HashMap<>();
+        map.put("qrcode",qrcode);
+        map.put("mainname",mainname);
+        NetManager.getInstance().api().getCheckPlanList(convertMapToBody(map))
                 .enqueue(new BaseCallback<SpotCheckAllBean>() {
                     @Override
                     protected void onSuccess(SpotCheckAllBean bean) {
-
+                        mView.showSuccess(bean);
                     }
 
                     @Override
                     protected void onFailed(int code, String msg) {
-                        SpotCheckAllBean bean1 = new SpotCheckAllBean();
-                        List<SpotCheckAllBean.SearchListBean> searchList = new ArrayList<>();
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
-                        bean1.setSearchList(searchList);
-                        mView.showSuccess(bean1);
-//                        mView.showError(msg);
+                        mView.showError(msg);
                     }
                 });
     }
 
-    public void getUnCheckPlanList(String mainid,String mainname){
-        NetManager.getInstance().api().getUnCheckPlanList(mainid,mainname)
+    public void getUnCheckPlanList(String qrcode,String mainname){
+        Map<String,String> map = new HashMap<>();
+        map.put("qrcode",qrcode);
+        map.put("mainname",mainname);
+        NetManager.getInstance().api().getUnCheckPlanList(convertMapToBody(map))
                 .enqueue(new BaseCallback<SpotCheckAllBean>() {
                     @Override
                     protected void onSuccess(SpotCheckAllBean bean) {
-                        SpotCheckAllBean bean1 = new SpotCheckAllBean();
-                        List<SpotCheckAllBean.SearchListBean> searchList = new ArrayList<>();
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
-                        mView.showSuccess(bean1);
+                        mView.showSuccess(bean);
                     }
 
                     @Override
                     protected void onFailed(int code, String msg) {
-                        SpotCheckAllBean bean1 = new SpotCheckAllBean();
-                        List<SpotCheckAllBean.SearchListBean> searchList = new ArrayList<>();
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
-                        bean1.setSearchList(searchList);
-                        mView.showSuccess(bean1);
-//                        mView.showError(msg);
+                        mView.showError(msg);
                     }
                 });
     }
 
 
-    public void getCheckedPlanList(String mainid,String mainname){
-        NetManager.getInstance().api().getCheckedPlanList(mainid,mainname)
+    public void getCheckedPlanList(String qrcode,String mainname){
+        Map<String,String> map = new HashMap<>();
+        map.put("qrcode",qrcode);
+        map.put("mainname",mainname);
+        NetManager.getInstance().api().getCheckedPlanList(convertMapToBody(map))
                 .enqueue(new BaseCallback<SpotCheckAllBean>() {
                     @Override
                     protected void onSuccess(SpotCheckAllBean bean) {
-                        SpotCheckAllBean bean1 = new SpotCheckAllBean();
-                        List<SpotCheckAllBean.SearchListBean> searchList = bean1.getSearchList();
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,0));
-                        mView.showSuccess(bean1);
+                        mView.showSuccess(bean);
                     }
 
                     @Override
                     protected void onFailed(int code, String msg) {
-                        SpotCheckAllBean bean1 = new SpotCheckAllBean();
-                        List<SpotCheckAllBean.SearchListBean> searchList = new ArrayList<>();
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
-                        searchList.add(new SpotCheckAllBean.SearchListBean("111","222",14,2));
-                        bean1.setSearchList(searchList);
-                        mView.showSuccess(bean1);
-//                        mView.showError(msg);
+                        mView.showError(msg);
                     }
                 });
     }

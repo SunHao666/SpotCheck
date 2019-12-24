@@ -1,6 +1,7 @@
 package com.app.spotcheck.moudle.login;
 
 import com.app.spotcheck.base.BaseView;
+import com.app.spotcheck.moudle.bean.LoginBean;
 
 /**
  * @ClassName: LoginView
@@ -8,9 +9,9 @@ import com.app.spotcheck.base.BaseView;
  * @Author: 作者名
  * @CreateDate: 2019/12/18 14:43
  */
-public interface LoginView<T>{
+public interface LoginView{
 
-    void showResult(T t);
+    void showResult(String msg, LoginBean bean);
 
     void showError(String error);
 }

@@ -1,13 +1,16 @@
 package com.app.spotcheck.moudle.scancheck;
 
 import com.app.spotcheck.base.BasePresenter;
+import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.LoginBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,27 +25,18 @@ import retrofit2.Response;
 public class ScanCheckPresenter extends BasePresenter<ScanCheckView> {
 
     public void fetch(String execid){
-        NetManager.getInstance().api().getUnCheckItemList(execid)
-                .enqueue(new BaseCallback<ScanCheckBean>() {
+        Map<String,String> map = new HashMap<>();
+        map.put("qrcode",execid);
+        NetManager.getInstance().api().getUnCheckItemList(convertMapToBody(map))
+                .enqueue(new BaseCallback<HomeScanBean>() {
                     @Override
-                    protected void onSuccess(ScanCheckBean bean) {
+                    protected void onSuccess(HomeScanBean bean) {
                         mView.showSuccess(bean);
                     }
 
                     @Override
                     protected void onFailed(int code, String msg) {
-                        ScanCheckBean bean = new ScanCheckBean();
-                        bean.setMAINNAME("1111");
-                        bean.setPARTNAME("2222");
-                        List<ScanCheckBean.SearchListBean> bean1 = new ArrayList<>();
-                        for (int i = 0; i < 4; i++) {
-                            ScanCheckBean.SearchListBean bean2 = new ScanCheckBean.SearchListBean();
-                            bean2.setITEMNAME("212121"+"place"+i);
-                            bean1.add(bean2);
-                        }
-                        bean.setSearchList(bean1);
-                        mView.showSuccess(bean);
-//                        mView.showError(msg);
+                        mView.showError(msg);
                     }
                 });
     }
@@ -54,11 +48,11 @@ public class ScanCheckPresenter extends BasePresenter<ScanCheckView> {
                     @Override
                     public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
                         LoginBean body = response.body();
-                        if(body.result_code == 200){
-                            mView.save(body.getResult_message());
-                        }else{
-                            mView.showError(body.getResult_message());
-                        }
+//                        if(body.result_code == 200){
+//                            mView.save(body.getResult_message());
+//                        }else{
+//                            mView.showError(body.getResult_message());
+//                        }
                     }
 
                     @Override

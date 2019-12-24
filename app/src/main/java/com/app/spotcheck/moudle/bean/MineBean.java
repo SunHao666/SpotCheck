@@ -1,5 +1,7 @@
 package com.app.spotcheck.moudle.bean;
 
+import java.util.List;
+
 /**
  * @ClassName: MineBean
  * @Description: java类作用描述
@@ -14,22 +16,22 @@ public class MineBean {
      * CHK_LIST : {"CHK_NUM":4,"CHK_FINISHDATE":"2019-12-03"}
      */
 
-    private LUBLISTBean LUB_LIST;
-    private CHKLISTBean CHK_LIST;
+    private List<LUBLISTBean> LUB_LIST;
+    private List<CHKLISTBean> CHK_LIST;
 
-    public LUBLISTBean getLUB_LIST() {
+    public List<LUBLISTBean> getLUB_LIST() {
         return LUB_LIST;
     }
 
-    public void setLUB_LIST(LUBLISTBean LUB_LIST) {
+    public void setLUB_LIST(List<LUBLISTBean> LUB_LIST) {
         this.LUB_LIST = LUB_LIST;
     }
 
-    public CHKLISTBean getCHK_LIST() {
+    public List<CHKLISTBean> getCHK_LIST() {
         return CHK_LIST;
     }
 
-    public void setCHK_LIST(CHKLISTBean CHK_LIST) {
+    public void setCHK_LIST(List<CHKLISTBean> CHK_LIST) {
         this.CHK_LIST = CHK_LIST;
     }
 

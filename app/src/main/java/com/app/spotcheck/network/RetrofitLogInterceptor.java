@@ -3,9 +3,12 @@ package com.app.spotcheck.network;
 import android.util.Log;
 
 
+import com.app.spotcheck.base.utils.SPUtils;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -15,9 +18,29 @@ import okio.Buffer;
 public class RetrofitLogInterceptor implements Interceptor {
     public static String TAG = "RetrofitLogInterceptor";
 
+    public static String requestBodyToString(RequestBody requestBody) throws IOException {
+        Buffer buffer = new Buffer();
+        requestBody.writeTo(buffer);
+        return buffer.readUtf8();
+    }
+
     @Override
     public synchronized okhttp3.Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
+
+        HttpUrl url = request.url();
+        //http://127.0.0.1/test/upload/img?userName=xiaoming&userPassword=12345
+        String scheme = url.scheme();//  http https
+        String host = url.host();//   127.0.0.1
+        String path = url.encodedPath();//  /test/upload/img
+        String query = url.encodedQuery();//  userName=xiaoming&userPassword=12345
+        Log.e(TAG,scheme);
+        Log.e(TAG,host);
+        Log.e(TAG,path);
+        Log.e(TAG,query+"");
+
+        RequestBody body = request.body();
+        Log.e(TAG, "请求body：| " + requestBodyToString(body));
 
         long startTime = System.currentTimeMillis();
         okhttp3.Response response = chain.proceed(chain.request());

@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
 import com.app.spotcheck.R;
+import com.app.spotcheck.base.utils.DialogUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -37,6 +38,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends TransitionAc
     public T mPresenter;
 
     private View.OnClickListener onClickListenerTopLeft;   //左边图标的点击事件
+    private DialogUtils loading;
+
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends TransitionAc
 
         LayoutInflater.from(this).inflate(getContentViewLayout(),viewContent);
 
+        ToastWrapper.init(this);
         mUnbind = ButterKnife.bind(this);
         ToastWrapper.init(this);
         mPresenter = initPresenter();
@@ -105,4 +109,16 @@ public abstract class BaseActivity<T extends BasePresenter> extends TransitionAc
         context.startActivity(intent);
     }
 
+    public void showLoding(){//点击加载并按钮模仿网络请求
+        if(loading == null){
+            loading = new DialogUtils(this,R.style.CustomDialog);
+        }
+        loading.show();
+    }
+
+    public void disLoding(){//点击加载并按钮模仿网络请求
+        if(loading != null && loading.isShowing()){
+            loading.dismiss();
+        }
+    }
 }

@@ -2,12 +2,16 @@ package com.app.spotcheck.moudle.mine;
 
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
+import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.MineBean;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -27,7 +31,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
 
     @Override
     protected void initData() {
-        mPresenter.fetch("");
+        String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
+        mPresenter.fetch(loginname);
     }
 
     @Override
@@ -47,19 +52,26 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
 
     @Override
     public void showSuccess(MineBean bean) {
-        tvName.setText("");
-        tvLoginTime.setText("");
+        String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
+        String logtime = SPUtils.getInstance(getActivity()).getString("logtime");
+        tvName.setText(loginname);
+        tvLoginTime.setText(logtime);
         initCheckList(bean);
         initLubList(bean);
     }
 
     private void initLubList(MineBean bean) {
-
+        List<MineBean.LUBLISTBean> lub_list = bean.getLUB_LIST();
+        rvMonthLub.setLayoutManager(new LinearLayoutManager(getActivity()));
+        MineLubAdapter adapter = new MineLubAdapter(getActivity(),lub_list);
+        rvMonthLub.setAdapter(adapter);
     }
 
     private void initCheckList(MineBean bean) {
-//        MineBean.CHKLISTBean chk_list = bean.getCHK_LIST();
-
+        List<MineBean.CHKLISTBean> chk_list = bean.getCHK_LIST();
+        rvMonthCheck.setLayoutManager(new LinearLayoutManager(getActivity()));
+        MineAdapter adapter = new MineAdapter(getActivity(),chk_list);
+        rvMonthCheck.setAdapter(adapter);
     }
 
     @Override

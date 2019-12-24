@@ -16,4 +16,9 @@
     <style name="ContentText.FixedSmall">
         <item name="android:textSize">@dimen/sp_12</item>
     </style>
+
+    <style name="CustomDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

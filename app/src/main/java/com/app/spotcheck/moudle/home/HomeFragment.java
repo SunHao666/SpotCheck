@@ -8,12 +8,17 @@ import androidx.annotation.Nullable;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
+import com.app.spotcheck.base.utils.LogUtils;
+import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.HomeBean;
+import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.patralcheck.PatralCheckActivity;
 import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
 import com.app.spotcheck.moudle.scanlub.ScanLubActivity;
 import com.king.zxing.CaptureActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -51,6 +56,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
 
     @Override
     protected void initData() {
+        long logtime = SPUtils.getInstance(getActivity()).getLong("logtime");
+        LogUtils.error("logtime"+logtime);
         mPresenter.fetch();
     }
 
@@ -73,12 +80,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     public void showSuccess(HomeBean bean) {
         HomeBean.CHKINFOBean chkinfo = bean.getCHKINFO();
         HomeBean.LUBINFOBean lubinfo = bean.getLUBINFO();
-        homeCheckNoNum.setText(chkinfo.getCHK_UNNUM());
+        homeCheckNoNum.setText(chkinfo.getCHK_UNNUM()+"");
         homePlanTime.setText(chkinfo.getCHK_EXECSTARTTIME() + "~" + chkinfo.getCHK_EXECENDTIME());
         tvDaji.setText(chkinfo.getCHK_MAINNAME());
         tvChecnkPlace.setText(chkinfo.getCHK_PARTNAME());
 
-        homeLubNoNum.setText(lubinfo.getLUB_UNNUM());
+        homeLubNoNum.setText(lubinfo.getLUB_UNNUM()+"");
         homePlanLubTime.setText(lubinfo.getLUB_EXECSTARTTIME() + "~" + lubinfo.getLUB_EXECENDTIME());
         tvLubDaji.setText(lubinfo.getLUB_MAINNAME());
         tvLubPlace.setText(lubinfo.getLUB_PARTNAME());
@@ -89,6 +96,17 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
         ToastWrapper.show(error);
     }
 
+    @Override
+    public void showScanSuccess(HomeScanBean bean) {
+        List<HomeScanBean.SearchListBean> searchList = bean.getSearchList();
+        if(searchList == null || searchList.size() == 0){
+            ToastWrapper.show("暂无待检项目");
+        }else{
+            //跳转至点检待检
+            onCheckScanClick.onClick(1);
+        }
+    }
+
     @OnClick({R.id.iv_home_check, R.id.iv_home_setpro, R.id.iv_home_lub})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -96,7 +114,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
                 startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1001);
                 break;
             case R.id.iv_home_setpro:
-                startActivity(new Intent(getActivity(), PatralCheckActivity.class));
+                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1002);
                 break;
             case R.id.iv_home_lub:
                 startActivity(new Intent(getActivity(), ScanLubActivity.class));
@@ -108,9 +126,21 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1001){
-            Intent intent = new Intent(getActivity(),ScanCheckActivity.class);
+            String qrcode = "E002M05P0001";
+            mPresenter.scanCheck(qrcode);
+        }else if(requestCode == 1002){
+            Intent intent = new Intent(getActivity(), PatralCheckActivity.class);
             intent.putExtra("execid","");
             startActivity(intent);
         }
+    }
+
+    private OnCheckScanClick onCheckScanClick;
+
+    public void setOnCheckScanClick(OnCheckScanClick onCheckScanClick) {
+        this.onCheckScanClick = onCheckScanClick;
+    }
+    public interface OnCheckScanClick{
+        public void onClick(int position);
     }
 }

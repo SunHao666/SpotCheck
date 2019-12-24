@@ -51,7 +51,10 @@
         android:textSize="@dimen/sp_15"
         android:textColor="#073156"
         android:drawableLeft="@drawable/ic_tab_category_f"
-        android:padding="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         />
@@ -60,6 +63,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:background="#608EF7"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,7 +77,10 @@
         android:textSize="@dimen/sp_15"
         android:textColor="#073156"
         android:drawableLeft="@drawable/ic_tab_cart_f"
-        android:padding="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         />

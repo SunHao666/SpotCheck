@@ -8,22 +8,46 @@ package com.app.spotcheck.moudle.bean;
  */
 public class LoginBean {
 
-    public int result_code;
-    public String result_message;
+    /**
+     * WorkClassName : 机电1班
+     * Loginid : test1
+     * logtime : 1577156159786
+     */
 
-    public int getResult_code() {
-        return result_code;
+    private String WorkClassName;
+    private String Loginid;
+    private long logtime;
+    private String Loginname;
+
+    public String getLoginname() {
+        return Loginname;
     }
 
-    public void setResult_code(int result_code) {
-        this.result_code = result_code;
+    public void setLoginname(String loginname) {
+        Loginname = loginname;
     }
 
-    public String getResult_message() {
-        return result_message;
+    public String getWorkClassName() {
+        return WorkClassName;
     }
 
-    public void setResult_message(String result_message) {
-        this.result_message = result_message;
+    public void setWorkClassName(String WorkClassName) {
+        this.WorkClassName = WorkClassName;
+    }
+
+    public String getLoginid() {
+        return Loginid;
+    }
+
+    public void setLoginid(String Loginid) {
+        this.Loginid = Loginid;
+    }
+
+    public long getLogtime() {
+        return logtime;
+    }
+
+    public void setLogtime(long logtime) {
+        this.logtime = logtime;
     }
 }

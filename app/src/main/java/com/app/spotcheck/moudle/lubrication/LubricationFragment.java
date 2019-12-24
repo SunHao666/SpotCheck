@@ -22,7 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LubricationFragment extends BaseFragment<LubPresenter> implements LubView{
+public class LubricationFragment extends BaseFragment<LubPresenter> implements LubView , TabLayout.OnTabSelectedListener {
     @BindView(R.id.tv_search)
     TextView tvSearch;
     @BindView(R.id.toolbar)
@@ -67,7 +67,7 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
             tablayout.addTab(tablayout.newTab());
             fragments.add(new LubFragment(i));
         }
-
+        tablayout.addOnTabSelectedListener(this);
         adapter = new MViewPagerAdapter(getActivity().getSupportFragmentManager(),getActivity(),fragments,tabNames);
         viewPager.setAdapter(adapter);
         tablayout.setupWithViewPager(viewPager);
@@ -90,5 +90,20 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
             case R.id.lay_search:
                 break;
         }
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }

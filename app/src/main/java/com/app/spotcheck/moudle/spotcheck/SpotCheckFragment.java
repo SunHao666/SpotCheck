@@ -7,13 +7,18 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
+import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
+import com.app.spotcheck.moudle.event.SpotCheckEvent;
 import com.google.android.material.tabs.TabLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implements SpotCheckView , TabLayout.OnTabSelectedListener {
+public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implements SpotCheckView, TabLayout.OnTabSelectedListener {
     @BindView(R.id.tv_search)
     TextView tvSearch;
     @BindView(R.id.toolbar)
@@ -32,14 +37,27 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     ImageView scan;
     @BindView(R.id.lay_search)
     LinearLayout laySearch;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
     public String[] tabNames = {"全部点检部位", "待检部位", "已检部位"};
     public List<Fragment> fragments = new ArrayList<>();
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
     private MViewPagerAdapter adapter;
-
+    private int tab = 0;
+    private boolean isParer = false;
     public static SpotCheckFragment newInstance() {
         return new SpotCheckFragment();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -54,12 +72,21 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
 
     @Override
     protected int getContentViewLayout() {
+
         return R.layout.fragment_spotcheck;
     }
 
     @Override
     protected void initView() {
+
         initTablayout();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void skiptab(SpotCheckEvent event) {
+        tab = event.tab;
+        LogUtils.error("tab==" + event.tab);
+        viewPager.setCurrentItem(1);
     }
 
     private void initTablayout() {
@@ -69,9 +96,11 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
         }
         tablayout.addOnTabSelectedListener(this);
 
-        adapter = new MViewPagerAdapter(getActivity().getSupportFragmentManager(),getActivity(),fragments,tabNames);
+        adapter = new MViewPagerAdapter(getActivity().getSupportFragmentManager(), getActivity(), fragments, tabNames);
         viewPager.setAdapter(adapter);
         tablayout.setupWithViewPager(viewPager);
+        viewPager.setCurrentItem(tab);
+        isParer = true;
     }
 
     @Override
@@ -107,5 +136,12 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    public void setTab(int tab) {
+        this.tab = tab;
+        if(isParer){
+            viewPager.setCurrentItem(tab);
+        }
     }
 }

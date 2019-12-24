@@ -2,6 +2,7 @@ package com.app.spotcheck.moudle.home;
 
 import com.app.spotcheck.base.BaseView;
 import com.app.spotcheck.moudle.bean.HomeBean;
+import com.app.spotcheck.moudle.bean.HomeScanBean;
 
 /**
  * @ClassName: HomeView
@@ -14,4 +15,6 @@ public interface HomeView {
     void showSuccess(HomeBean bean);
 
     void showError(String error);
+
+    void showScanSuccess(HomeScanBean bean);
 }

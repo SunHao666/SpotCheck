@@ -14,6 +14,7 @@ import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.utils.CommonAdapter;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
+import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.moudle.scancheck.checkexception.CheckExceptionActivity;
 import com.app.spotcheck.moudle.scancheck.scanresult.ScanCheckResultActivity;
@@ -46,6 +47,7 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
     @Override
     protected void initData() {
         String execid = getIntent().getStringExtra("execid");
+        execid = "E002M05P0001";
         mPresenter.fetch(execid);
     }
 
@@ -88,12 +90,12 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
 
 
     @Override
-    public void showSuccess(ScanCheckBean bean) {
-        tvSetName.setText(bean.getMAINNAME());
-        tvSetPlace.setText(bean.getPARTNAME());
-        List<ScanCheckBean.SearchListBean> searchList = bean.getSearchList();
-        beans.addAll(searchList);
-        adapter.notifyDataSetChanged();
+    public void showSuccess(HomeScanBean bean) {
+//        tvSetName.setText(bean.getMAINNAME());
+//        tvSetPlace.setText(bean.getPARTNAME());
+//        List<ScanCheckBean.SearchListBean> searchList = bean.getSearchList();
+//        beans.addAll(searchList);
+//        adapter.notifyDataSetChanged();
     }
 
     @Override

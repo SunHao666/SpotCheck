@@ -2,9 +2,15 @@ package com.app.spotcheck.moudle.home;
 
 import com.app.spotcheck.base.BasePresenter;
 import com.app.spotcheck.base.BaseView;
+import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.moudle.bean.HomeBean;
+import com.app.spotcheck.moudle.bean.HomeScanBean;
+import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ClassName: HomePresenter
@@ -33,5 +39,23 @@ public class HomePresenter extends BasePresenter<HomeView> {
                         mView.showError(msg);
                     }
         });
+    }
+
+
+    public void scanCheck(String qrcode){
+        Map<String,String> map = new HashMap<>();
+        map.put("qrcode",qrcode);
+        NetManager.getInstance().api().getUnCheckItemList(convertMapToBody(map))
+                .enqueue(new BaseCallback<HomeScanBean>() {
+                    @Override
+                    protected void onSuccess(HomeScanBean bean) {
+                        mView.showScanSuccess(bean);
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        mView.showError(msg);
+                    }
+                });
     }
 }

@@ -5,6 +5,9 @@ import com.app.spotcheck.moudle.bean.MineBean;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @ClassName: MinePresenter
  * @Description: java类作用描述
@@ -14,7 +17,10 @@ import com.app.spotcheck.network.NetManager;
 public class MinePresenter extends BasePresenter<MineView> {
 
     public void fetch(String workman){
-        NetManager.getInstance().api().getInfo(workman)
+        Map<String,String> map = new HashMap<>();
+        map.put("workman",workman);
+
+        NetManager.getInstance().api().getInfo(convertMapToBody(map))
                 .enqueue(new BaseCallback<MineBean>() {
                     @Override
                     protected void onSuccess(MineBean bean) {

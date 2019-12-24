@@ -2,7 +2,13 @@ package com.app.spotcheck.base;
 
 import android.view.View;
 
+import org.json.JSONObject;
+
 import java.lang.ref.WeakReference;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * @ClassName: BasePresenter
@@ -27,4 +33,7 @@ public class BasePresenter<V> {
         }
     }
 
+    public static RequestBody convertMapToBody(Map<?,?> map) {
+        return RequestBody.create(MediaType.parse("application/json; charset=utf- 8"), new JSONObject(map).toString());
+    }
 }

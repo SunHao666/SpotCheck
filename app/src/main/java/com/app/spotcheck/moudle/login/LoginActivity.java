@@ -2,6 +2,7 @@ package com.app.spotcheck.moudle.login;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.BasePresenter;
+import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.MainActivity;
 import com.app.spotcheck.moudle.bean.LoginBean;
@@ -25,7 +27,7 @@ import butterknife.OnClick;
  * @Author: 作者名
  * @CreateDate: 2019/12/18 20:28
  */
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginView<LoginBean>{
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginView{
 
 
     @BindView(R.id.iv_logo)
@@ -58,7 +60,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     protected void initView() {
-
+        toolbar.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.btn_login)
@@ -70,20 +72,24 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             ToastWrapper.show("请输入密码");
             return;
         }
-
+        showLoding();
         mPresenter.login(etUsername.getText().toString(),etPwd.getText().toString());
 
     }
 
     @Override
-    public void showResult(LoginBean loginBean) {
-        ToastWrapper.show(loginBean.getResult_message());
+    public void showResult(String success,LoginBean bean) {
+        SPUtils.getInstance(this).put("logtime",bean.getLogtime());
+        SPUtils.getInstance(this).put("Loginname",bean.getLoginname());
+        disLoding();
+        ToastWrapper.show(success);
         MainActivity.show(LoginActivity.this,MainActivity.class);
         finish();
     }
 
     @Override
     public void showError(String error) {
+        disLoding();
         ToastWrapper.show(error);
     }
 }

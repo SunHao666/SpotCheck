@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
+import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 
 import butterknife.BindView;
@@ -40,6 +41,7 @@ public class PatralCheckActivity extends BaseActivity<PatralCheckPresenter> impl
     @Override
     protected void initData() {
         String execid = getIntent().getStringExtra("execid");
+        execid = "E002M05P0001";
         mPresenter.fetch(execid);
     }
 
@@ -76,11 +78,12 @@ public class PatralCheckActivity extends BaseActivity<PatralCheckPresenter> impl
 
     @Override
     public void showSuccess(ScanCheckBean bean) {
-
+        tvSetName.setText(bean.getMAINNAME());
+        tvSetPlace.setText(bean.getPARTNAME());
     }
 
     @Override
     public void showError(String error) {
-
+        ToastWrapper.show(error);
     }
 }

@@ -13,6 +13,7 @@ import com.app.spotcheck.base.utils.CommonAdapter;
 import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.utils.MultiItemCommonAdapter;
 import com.app.spotcheck.base.utils.MultiItemTypeSupport;
+import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 
 import java.util.ArrayList;
@@ -63,6 +64,8 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
 
     @Override
     public void showSuccess(SpotCheckAllBean bean) {
+        datas.clear();
+        adapter.notifyDataSetChanged();
         LogUtils.error("bean size = "+bean.getSearchList().size());
         datas.addAll(bean.getSearchList());
         adapter.notifyDataSetChanged();
@@ -70,7 +73,7 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
 
     @Override
     public void showError(String error) {
-
+        ToastWrapper.show(error);
     }
 
     @Override
@@ -87,7 +90,7 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
 
     private void initRequest() {
         if(tab == 0){
-            mPresenter.getCheckPlanList("","");
+            mPresenter.getCheckPlanList("E002M05P0001","");
         }else if(tab == 1){
             mPresenter.getUnCheckPlanList("","");
         }else if(tab == 2){

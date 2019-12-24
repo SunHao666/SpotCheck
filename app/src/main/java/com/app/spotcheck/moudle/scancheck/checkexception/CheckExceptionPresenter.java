@@ -40,11 +40,11 @@ public class CheckExceptionPresenter extends BasePresenter<CheckExceptionView> {
                     @Override
                     public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
                         LoginBean body = response.body();
-                        if (body.result_code == 200){
-                            mView.save(body.getResult_message());
-                        }else{
-                            mView.showError(body.getResult_message());
-                        }
+//                        if (body.result_code == 200){
+//                            mView.save(body.getResult_message());
+//                        }else{
+//                            mView.showError(body.getResult_message());
+//                        }
                     }
 
                     @Override

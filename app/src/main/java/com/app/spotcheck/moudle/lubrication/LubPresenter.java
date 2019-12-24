@@ -14,43 +14,43 @@ import com.app.spotcheck.network.NetManager;
 public class LubPresenter extends BasePresenter<LubView> {
 
     public void getCheckPlanList(String mainid,String mainname){
-        NetManager.getInstance().api().getCheckPlanList(mainid,mainname)
-                .enqueue(new BaseCallback<SpotCheckAllBean>() {
-                    @Override
-                    protected void onSuccess(SpotCheckAllBean bean) {
-
-                    }
-
-                    @Override
-                    protected void onFailed(int code, String msg) {
-                    }
-                });
+//        NetManager.getInstance().api().getCheckPlanList(mainid,mainname)
+//                .enqueue(new BaseCallback<SpotCheckAllBean>() {
+//                    @Override
+//                    protected void onSuccess(SpotCheckAllBean bean) {
+//
+//                    }
+//
+//                    @Override
+//                    protected void onFailed(int code, String msg) {
+//                    }
+//                });
     }
 
     public void getUnCheckPlanList(String mainid,String mainname){
-        NetManager.getInstance().api().getUnCheckPlanList(mainid,mainname)
-                .enqueue(new BaseCallback<SpotCheckAllBean>() {
-                    @Override
-                    protected void onSuccess(SpotCheckAllBean bean) {
-                    }
-
-                    @Override
-                    protected void onFailed(int code, String msg) {
-                    }
-                });
+//        NetManager.getInstance().api().getUnCheckPlanList(mainid,mainname)
+//                .enqueue(new BaseCallback<SpotCheckAllBean>() {
+//                    @Override
+//                    protected void onSuccess(SpotCheckAllBean bean) {
+//                    }
+//
+//                    @Override
+//                    protected void onFailed(int code, String msg) {
+//                    }
+//                });
     }
 
 
     public void getCheckedPlanList(String mainid,String mainname){
-        NetManager.getInstance().api().getCheckedPlanList(mainid,mainname)
-                .enqueue(new BaseCallback<SpotCheckAllBean>() {
-                    @Override
-                    protected void onSuccess(SpotCheckAllBean bean) {
-                    }
-
-                    @Override
-                    protected void onFailed(int code, String msg) {
-                    }
-                });
+//        NetManager.getInstance().api().getCheckedPlanList(mainid,mainname)
+//                .enqueue(new BaseCallback<SpotCheckAllBean>() {
+//                    @Override
+//                    protected void onSuccess(SpotCheckAllBean bean) {
+//                    }
+//
+//                    @Override
+//                    protected void onFailed(int code, String msg) {
+//                    }
+//                });
     }
 }

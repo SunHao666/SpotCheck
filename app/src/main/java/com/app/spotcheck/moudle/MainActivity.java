@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.BasePresenter;
+import com.app.spotcheck.moudle.event.SpotCheckEvent;
 import com.app.spotcheck.moudle.home.HomeFragment;
 import com.app.spotcheck.moudle.login.LoginActivity;
 import com.app.spotcheck.moudle.lubrication.LubricationFragment;
@@ -22,7 +23,10 @@ import com.app.spotcheck.moudle.mine.MineFragment;
 import com.app.spotcheck.moudle.spotcheck.SpotCheckFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity<BasePresenter> implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -60,6 +64,20 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
         retrieveFragments();
         bottomnavigationview.setOnNavigationItemSelectedListener(this);
         toolbar.setVisibility(View.GONE);
+        initListener();
+    }
+
+    private void initListener() {
+        mHomeFragment.setOnCheckScanClick(new HomeFragment.OnCheckScanClick() {
+            @Override
+            public void onClick(int position) {
+                if (mSpotCheckFragment == null)
+                    mSpotCheckFragment = SpotCheckFragment.newInstance();
+                mSpotCheckFragment.setTab(1);
+                bottomnavigationview.setSelectedItemId(R.id.tab_two);
+                EventBus.getDefault().post(new SpotCheckEvent(1));
+            }
+        });
     }
 
 
@@ -68,10 +86,15 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
      */
     private void retrieveFragments() {
         FragmentManager manager = getSupportFragmentManager();
-        mHomeFragment = (HomeFragment) manager.findFragmentByTag(HomeFragment.class.getName());
-        mSpotCheckFragment = (SpotCheckFragment) manager.findFragmentByTag(SpotCheckFragment.class.getName());
-        mLubricationFragment = (LubricationFragment) manager.findFragmentByTag(LubricationFragment.class.getName());
-        mMineFragment = (MineFragment) manager.findFragmentByTag(MineFragment.class.getName());
+//        mHomeFragment = (HomeFragment) manager.findFragmentByTag(HomeFragment.class.getName());
+//        mSpotCheckFragment = (SpotCheckFragment) manager.findFragmentByTag(SpotCheckFragment.class.getName());
+//        mLubricationFragment = (LubricationFragment) manager.findFragmentByTag(LubricationFragment.class.getName());
+//        mMineFragment = (MineFragment) manager.findFragmentByTag(MineFragment.class.getName());
+        mHomeFragment = new HomeFragment();
+        mSpotCheckFragment = new SpotCheckFragment();
+        mLubricationFragment = new LubricationFragment();
+        mMineFragment = new MineFragment();
+        switchFragment(mHomeFragment);
     }
 
 

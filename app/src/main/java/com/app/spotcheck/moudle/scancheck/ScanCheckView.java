@@ -1,5 +1,6 @@
 package com.app.spotcheck.moudle.scancheck;
 
+import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 
 /**
@@ -10,7 +11,7 @@ import com.app.spotcheck.moudle.bean.ScanCheckBean;
  */
 public interface ScanCheckView {
 
-    void showSuccess(ScanCheckBean bean);
+    void showSuccess(HomeScanBean bean);
 
     void showError(String error);
 

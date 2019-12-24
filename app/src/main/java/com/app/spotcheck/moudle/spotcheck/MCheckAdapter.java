@@ -48,19 +48,19 @@ public class MCheckAdapter extends RecyclerView.Adapter<MCheckAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tvTitle.setText(datas.get(position).getPARTNAME());
-        holder.tvCheckedNum.setText(datas.get(position).getCHECKNUM()+"");
+        holder.tvCheckedNum.setText("已点检项目"+datas.get(position).getCHECKNUM()+"项");
         holder.tvUncheckNum.setText(datas.get(position).getUNCHECKNUM()+"");
         holder.tvCheckTime.setText(datas.get(position).getEXECSTARTTIME()+"~"+datas.get(position).getEXECENDTIME());
         holder.tvCheckPlace.setText(datas.get(position).getMAINNAME());
         if(tab == 0){
-            holder.tvUncheckNum.setVisibility(View.VISIBLE);
+            holder.layUncheckNum.setVisibility(View.VISIBLE);
             holder.tvCheckedNum.setVisibility(View.VISIBLE);
 
         }else if(tab == 1){
-            holder.tvUncheckNum.setVisibility(View.VISIBLE);
+            holder.layUncheckNum.setVisibility(View.VISIBLE);
             holder.tvCheckedNum.setVisibility(View.GONE);
         }else if(tab == 2){
-            holder.tvUncheckNum.setVisibility(View.GONE);
+            holder.layUncheckNum.setVisibility(View.GONE);
             holder.tvCheckedNum.setVisibility(View.VISIBLE);
         }
 
