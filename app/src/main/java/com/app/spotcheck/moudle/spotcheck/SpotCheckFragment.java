@@ -51,13 +51,11 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -82,12 +80,6 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
         initTablayout();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void skiptab(SpotCheckEvent event) {
-        tab = event.tab;
-        LogUtils.error("tab==" + event.tab);
-        viewPager.setCurrentItem(1);
-    }
 
     private void initTablayout() {
         for (int i = 0; i < tabNames.length; i++) {
@@ -140,6 +132,7 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
 
     public void setTab(int tab) {
         this.tab = tab;
+        //第n次进点检列表页
         if(isParer){
             viewPager.setCurrentItem(tab);
         }

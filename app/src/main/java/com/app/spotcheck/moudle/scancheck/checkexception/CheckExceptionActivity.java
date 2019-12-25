@@ -18,10 +18,12 @@ import com.app.spotcheck.base.adapter.FullyGridLayoutManager;
 import com.app.spotcheck.base.adapter.GridImageAdapter;
 import com.app.spotcheck.base.adapter.TakePhotoAdapter;
 import com.app.spotcheck.base.utils.GlideEngine;
+import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.PopuwindowListView;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.MainActivity;
 import com.app.spotcheck.moudle.bean.CheckExceptionBean;
+import com.app.spotcheck.moudle.bean.PROBLEMKINDBean;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -58,10 +60,10 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     @BindView(R.id.lay_pro_type)
     LinearLayout layProType;
     CheckExceptionBean bean;
-    public List<CheckExceptionBean.PROBLEMKINDBean> data = new ArrayList<>();
+    public List<PROBLEMKINDBean> data = new ArrayList<>();
     @BindView(R.id.rv_take_photo)
     RecyclerView mRecyclerView;
-    private int maxSelectNum = 8;//最多到几张还可以选择
+    private int maxSelectNum = 3;//最多到几张还可以选择
     private List<LocalMedia> selectList = new ArrayList<>();
     private int id;
     private GridImageAdapter adapter;
@@ -101,6 +103,7 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
         tvSetPlace.setText(bean.getPARTNAME());
         tvCheckProject.setText(bean.getITEMNAME());
         tvCheckContent.setText(bean.getCHECKCONTEXT());
+        data.addAll(bean.getPROBLEMKIND());
     }
 
     @Override
@@ -132,26 +135,32 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
             ToastWrapper.show("获取设备信息失败，请返回重新扫描");
             return;
         }
+        showLoding();
+//        photoList	照片列表
+//        id	记录编号
+//        mainid	设备编号
+//        partid	部位编号
 //        itemname	点检的项目
 //        execman	点检人
 //        problem	点检出的问题描述
 //        problemkind	问题的类型
 
+        String Loginname = SPUtils.getInstance(this).getString("Loginname");
         Map<String, RequestBody> map = new HashMap<>();
         map.put("id", toRequestBody(bean.getID() + ""));
-        map.put("mainid", toRequestBody(""));
-        map.put("partid", toRequestBody(""));
-        map.put("itemname", toRequestBody(""));
-        map.put("execman", toRequestBody(""));
+        map.put("mainid", toRequestBody(bean.getMAINID()));
+        map.put("partid", toRequestBody(bean.getPARTID()));
+        map.put("itemname", toRequestBody(bean.getITEMNAME()));
+        map.put("execman", toRequestBody(Loginname));
         map.put("problem", toRequestBody(etInfo.getText().toString()));
-        map.put("problemkind", toRequestBody(""));
+        map.put("problemkind", toRequestBody(tvProType.getText().toString()));
 
         List<MultipartBody.Part> parts = new ArrayList<>();
         for (int i = 0; i < selectList.size(); i++) {
             if(selectList.get(i).isCompressed()){
                 File file = new File(selectList.get(i).getCompressPath());
                 RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+                MultipartBody.Part part = MultipartBody.Part.createFormData("photoList", file.getName(), requestFile);
                 parts.add(part);
             }
         }
@@ -171,7 +180,7 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
                 tvProType.setText(data.get(position).getName());
             }
         });
-        popu.showAsDropDown(layProType);
+        popu.showPopupWindow(layProType);
     }
 
     private void initWidget() {

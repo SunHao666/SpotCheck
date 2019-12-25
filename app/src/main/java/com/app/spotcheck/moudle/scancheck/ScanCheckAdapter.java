@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,9 +15,14 @@ import com.app.spotcheck.moudle.bean.ScanCheckBean;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ScanCheckAdapter extends RecyclerView.Adapter<ScanCheckAdapter.ViewHolder> {
     Context context;
     List<ScanCheckBean.SearchListBean> data;
+
+
     public ScanCheckAdapter(Context context, List<ScanCheckBean.SearchListBean> data) {
         this.context = context;
         this.data = data;
@@ -31,8 +37,8 @@ public class ScanCheckAdapter extends RecyclerView.Adapter<ScanCheckAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        if(position%2 == 0){
+        holder.tvContent.setText(data.get(position).getCHECKCONTEXT());
+        if (position % 2 == 0) {
             holder.itemView.setBackgroundColor(Color.parseColor("#EAF2F8"));
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -49,17 +55,21 @@ public class ScanCheckAdapter extends RecyclerView.Adapter<ScanCheckAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_content)
+        TextView tvContent;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            ButterKnife.bind(this,itemView);
         }
     }
 
     CheckItemClickListener listener;
-    public void setOnItemClickListener(CheckItemClickListener listener){
+
+    public void setOnItemClickListener(CheckItemClickListener listener) {
         this.listener = listener;
     }
 
-    public interface CheckItemClickListener{
+    public interface CheckItemClickListener {
         void onClick(int position);
     }
 }

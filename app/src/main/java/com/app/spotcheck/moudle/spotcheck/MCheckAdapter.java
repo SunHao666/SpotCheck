@@ -55,7 +55,6 @@ public class MCheckAdapter extends RecyclerView.Adapter<MCheckAdapter.ViewHolder
         if(tab == 0){
             holder.layUncheckNum.setVisibility(View.VISIBLE);
             holder.tvCheckedNum.setVisibility(View.VISIBLE);
-
         }else if(tab == 1){
             holder.layUncheckNum.setVisibility(View.VISIBLE);
             holder.tvCheckedNum.setVisibility(View.GONE);
@@ -64,6 +63,12 @@ public class MCheckAdapter extends RecyclerView.Adapter<MCheckAdapter.ViewHolder
             holder.tvCheckedNum.setVisibility(View.VISIBLE);
         }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCheckItemClickListener.onClick(position,tab);
+            }
+        });
     }
 
     @Override
@@ -98,5 +103,13 @@ public class MCheckAdapter extends RecyclerView.Adapter<MCheckAdapter.ViewHolder
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
+    }
+    public OnCheckItemClickListener onCheckItemClickListener;
+
+    public void setOnCheckItemClickListener(OnCheckItemClickListener onCheckItemClickListener){
+        this.onCheckItemClickListener = onCheckItemClickListener;
+    }
+    public interface OnCheckItemClickListener{
+        void onClick(int position,int tab);
     }
 }

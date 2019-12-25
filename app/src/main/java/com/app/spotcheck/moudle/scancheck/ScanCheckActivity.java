@@ -2,6 +2,7 @@ package com.app.spotcheck.moudle.scancheck;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,11 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.utils.CommonAdapter;
+import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.moudle.scancheck.checkexception.CheckExceptionActivity;
 import com.app.spotcheck.moudle.scancheck.scanresult.ScanCheckResultActivity;
+import com.app.spotcheck.network.Contant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +46,18 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
     RecyclerView recyclerview;
     private List<ScanCheckBean.SearchListBean> beans = new ArrayList<>();
     private ScanCheckAdapter adapter;
+    private String execid;
+    private List<Integer> execids = new ArrayList<>();
 
     @Override
     protected void initData() {
-        String execid = getIntent().getStringExtra("execid");
-        execid = "E002M05P0001";
+        execid = getIntent().getStringExtra("EXECID");
+//        String execid ="cb611e9d3fa64ca197d0b76ee78bb6f1";
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mPresenter.fetch(execid);
     }
 
@@ -85,22 +95,30 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
 
     @OnClick(R.id.btn_check_ok)
     public void onViewClicked() {
-        mPresenter.saveCheckReult("execid","",new ArrayList<>());
+        String loginname = SPUtils.getInstance(this).getString("Loginname");
+        mPresenter.saveCheckReult(execid,loginname,execids);
     }
 
 
     @Override
-    public void showSuccess(HomeScanBean bean) {
-//        tvSetName.setText(bean.getMAINNAME());
-//        tvSetPlace.setText(bean.getPARTNAME());
-//        List<ScanCheckBean.SearchListBean> searchList = bean.getSearchList();
-//        beans.addAll(searchList);
-//        adapter.notifyDataSetChanged();
+    public void showSuccess(ScanCheckBean bean) {
+        beans.clear();
+        adapter.notifyDataSetChanged();
+        tvSetName.setText(bean.getMAINNAME());
+        tvSetPlace.setText(bean.getPARTNAME());
+        List<ScanCheckBean.SearchListBean> searchList = bean.getSearchList();
+        beans.addAll(searchList);
+        adapter.notifyDataSetChanged();
+        btnCheckOk.setEnabled(true);
+        for (int i = 0; i < beans.size(); i++) {
+            execids.add(beans.get(i).getID());
+        }
     }
 
     @Override
     public void showError(String error) {
         ToastWrapper.show(error);
+        btnCheckOk.setEnabled(false);
     }
 
     @Override

@@ -41,18 +41,18 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
         map.put("qrcode",qrcode);
         map.put("mainname",mainname);
         NetManager.getInstance().api().getUnCheckPlanList(convertMapToBody(map))
-                .enqueue(new BaseCallback<SpotCheckAllBean>() {
-                    @Override
-                    protected void onSuccess(SpotCheckAllBean bean) {
-                        mView.showSuccess(bean);
-                    }
+            .enqueue(new BaseCallback<SpotCheckAllBean>() {
+        @Override
+        protected void onSuccess(SpotCheckAllBean bean) {
+            mView.showSuccess(bean);
+        }
 
-                    @Override
-                    protected void onFailed(int code, String msg) {
-                        mView.showError(msg);
-                    }
-                });
-    }
+        @Override
+        protected void onFailed(int code, String msg) {
+            mView.showError(msg);
+        }
+    });
+}
 
 
     public void getCheckedPlanList(String qrcode,String mainname){

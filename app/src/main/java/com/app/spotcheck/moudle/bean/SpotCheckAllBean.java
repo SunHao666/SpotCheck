@@ -45,7 +45,7 @@ public class SpotCheckAllBean {
         private String MAINNAME;
         private String EXECSTARTTIME;
         private String EXECENDTIME;
-        private String RECID;
+        private String EXECID;
         private String PARTNAME;
         private int UNCHECKNUM;
         private String MAINID;
@@ -83,12 +83,12 @@ public class SpotCheckAllBean {
             this.EXECENDTIME = EXECENDTIME;
         }
 
-        public String getRECID() {
-            return RECID;
+        public String getEXECID() {
+            return EXECID;
         }
 
-        public void setRECID(String RECID) {
-            this.RECID = RECID;
+        public void setEXECID(String EXECID) {
+            this.EXECID = EXECID;
         }
 
         public String getPARTNAME() {

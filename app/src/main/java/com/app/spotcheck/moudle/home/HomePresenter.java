@@ -6,6 +6,7 @@ import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
+import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
 
@@ -45,11 +46,11 @@ public class HomePresenter extends BasePresenter<HomeView> {
     public void scanCheck(String qrcode){
         Map<String,String> map = new HashMap<>();
         map.put("qrcode",qrcode);
-        NetManager.getInstance().api().getUnCheckItemList(convertMapToBody(map))
-                .enqueue(new BaseCallback<HomeScanBean>() {
+        NetManager.getInstance().api().getUnCheckPlanList(convertMapToBody(map))
+                .enqueue(new BaseCallback<SpotCheckAllBean>() {
                     @Override
-                    protected void onSuccess(HomeScanBean bean) {
-                        mView.showScanSuccess(bean);
+                    protected void onSuccess(SpotCheckAllBean bean) {
+                        mView.showScanSuccess(bean,qrcode);
                     }
 
                     @Override

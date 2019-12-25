@@ -5,6 +5,7 @@ import com.app.spotcheck.moudle.bean.CheckExceptionBean;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.LoginBean;
+import com.app.spotcheck.moudle.bean.PatralCheckBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.bean.MineBean;
@@ -46,28 +47,32 @@ public interface NetService {
     Call<BaseCallModel<SpotCheckAllBean>> getCheckedPlanList(@Body RequestBody body);
 
     //点检扫描结果
-    @POST("check/getUnCheckPlanList")
-    Call<BaseCallModel<HomeScanBean>> getUnCheckItemList(@Body RequestBody body);
+    @POST("check/getUnCheckItemList")
+    Call<BaseCallModel<ScanCheckBean>> getUnCheckItemList(@Body RequestBody body);
 
     //巡检扫描结果
     @POST("repair/gotoAddRepair")
-    Call<BaseCallModel<ScanCheckBean>> gotoAddRepair(@Body RequestBody body);
+    Call<BaseCallModel<PatralCheckBean>> gotoAddRepair(@Body RequestBody body);
 
     //点检扫描保存
-    @FormUrlEncoded
     @POST("check/saveAllItem")
-    Call<LoginBean> saveAllItem(@Field("execid")String execid,@Field("execman")String execman,@Field("recidList") List<String> recidList);
+    Call<BaseCallModel> saveAllItem(@Body RequestBody body);
 
 
     //点检异常
-    @FormUrlEncoded
     @POST("check/getUnCheckItemInfo")
-    Call<BaseCallModel<CheckExceptionBean>> getUnCheckItemInfo(@Field("id")int id);
+    Call<BaseCallModel<CheckExceptionBean>> getUnCheckItemInfo(@Body RequestBody body);
 
     //点检异常保存
     @Multipart
     @POST("check/saveCheckItem")
-    Call<LoginBean> saveCheckItem(@PartMap Map<String, RequestBody> params, @Part() List<MultipartBody.Part> parts);
+    Call<BaseCallModel> saveCheckItem(@PartMap Map<String, RequestBody> params, @Part() List<MultipartBody.Part> parts);
+
+    //巡检异常保存
+    @Multipart
+    @POST("repair/addRepairSave")
+    Call<BaseCallModel> addRepairSave(@PartMap Map<String, RequestBody> params, @Part() List<MultipartBody.Part> parts);
+
 
     //个人工作信息
     @POST("person/getInfo")

@@ -1,5 +1,6 @@
 package com.app.spotcheck.moudle.patralcheck;
 
+import com.app.spotcheck.moudle.bean.PatralCheckBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 
 /**
@@ -10,7 +11,9 @@ import com.app.spotcheck.moudle.bean.ScanCheckBean;
  */
 public interface PatralCheckView {
 
-    void showSuccess(ScanCheckBean bean);
+    void showSuccess(PatralCheckBean bean);
 
     void showError(String error);
+
+    void save(String result_message);
 }

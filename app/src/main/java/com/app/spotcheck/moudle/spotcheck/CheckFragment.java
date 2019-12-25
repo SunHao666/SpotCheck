@@ -1,6 +1,8 @@
 package com.app.spotcheck.moudle.spotcheck;
 
 import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,9 @@ import com.app.spotcheck.base.utils.MultiItemCommonAdapter;
 import com.app.spotcheck.base.utils.MultiItemTypeSupport;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
+import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
+import com.app.spotcheck.moudle.scancheck.checkexception.CheckExceptionActivity;
+import com.app.spotcheck.network.Contant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +64,16 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     protected void initView() {
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MCheckAdapter(getActivity(),datas,tab);
+        adapter.setOnCheckItemClickListener(new MCheckAdapter.OnCheckItemClickListener() {
+            @Override
+            public void onClick(int position, int tab) {
+                if(tab == 1){
+                    Intent intent = new Intent(getActivity(), ScanCheckActivity.class);
+                    intent.putExtra("EXECID",datas.get(position).getEXECID());
+                    startActivity(intent);
+                }
+            }
+        });
         recyclerview.setAdapter(adapter);
     }
 
@@ -88,13 +103,22 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initRequest();
+    }
+
     private void initRequest() {
+        if(TextUtils.isEmpty(Contant.CHECKQRCODE) && TextUtils.isEmpty(Contant.CHECKSEARCH)){
+            return;
+        }
         if(tab == 0){
-            mPresenter.getCheckPlanList("E002M05P0001","");
+            mPresenter.getCheckPlanList(Contant.CHECKQRCODE,Contant.CHECKSEARCH);
         }else if(tab == 1){
-            mPresenter.getUnCheckPlanList("","");
+            mPresenter.getUnCheckPlanList(Contant.CHECKQRCODE,Contant.CHECKSEARCH);
         }else if(tab == 2){
-            mPresenter.getCheckedPlanList("","");
+            mPresenter.getCheckedPlanList(Contant.CHECKQRCODE,Contant.CHECKSEARCH);
         }
     }
 

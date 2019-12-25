@@ -11,7 +11,7 @@ import com.app.spotcheck.moudle.bean.ScanCheckBean;
  */
 public interface ScanCheckView {
 
-    void showSuccess(HomeScanBean bean);
+    void showSuccess(ScanCheckBean bean);
 
     void showError(String error);
 

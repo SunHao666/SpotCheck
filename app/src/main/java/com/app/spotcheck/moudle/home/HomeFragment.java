@@ -13,9 +13,11 @@ import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
+import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.patralcheck.PatralCheckActivity;
 import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
 import com.app.spotcheck.moudle.scanlub.ScanLubActivity;
+import com.app.spotcheck.network.Contant;
 import com.king.zxing.CaptureActivity;
 
 import java.util.List;
@@ -97,13 +99,14 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     }
 
     @Override
-    public void showScanSuccess(HomeScanBean bean) {
-        List<HomeScanBean.SearchListBean> searchList = bean.getSearchList();
+    public void showScanSuccess(SpotCheckAllBean bean, String qrcode) {
+        List<SpotCheckAllBean.SearchListBean> searchList = bean.getSearchList();
         if(searchList == null || searchList.size() == 0){
             ToastWrapper.show("暂无待检项目");
         }else{
             //跳转至点检待检
             onCheckScanClick.onClick(1);
+            Contant.CHECKQRCODE  = qrcode;
         }
     }
 
@@ -111,10 +114,14 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_home_check:
-                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1001);
+//                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1001);
+                mPresenter.scanCheck(Contant.CHECKQRCODE);
                 break;
             case R.id.iv_home_setpro:
-                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1002);
+//                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1002);
+                Intent intent = new Intent(getActivity(), PatralCheckActivity.class);
+                intent.putExtra("execid","E002M05P0002");
+                startActivity(intent);
                 break;
             case R.id.iv_home_lub:
                 startActivity(new Intent(getActivity(), ScanLubActivity.class));
@@ -130,7 +137,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
             mPresenter.scanCheck(qrcode);
         }else if(requestCode == 1002){
             Intent intent = new Intent(getActivity(), PatralCheckActivity.class);
-            intent.putExtra("execid","");
+            intent.putExtra("execid","E002M05P0001");
             startActivity(intent);
         }
     }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.moudle.bean.CheckExceptionBean;
+import com.app.spotcheck.moudle.bean.PROBLEMKINDBean;
 
 import java.util.List;
 
@@ -26,9 +27,9 @@ import butterknife.ButterKnife;
 public class ProTypeAdapter extends RecyclerView.Adapter<ProTypeAdapter.ViewHolder> {
 
     Context context;
-    List<CheckExceptionBean.PROBLEMKINDBean> data;
+    List<PROBLEMKINDBean> data;
 
-    public ProTypeAdapter(Context context, List<CheckExceptionBean.PROBLEMKINDBean> data) {
+    public ProTypeAdapter(Context context, List<PROBLEMKINDBean> data) {
         this.context = context;
         this.data = data;
     }

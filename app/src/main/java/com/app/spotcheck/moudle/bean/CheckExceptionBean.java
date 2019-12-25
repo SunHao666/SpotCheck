@@ -23,6 +23,25 @@ public class CheckExceptionBean {
     private String PARTNAME;
     private int ID;
     private String ITEMNAME;
+    private String PARTID;
+    private String MAINID;
+
+    public String getPARTID() {
+        return PARTID;
+    }
+
+    public void setPARTID(String PARTID) {
+        this.PARTID = PARTID;
+    }
+
+    public String getMAINID() {
+        return MAINID;
+    }
+
+    public void setMAINID(String MAINID) {
+        this.MAINID = MAINID;
+    }
+
     private List<PROBLEMKINDBean> PROBLEMKIND;
 
     public String getMAINNAME() {
@@ -89,29 +108,4 @@ public class CheckExceptionBean {
         this.PROBLEMKIND = PROBLEMKIND;
     }
 
-    public static class PROBLEMKINDBean {
-        /**
-         * value : 1
-         * name : A类
-         */
-
-        private String value;
-        private String name;
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
 }

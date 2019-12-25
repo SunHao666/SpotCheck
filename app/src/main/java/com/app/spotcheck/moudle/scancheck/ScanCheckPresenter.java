@@ -4,6 +4,7 @@ import com.app.spotcheck.base.BasePresenter;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.LoginBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
+import com.app.spotcheck.network.BaseCallModel;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Field;
 
 /**
  * @ClassName: ScanCheckPresenter
@@ -26,11 +28,11 @@ public class ScanCheckPresenter extends BasePresenter<ScanCheckView> {
 
     public void fetch(String execid){
         Map<String,String> map = new HashMap<>();
-        map.put("qrcode",execid);
+        map.put("execid",execid);
         NetManager.getInstance().api().getUnCheckItemList(convertMapToBody(map))
-                .enqueue(new BaseCallback<HomeScanBean>() {
+                .enqueue(new BaseCallback<ScanCheckBean>() {
                     @Override
-                    protected void onSuccess(HomeScanBean bean) {
+                    protected void onSuccess(ScanCheckBean bean) {
                         mView.showSuccess(bean);
                     }
 
@@ -41,22 +43,27 @@ public class ScanCheckPresenter extends BasePresenter<ScanCheckView> {
                 });
     }
 
-    public void saveCheckReult(String execid, String execman, List<String> recidList) {
+    public void saveCheckReult(String execid, String execman, List<Integer> recidList) {
+//        @Field("execid")String execid,@Field("execman")String execman,@Field("recidList") List<Integer> recidList
 
-        NetManager.getInstance().api().saveAllItem(execid,execman,recidList)
-                .enqueue(new Callback<LoginBean>() {
+        Map<String,Object> map = new HashMap<>();
+        map.put("execid",execid);
+        map.put("execman",execman);
+        map.put("recidList",recidList);
+        NetManager.getInstance().api().saveAllItem(convertMapToBody(map))
+                .enqueue(new Callback<BaseCallModel>() {
                     @Override
-                    public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
-                        LoginBean body = response.body();
-//                        if(body.result_code == 200){
-//                            mView.save(body.getResult_message());
-//                        }else{
-//                            mView.showError(body.getResult_message());
-//                        }
+                    public void onResponse(Call<BaseCallModel> call, Response<BaseCallModel> response) {
+                        BaseCallModel body = response.body();
+                        if(body.result_code == 401){
+                            mView.save(body.getResult_message());
+                        }else{
+                            mView.showError(body.getResult_message());
+                        }
                     }
 
                     @Override
-                    public void onFailure(Call<LoginBean> call, Throwable t) {
+                    public void onFailure(Call<BaseCallModel> call, Throwable t) {
                         mView.save("success");
 //                        mView.showError(t.getMessage());
                     }

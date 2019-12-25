@@ -75,7 +75,6 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
                     mSpotCheckFragment = SpotCheckFragment.newInstance();
                 mSpotCheckFragment.setTab(1);
                 bottomnavigationview.setSelectedItemId(R.id.tab_two);
-                EventBus.getDefault().post(new SpotCheckEvent(1));
             }
         });
     }
