@@ -1,9 +1,13 @@
 package com.app.spotcheck.moudle.lubrication;
 
 import com.app.spotcheck.base.BasePresenter;
+import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ClassName: HomePresenter
@@ -27,21 +31,28 @@ public class LubPresenter extends BasePresenter<LubView> {
 //                });
     }
 
-    public void getUnCheckPlanList(String mainid,String mainname){
-//        NetManager.getInstance().api().getUnCheckPlanList(mainid,mainname)
-//                .enqueue(new BaseCallback<SpotCheckAllBean>() {
-//                    @Override
-//                    protected void onSuccess(SpotCheckAllBean bean) {
-//                    }
-//
-//                    @Override
-//                    protected void onFailed(int code, String msg) {
-//                    }
-//                });
+    public void getLubPlanList(String qrcode,String mainname,int execstatus){
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("qrcode",qrcode);
+        map.put("mainname",mainname);
+        map.put("execstatus",execstatus);//0：未完成；1：完成
+        NetManager.getInstance().api().getLubPlanList(convertMapToBody(map))
+                .enqueue(new BaseCallback<LubAllBean>() {
+                    @Override
+                    protected void onSuccess(LubAllBean bean) {
+                        mView.showSuccess(bean);
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        mView.showError(msg);
+                    }
+                });
     }
 
 
-    public void getCheckedPlanList(String mainid,String mainname){
+    public void getLubedPlanList(String mainid,String mainname){
 //        NetManager.getInstance().api().getCheckedPlanList(mainid,mainname)
 //                .enqueue(new BaseCallback<SpotCheckAllBean>() {
 //                    @Override

@@ -1,6 +1,7 @@
 package com.app.spotcheck.moudle.lubrication;
 
 import com.app.spotcheck.moudle.bean.HomeBean;
+import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.LubBean;
 
 /**
@@ -11,7 +12,7 @@ import com.app.spotcheck.moudle.bean.LubBean;
  */
 public interface LubView {
 
-    void showSuccess(LubBean bean);
+    void showSuccess(LubAllBean bean);
 
     void showError(String error);
 }

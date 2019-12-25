@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.spotcheck.R;
+import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.LubBean;
 
 import java.util.List;
@@ -27,10 +28,10 @@ import butterknife.ButterKnife;
 public class MLubAdapter extends RecyclerView.Adapter<MLubAdapter.ViewHolder> {
 
     private Context context;
-    private List<LubBean.LubSearchListBean> datas;
+    private List<LubAllBean.SearchListBean> datas;
     private int tab;
 
-    public MLubAdapter(Context context, List<LubBean.LubSearchListBean> datas, int tab) {
+    public MLubAdapter(Context context, List<LubAllBean.SearchListBean> datas, int tab) {
         this.context = context;
         this.datas = datas;
         this.tab = tab;

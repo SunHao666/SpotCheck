@@ -77,6 +77,16 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
                 bottomnavigationview.setSelectedItemId(R.id.tab_two);
             }
         });
+
+        mHomeFragment.setOnLubScanClick(new HomeFragment.OnLubScanClick() {
+            @Override
+            public void onClick(int position) {
+                if (mLubricationFragment == null)
+                    mLubricationFragment = LubricationFragment.newInstance();
+                mLubricationFragment.setTab(1);
+                bottomnavigationview.setSelectedItemId(R.id.tab_three);
+            }
+        });
     }
 
 

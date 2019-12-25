@@ -115,7 +115,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
         switch (view.getId()) {
             case R.id.iv_home_check:
 //                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1001);
-                mPresenter.scanCheck(Contant.CHECKQRCODE);
+//                mPresenter.scanCheck(Contant.CHECKQRCODE);
+                onCheckScanClick.onClick(1);
+                Contant.CHECKQRCODE  = "E002M05P0002";
                 break;
             case R.id.iv_home_setpro:
 //                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1002);
@@ -124,6 +126,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
                 startActivity(intent);
                 break;
             case R.id.iv_home_lub:
+                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1003);
                 startActivity(new Intent(getActivity(), ScanLubActivity.class));
                 break;
         }
@@ -133,12 +136,15 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1001){
-            String qrcode = "E002M05P0001";
-            mPresenter.scanCheck(qrcode);
+            onCheckScanClick.onClick(1);
+            Contant.CHECKQRCODE  = "E002M05P0002";
         }else if(requestCode == 1002){
             Intent intent = new Intent(getActivity(), PatralCheckActivity.class);
             intent.putExtra("execid","E002M05P0001");
             startActivity(intent);
+        }else if(requestCode == 1003){
+            onLubScanClick.onClick(1);
+            Contant.LUBQRCODE = "E002M05P0002";
         }
     }
 
@@ -148,6 +154,15 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
         this.onCheckScanClick = onCheckScanClick;
     }
     public interface OnCheckScanClick{
+        public void onClick(int position);
+    }
+
+    private OnLubScanClick onLubScanClick;
+
+    public void setOnLubScanClick(OnLubScanClick onLubScanClick) {
+        this.onLubScanClick = onLubScanClick;
+    }
+    public interface OnLubScanClick{
         public void onClick(int position);
     }
 }

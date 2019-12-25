@@ -5,4 +5,6 @@ public class Contant {
     public static String LOGTIME = "";
     public static String CHECKQRCODE = "E002M05P0002";
     public static String CHECKSEARCH ="";
+    public static String LUBQRCODE = "E002M05P0002";
+    public static String LUBSEARCH ="";
 }

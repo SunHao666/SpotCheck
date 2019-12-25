@@ -6,11 +6,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
 import com.app.spotcheck.base.utils.LogUtils;
+import com.app.spotcheck.base.wrapper.ToastWrapper;
+import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.LubBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.spotcheck.MCheckAdapter;
 import com.app.spotcheck.moudle.spotcheck.SpotCheckPresenter;
 import com.app.spotcheck.moudle.spotcheck.SpotCheckView;
+import com.app.spotcheck.network.Contant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +32,7 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     private int tab = 0;
-    List<LubBean.LubSearchListBean> datas = new ArrayList<>();
+    List<LubAllBean.SearchListBean> datas = new ArrayList<>();
     private MLubAdapter adapter;
 
     public LubFragment(int tab) {
@@ -60,13 +63,17 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
 
 
     @Override
-    public void showSuccess(LubBean bean) {
-
+    public void showSuccess(LubAllBean bean) {
+        datas.clear();
+        adapter.notifyDataSetChanged();
+        LogUtils.error("bean size = "+bean.getSearchList().size());
+        datas.addAll(bean.getSearchList());
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void showError(String error) {
-
+        ToastWrapper.show(error);
     }
 
     @Override
@@ -85,9 +92,9 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
         if(tab == 0){
             mPresenter.getCheckPlanList("","");
         }else if(tab == 1){
-            mPresenter.getUnCheckPlanList("","");
+            mPresenter.getLubPlanList(Contant.LUBQRCODE,Contant.CHECKSEARCH,0);
         }else if(tab == 2){
-            mPresenter.getCheckedPlanList("","");
+            mPresenter.getLubedPlanList("","");
         }
     }
 

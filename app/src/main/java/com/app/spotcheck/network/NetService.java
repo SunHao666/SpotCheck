@@ -5,6 +5,7 @@ import com.app.spotcheck.moudle.bean.CheckExceptionBean;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.LoginBean;
+import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
@@ -58,6 +59,10 @@ public interface NetService {
     @POST("check/saveAllItem")
     Call<BaseCallModel> saveAllItem(@Body RequestBody body);
 
+
+    //润滑列表
+    @POST("lub/getLubList")
+    Call<BaseCallModel<LubAllBean>> getLubPlanList(@Body RequestBody body);
 
     //点检异常
     @POST("check/getUnCheckItemInfo")

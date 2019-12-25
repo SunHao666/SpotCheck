@@ -37,8 +37,9 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
     ViewPager viewPager;
     public String[] tabNames = {"全部润滑工作", "待润滑", "已完成"};
     public List<Fragment> fragments = new ArrayList<>();
-    private MViewPagerAdapter adapter;
-
+    private ViewPagerLubAdapter adapter;
+    private int tab = 0;
+    private boolean isParer = false;
     public static LubricationFragment newInstance() {
         return new LubricationFragment();
     }
@@ -68,9 +69,11 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
             fragments.add(new LubFragment(i));
         }
         tablayout.addOnTabSelectedListener(this);
-        adapter = new MViewPagerAdapter(getActivity().getSupportFragmentManager(),getActivity(),fragments,tabNames);
+        adapter = new ViewPagerLubAdapter(getActivity().getSupportFragmentManager(),getActivity(),fragments,tabNames);
         viewPager.setAdapter(adapter);
         tablayout.setupWithViewPager(viewPager);
+        viewPager.setCurrentItem(tab);
+        isParer = true;
     }
     @Override
     public void showSuccess(LubBean bean) {
@@ -105,5 +108,13 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    public void setTab(int tab) {
+        this.tab = tab;
+        //第n次进点检列表页
+        if(isParer){
+            viewPager.setCurrentItem(tab);
+        }
     }
 }
