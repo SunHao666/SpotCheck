@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  * @Author: 作者名
  * @CreateDate: 2019/12/19 20:53
  */
-public class MViewPagerAdapter extends FragmentPagerAdapter {
+public class MViewPagerAdapter extends FragmentStatePagerAdapter {
     private  List<Fragment> fragments;
     private String[] tabNames;
     private Context context;

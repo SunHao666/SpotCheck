@@ -4,10 +4,12 @@ package com.app.spotcheck.network;
 import com.app.spotcheck.moudle.bean.CheckExceptionBean;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
+import com.app.spotcheck.moudle.bean.KeyWordsBean;
 import com.app.spotcheck.moudle.bean.LoginBean;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
+import com.app.spotcheck.moudle.bean.ScanLubBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.bean.MineBean;
 
@@ -64,6 +66,13 @@ public interface NetService {
     @POST("lub/getLubList")
     Call<BaseCallModel<LubAllBean>> getLubPlanList(@Body RequestBody body);
 
+    //润滑详细
+    @POST("lub/getLubricationInfo")
+    Call<BaseCallModel<ScanLubBean>> getLubricationInfo(@Body RequestBody body);
+
+    //润滑详细保存
+    @POST("lub/saveLubrication")
+    Call<BaseCallModel> saveLubrication(@Body RequestBody body);
     //点检异常
     @POST("check/getUnCheckItemInfo")
     Call<BaseCallModel<CheckExceptionBean>> getUnCheckItemInfo(@Body RequestBody body);
@@ -83,4 +92,8 @@ public interface NetService {
     @POST("person/getInfo")
     Call<BaseCallModel<MineBean>> getInfo(@Body RequestBody body);
 
+    //查询关键字
+
+    @POST("keywords/getInfo")
+    Call<BaseCallModel<KeyWordsBean>> getKeyWordInfo(@Body RequestBody body);
 }

@@ -29,4 +29,14 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
     protected void initView() {
 
     }
+
+    @Override
+    public void showSuccess() {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
 }

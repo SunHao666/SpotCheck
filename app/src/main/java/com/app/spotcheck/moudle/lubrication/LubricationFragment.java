@@ -11,6 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
+import com.app.spotcheck.base.view.ScrollableViewPager;
+import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.LubBean;
 import com.app.spotcheck.moudle.spotcheck.CheckFragment;
 import com.app.spotcheck.moudle.spotcheck.MViewPagerAdapter;
@@ -34,7 +36,7 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
     @BindView(R.id.lay_search)
     LinearLayout laySearch;
     @BindView(R.id.viewPager)
-    ViewPager viewPager;
+    ScrollableViewPager viewPager;
     public String[] tabNames = {"全部润滑工作", "待润滑", "已完成"};
     public List<Fragment> fragments = new ArrayList<>();
     private ViewPagerLubAdapter adapter;
@@ -71,12 +73,13 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
         tablayout.addOnTabSelectedListener(this);
         adapter = new ViewPagerLubAdapter(getActivity().getSupportFragmentManager(),getActivity(),fragments,tabNames);
         viewPager.setAdapter(adapter);
+        viewPager.setScanScroll(false);
         tablayout.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(tab);
         isParer = true;
     }
     @Override
-    public void showSuccess(LubBean bean) {
+    public void showSuccess(LubAllBean bean) {
 
     }
 

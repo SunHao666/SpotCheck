@@ -35,6 +35,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
             throw new RuntimeException("mPresenter no init");
         }
         mPresenter.attachView(this);
+        initData();
         return view;
     }
 
@@ -46,7 +47,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     public final void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
-        initData();
+
     }
 
     @Override

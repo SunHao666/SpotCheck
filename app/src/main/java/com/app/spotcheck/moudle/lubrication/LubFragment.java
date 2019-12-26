@@ -1,5 +1,7 @@
 package com.app.spotcheck.moudle.lubrication;
 
+import android.text.TextUtils;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,8 +67,7 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
     @Override
     public void showSuccess(LubAllBean bean) {
         datas.clear();
-        adapter.notifyDataSetChanged();
-        LogUtils.error("bean size = "+bean.getSearchList().size());
+        LogUtils.error("lub bean size = "+bean.getSearchList().size());
         datas.addAll(bean.getSearchList());
         adapter.notifyDataSetChanged();
     }
@@ -89,12 +90,16 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
     }
 
     private void initRequest() {
+        LogUtils.error("tab="+tab+",LUBQRCODE="+Contant.LUBQRCODE);
+        if(TextUtils.isEmpty(Contant.LUBQRCODE) && TextUtils.isEmpty(Contant.LUBSEARCH)){
+            return;
+        }
         if(tab == 0){
-            mPresenter.getCheckPlanList("","");
+            mPresenter.getLubPlanList(Contant.LUBQRCODE,Contant.CHECKSEARCH,"");
         }else if(tab == 1){
-            mPresenter.getLubPlanList(Contant.LUBQRCODE,Contant.CHECKSEARCH,0);
+            mPresenter.getLubPlanList(Contant.LUBQRCODE,Contant.CHECKSEARCH,"0");
         }else if(tab == 2){
-            mPresenter.getLubedPlanList("","");
+            mPresenter.getLubPlanList(Contant.LUBQRCODE,Contant.CHECKSEARCH,"1");
         }
     }
 

@@ -1,6 +1,7 @@
 package com.app.spotcheck.moudle.spotcheck;
 
 import com.app.spotcheck.base.BasePresenter;
+import com.app.spotcheck.moudle.bean.KeyWordsBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
@@ -71,5 +72,25 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
                         mView.showError(msg);
                     }
                 });
+    }
+
+    public void getCheckSearch(String usekind, String userid) {
+        Map<String,String> map = new HashMap<>();
+        map.put("usekind",usekind);
+        map.put("userid",userid);
+        NetManager.getInstance().api().getKeyWordInfo(convertMapToBody(map))
+                .enqueue(new BaseCallback<KeyWordsBean>() {
+                    @Override
+                    protected void onSuccess(KeyWordsBean keyWordsBean) {
+                        mView.showSearchSuccess(keyWordsBean);
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        mView.showError(msg);
+                    }
+                });
+
+
     }
 }

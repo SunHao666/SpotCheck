@@ -35,9 +35,9 @@ public class LubAllBean {
         private Object EXECSTARTTIME;
         private Object EXECENDTIME;
         private String EXECSTATUS;
-        private String RECID;
+        private String LRECNO;
         private String PARTNAME;
-        private Object FINISHTIME;
+        private String FINISHTIME;
         private String MAINID;
 
         public String getPARTID() {
@@ -88,12 +88,12 @@ public class LubAllBean {
             this.EXECSTATUS = EXECSTATUS;
         }
 
-        public String getRECID() {
-            return RECID;
+        public String getLRECNO() {
+            return LRECNO;
         }
 
-        public void setRECID(String RECID) {
-            this.RECID = RECID;
+        public void setLRECNO(String LRECNO) {
+            this.LRECNO = LRECNO;
         }
 
         public String getPARTNAME() {
@@ -104,11 +104,11 @@ public class LubAllBean {
             this.PARTNAME = PARTNAME;
         }
 
-        public Object getFINISHTIME() {
+        public String getFINISHTIME() {
             return FINISHTIME;
         }
 
-        public void setFINISHTIME(Object FINISHTIME) {
+        public void setFINISHTIME(String FINISHTIME) {
             this.FINISHTIME = FINISHTIME;
         }
 

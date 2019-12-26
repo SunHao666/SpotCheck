@@ -31,6 +31,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
 
     @Override
     protected void initData() {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
         mPresenter.fetch(loginname);
     }
@@ -53,9 +59,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
     @Override
     public void showSuccess(MineBean bean) {
         String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
-        String logtime = SPUtils.getInstance(getActivity()).getString("logtime");
+        long logtime = SPUtils.getInstance(getActivity()).getLong("logtime");
         tvName.setText(loginname);
-        tvLoginTime.setText(logtime);
+        tvLoginTime.setText(logtime+"");
         initCheckList(bean);
         initLubList(bean);
     }
@@ -77,5 +83,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
     @Override
     public void showError(String error) {
         ToastWrapper.show(error);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
+            mPresenter.fetch(loginname);
+        }
     }
 }

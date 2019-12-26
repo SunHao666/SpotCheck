@@ -47,7 +47,19 @@ public class MLubAdapter extends RecyclerView.Adapter<MLubAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tvTitle.setText(datas.get(position).getPARTNAME());
-        //...
+        holder.tvPlanTime.setText(datas.get(position).getPLANTIME());
+        holder.tvLubPlace.setText(datas.get(position).getPARTNAME());
+        holder.tvLubTime.setText(datas.get(position).getFINISHTIME());
+        //待润滑
+        if(datas.get(position).getEXECSTATUS().equals("0")){
+            holder.layCheckPlan.setVisibility(View.GONE);
+            holder.tvWaitLub.setVisibility(View.VISIBLE);
+            holder.tvOver.setVisibility(View.GONE);
+        }else if(datas.get(position).getEXECSTATUS().equals("1")){
+            holder.layCheckPlan.setVisibility(View.VISIBLE);
+            holder.tvWaitLub.setVisibility(View.GONE);
+            holder.tvOver.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

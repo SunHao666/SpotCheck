@@ -1,6 +1,7 @@
 package com.app.spotcheck.moudle.spotcheck;
 
 import com.app.spotcheck.base.BaseView;
+import com.app.spotcheck.moudle.bean.KeyWordsBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 
 /**
@@ -14,4 +15,6 @@ public interface SpotCheckView extends BaseView {
     void showSuccess(SpotCheckAllBean bean);
 
     void showError(String error);
+
+    void showSearchSuccess(KeyWordsBean bean);
 }

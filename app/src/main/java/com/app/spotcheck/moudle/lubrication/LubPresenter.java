@@ -31,7 +31,7 @@ public class LubPresenter extends BasePresenter<LubView> {
 //                });
     }
 
-    public void getLubPlanList(String qrcode,String mainname,int execstatus){
+    public void getLubPlanList(String qrcode,String mainname,String execstatus){
 
         Map<String,Object> map = new HashMap<>();
         map.put("qrcode",qrcode);

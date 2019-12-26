@@ -63,7 +63,7 @@
         app:tabIndicatorColor="#5099F8"
         app:tabIndicatorGravity="bottom"
         app:tabIndicatorFullWidth="false"/>
-    <androidx.viewpager.widget.ViewPager
+    <com.app.spotcheck.base.view.ScrollableViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

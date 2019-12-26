@@ -57,10 +57,24 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
 
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            mPresenter.fetch();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.fetch();
+    }
+
+    @Override
     protected void initData() {
         long logtime = SPUtils.getInstance(getActivity()).getLong("logtime");
         LogUtils.error("logtime"+logtime);
-        mPresenter.fetch();
+//        mPresenter.fetch();
     }
 
     @Override
@@ -116,8 +130,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
             case R.id.iv_home_check:
 //                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1001);
 //                mPresenter.scanCheck(Contant.CHECKQRCODE);
-                onCheckScanClick.onClick(1);
                 Contant.CHECKQRCODE  = "E002M05P0002";
+                onCheckScanClick.onClick(1);
                 break;
             case R.id.iv_home_setpro:
 //                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1002);
@@ -126,8 +140,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
                 startActivity(intent);
                 break;
             case R.id.iv_home_lub:
-                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1003);
-                startActivity(new Intent(getActivity(), ScanLubActivity.class));
+                Contant.LUBQRCODE = "E001M01L0001";
+                onLubScanClick.onClick(1);
+//                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1003);
+//                startActivity(new Intent(getActivity(), ScanLubActivity.class));
                 break;
         }
     }

@@ -81,6 +81,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void showResult(String success,LoginBean bean) {
         SPUtils.getInstance(this).put("logtime",bean.getLogtime());
         SPUtils.getInstance(this).put("Loginname",bean.getLoginname());
+        SPUtils.getInstance(this).put("Loginid",bean.getLoginid());
         disLoding();
         ToastWrapper.show(success);
         MainActivity.show(LoginActivity.this,MainActivity.class);

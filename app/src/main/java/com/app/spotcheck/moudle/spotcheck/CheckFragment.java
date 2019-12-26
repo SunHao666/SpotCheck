@@ -16,6 +16,7 @@ import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.utils.MultiItemCommonAdapter;
 import com.app.spotcheck.base.utils.MultiItemTypeSupport;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
+import com.app.spotcheck.moudle.bean.KeyWordsBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
 import com.app.spotcheck.moudle.scancheck.checkexception.CheckExceptionActivity;
@@ -39,15 +40,19 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     RecyclerView recyclerview;
     private int tab = 0;
     List<SpotCheckAllBean.SearchListBean> datas = new ArrayList<>();
+    boolean isVisibleToUser = false;
     private MCheckAdapter adapter;
 
     public CheckFragment(int tab) {
         this.tab = tab;
     }
 
+
+
     @Override
     protected void initData() {
-
+        LogUtils.error("tab="+tab+",initData");
+//        initRequest();
     }
 
     @Override
@@ -92,8 +97,14 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     }
 
     @Override
+    public void showSearchSuccess(KeyWordsBean bean) {
+
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        LogUtils.error("tab="+tab+",是否显示："+isVisibleToUser);
         if(isVisibleToUser){
             if(mPresenter == null){
                 mPresenter = new SpotCheckPresenter();
@@ -106,10 +117,12 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     @Override
     public void onResume() {
         super.onResume();
-        initRequest();
+        LogUtils.error("tab="+tab+",onResume：");
+//        initRequest();
     }
 
     private void initRequest() {
+        LogUtils.error("tab="+tab+",CHECKQRCODE="+Contant.CHECKQRCODE);
         if(TextUtils.isEmpty(Contant.CHECKQRCODE) && TextUtils.isEmpty(Contant.CHECKSEARCH)){
             return;
         }
