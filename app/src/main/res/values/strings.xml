@@ -28,4 +28,7 @@
     <string name="item_lub_place">润滑部位</string>
     <string name="item_lub_time">润滑时间</string>
     <string name="scan_check">设备点检项目</string>
+    <string name="home_nolub">未完成的润滑部位</string>
+    <string name="home_lub_plan">最近需进行润滑的计划</string>
+    <string name="home_lub_place">润滑部位:</string>
 </resources>

@@ -39,13 +39,14 @@ public class ScanLubPresenter extends BasePresenter<ScanLubView> {
 
     }
 
-    public void save(String lrecno, String workhours, String stophours, String loginname) {
+    public void save(String lrecno, String workhours, String stophours, String remark,String loginname) {
 
         Map<String,String> map = new HashMap<>();
         map.put("lrecno",lrecno);
         map.put("workhours",lrecno);
         map.put("stophours",stophours);
         map.put("execman",loginname);
+        map.put("remark",remark);
         NetManager.getInstance().api().saveLubrication(convertMapToBody(map))
                 .enqueue(new Callback<BaseCallModel>() {
                     @Override

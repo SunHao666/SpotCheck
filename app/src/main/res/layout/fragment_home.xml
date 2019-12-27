@@ -199,7 +199,10 @@
                         android:layout_marginLeft="@dimen/dp_8"
                         android:layout_marginRight="@dimen/dp_15"
                         android:background="@drawable/home_shape_spot"
-                        android:padding="@dimen/dp_5"
+                        android:paddingRight="@dimen/dp_10"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5"
                         android:textColor="#EFF1F4"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
@@ -325,7 +328,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/home_nocheck"
+                        android:text="@string/home_nolub"
                         android:textColor="#1F1F1F"
                         android:textSize="@dimen/sp_14" />
 
@@ -337,7 +340,10 @@
                         android:layout_marginLeft="@dimen/dp_8"
                         android:layout_marginRight="@dimen/dp_15"
                         android:background="@drawable/home_shape_spot"
-                        android:padding="@dimen/dp_5"
+                        android:paddingRight="@dimen/dp_10"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5"
                         android:textColor="#EFF1F4"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
@@ -356,7 +362,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/home_check_plan"
+                        android:text="@string/home_lub_plan"
                         android:textColor="#9E9E9E"
                         android:textSize="@dimen/sp_12" />
 
@@ -410,7 +416,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/home_check_place"
+                        android:text="@string/home_lub_place"
                         android:textColor="#515151"
                         android:textSize="@dimen/sp_14" />
 

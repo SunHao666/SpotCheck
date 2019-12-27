@@ -64,63 +64,73 @@
 
             </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
-            android:id="@+id/lay_space"
+            android:id="@+id/lay_part"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_below="@id/lay_check"
-            android:layout_marginTop="@dimen/dp_10"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp_13"
-            android:paddingRight="@dimen/dp_13">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/item_lub_place"
-                android:textColor="#515151"
-                android:textSize="@dimen/sp_14" />
-
-            <TextView
-                android:id="@+id/tv_lub_place"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#1F1F1F"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lay_check_plan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lay_space"
-            android:orientation="horizontal"
             android:paddingLeft="@dimen/dp_13"
             android:paddingRight="@dimen/dp_13"
-            android:paddingBottom="@dimen/dp_16">
+            android:paddingBottom="@dimen/dp_16"
+            android:paddingTop="@dimen/dp_10"
+            >
+            <LinearLayout
+                android:id="@+id/lay_space"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_lub_place"
+                    android:textColor="#515151"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_lub_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:textColor="#1F1F1F"
+                    android:textSize="@dimen/sp_16" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lay_check_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/item_lub_time"
-                android:textColor="#515151"
-                android:textSize="@dimen/sp_14" />
+                android:orientation="horizontal"
+                >
 
-            <TextView
-                android:id="@+id/tv_lub_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#1F1F1F"
-                android:textSize="@dimen/sp_16" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_lub_time"
+                    android:textColor="#515151"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_lub_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:textColor="#1F1F1F"
+                    android:textSize="@dimen/sp_16" />
+            </LinearLayout>
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/lay_check_plan"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_10"
+            android:layout_alignTop="@id/lay_part"
+            android:layout_alignBottom="@id/lay_part"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView

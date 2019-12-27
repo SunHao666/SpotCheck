@@ -48,7 +48,7 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
     private ScanCheckAdapter adapter;
     private String execid;
     private List<Integer> execids = new ArrayList<>();
-
+    ScanCheckBean bean;
     @Override
     protected void initData() {
         execid = getIntent().getStringExtra("EXECID");
@@ -102,6 +102,7 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
 
     @Override
     public void showSuccess(ScanCheckBean bean) {
+        this.bean = bean;
         beans.clear();
         adapter.notifyDataSetChanged();
         tvSetName.setText(bean.getMAINNAME());
@@ -123,7 +124,11 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
 
     @Override
     public void save(String msg) {
-        startActivity(new Intent(this, ScanCheckResultActivity.class));
+        Intent intent = new Intent(this, ScanCheckResultActivity.class);
+        intent.putExtra("from","00");
+        intent.putExtra("setName",bean.getMAINNAME());
+        intent.putExtra("setPlace",bean.getPARTNAME());
+        startActivity(intent);
         finish();
     }
 }

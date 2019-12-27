@@ -1,5 +1,6 @@
 package com.app.spotcheck.moudle.mine;
 
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +12,8 @@ import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.MineBean;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,14 +34,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
 
     @Override
     protected void initData() {
-
+        String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
+        mPresenter.fetch(loginname);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
-        mPresenter.fetch(loginname);
+//        String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
+//        mPresenter.fetch(loginname);
     }
 
     @Override
@@ -61,7 +65,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
         String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
         long logtime = SPUtils.getInstance(getActivity()).getLong("logtime");
         tvName.setText(loginname);
-        tvLoginTime.setText(logtime+"");
+        tvLoginTime.setText("登录时间: "+dataformat(logtime));
         initCheckList(bean);
         initLubList(bean);
     }
@@ -92,5 +96,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
             String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
             mPresenter.fetch(loginname);
         }
+    }
+
+    public String dataformat(long time){
+
+        if(TextUtils.isEmpty(String.valueOf(time))){
+            return "";
+        }
+        Date date = new Date();
+        String str = "yyy-MM-dd HH:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(str);
+        return sdf.format(date);
     }
 }

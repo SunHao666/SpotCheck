@@ -77,6 +77,7 @@ public class MCheckAdapter extends RecyclerView.Adapter<MCheckAdapter.ViewHolder
     }
 
 
+
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_title)
         TextView tvTitle;

@@ -18,8 +18,12 @@ import androidx.appcompat.widget.Toolbar;
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.utils.DialogUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
+import com.app.spotcheck.moudle.event.BaseEvent;
+import com.app.spotcheck.moudle.login.LoginActivity;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -48,6 +52,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends TransitionAc
         viewContent = (FrameLayout)findViewById(R.id.view_content);
         mTitle = (TextView)findViewById(R.id.tv_title);
 
+        EventBus.getDefault().register(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -98,7 +103,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends TransitionAc
         mPresenter.dettachView(this);
         mUnbind.unbind();
         mUnbind = null;
+        EventBus.getDefault().unregister(this);
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void toLogin(BaseEvent event){
+        startActivity(new Intent(this, LoginActivity.class));
+    }
+
     @LayoutRes
     protected abstract int getContentViewLayout();
 
@@ -121,4 +132,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends TransitionAc
             loading.dismiss();
         }
     }
+
+
 }

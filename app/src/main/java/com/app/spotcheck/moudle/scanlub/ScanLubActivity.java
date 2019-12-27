@@ -1,5 +1,6 @@
 package com.app.spotcheck.moudle.scanlub;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.ScanLubBean;
+import com.app.spotcheck.moudle.scancheck.scanresult.ScanCheckResultActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +49,7 @@ public class ScanLubActivity extends BaseActivity<ScanLubPresenter> implements S
     @BindView(R.id.btn_over_lub)
     Button btnOverLub;
     private String lrecno;
-
+    ScanLubBean bean;
     @Override
     protected void initData() {
         lrecno = getIntent().getStringExtra("lrecno");
@@ -92,18 +94,22 @@ public class ScanLubActivity extends BaseActivity<ScanLubPresenter> implements S
             return;
         }
         String Loginname = SPUtils.getInstance(this).getString("Loginname");
-        mPresenter.save(lrecno,etWorkTime.getText().toString(),etStopTime.getText().toString(),Loginname);
+        mPresenter.save(lrecno,etWorkTime.getText().toString(),
+                etStopTime.getText().toString(),
+                etForgetInfo.getText().toString(),
+                Loginname);
     }
 
     @Override
     public void showSuccess(ScanLubBean bean) {
+        this.bean = bean;
         tvSetName.setText(bean.getMAINNAME());
         tvLubName.setText(bean.getPARTNAME());
         tvLubPlantime.setText(bean.getPLANTIME());
         tvLubType.setText(bean.getLUBTYPE());
         tvUseZhi.setText(bean.getLUBRICANT());
         tvUseZhitype.setText(bean.getOILTYPE());
-        tvUseMany.setText(bean.getOILVOLUME());
+        tvUseMany.setText(bean.getOILVOLUME()+"");
     }
 
     @Override
@@ -114,6 +120,11 @@ public class ScanLubActivity extends BaseActivity<ScanLubPresenter> implements S
     @Override
     public void showSaveSuccess(String msg) {
         ToastWrapper.show(msg);
+        Intent intent = new Intent(this, ScanCheckResultActivity.class);
+        intent.putExtra("from","01");
+        intent.putExtra("setName",bean.getMAINNAME());
+        intent.putExtra("setPlace",bean.getPARTNAME());
+        startActivity(intent);
         finish();
     }
 }

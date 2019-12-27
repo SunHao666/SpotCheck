@@ -1,22 +1,32 @@
 package com.app.spotcheck.moudle.lubrication;
 
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
+import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.view.ScrollableViewPager;
+import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.LubBean;
+import com.app.spotcheck.moudle.patralcheck.PatralCheckActivity;
+import com.app.spotcheck.moudle.search.SearchActivity;
 import com.app.spotcheck.moudle.spotcheck.CheckFragment;
 import com.app.spotcheck.moudle.spotcheck.MViewPagerAdapter;
+import com.app.spotcheck.network.Contant;
 import com.google.android.material.tabs.TabLayout;
+import com.king.zxing.CaptureActivity;
+import com.king.zxing.Intents;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +81,7 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
             fragments.add(new LubFragment(i));
         }
         tablayout.addOnTabSelectedListener(this);
-        adapter = new ViewPagerLubAdapter(getActivity().getSupportFragmentManager(),getActivity(),fragments,tabNames);
+        adapter = new ViewPagerLubAdapter(getChildFragmentManager(),getActivity(),fragments,tabNames);
         viewPager.setAdapter(adapter);
         viewPager.setScanScroll(false);
         tablayout.setupWithViewPager(viewPager);
@@ -92,12 +102,50 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.scan:
+                scanLub();
                 break;
             case R.id.lay_search:
+                Intent intent =new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("usekind","2");
+                startActivityForResult(intent,1005);
                 break;
         }
     }
 
+    private void scanLub() {
+        tvSearch.setText("");
+                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1003);
+//        Contant.LUBQRCODE  = "E011M03L0001";
+//        Contant.LUBSEARCH = "";
+//        viewPager.setCurrentItem(1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data == null){ return;}
+        String result = data.getStringExtra(Intents.Scan.RESULT);
+        if(TextUtils.isEmpty(result)|| !result.contains("qrcode=")){
+            ToastWrapper.show("二维码格式不正确");
+            return;
+        }
+        LogUtils.error("scan before="+result);
+        result = result.substring(7,result.length());
+        LogUtils.error(result);
+        if(requestCode == 1003){
+            Contant.LUBQRCODE = result;
+            Contant.LUBSEARCH = "";
+            viewPager.setCurrentItem(1);
+        }else if(requestCode == 1005 && resultCode == 2005){
+            String key = data.getStringExtra("key");
+            if(!TextUtils.isEmpty(key)){
+                tvSearch.setText(key);
+                Contant.LUBQRCODE  = "";
+                Contant.LUBSEARCH = key;
+                viewPager.setCurrentItem(1);
+            }
+        }
+    }
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
 

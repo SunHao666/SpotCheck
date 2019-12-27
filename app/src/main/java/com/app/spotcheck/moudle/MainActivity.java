@@ -3,6 +3,7 @@ package com.app.spotcheck.moudle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -15,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.BasePresenter;
+import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.event.SpotCheckEvent;
 import com.app.spotcheck.moudle.home.HomeFragment;
 import com.app.spotcheck.moudle.login.LoginActivity;
@@ -158,4 +160,25 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    //退出时的时间
+    private long mExitTime;
+    public void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            ToastWrapper.show("再按一次退出程序");
+            mExitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
 }

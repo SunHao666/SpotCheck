@@ -41,14 +41,19 @@ public class ScanCheckResultActivity extends BaseActivity<ScanCheckResultPresent
     @Override
     protected void initView() {
         String from = getIntent().getStringExtra("from");
+        String msetName = getIntent().getStringExtra("setName");
+        String msetPlace = getIntent().getStringExtra("setPlace");
+
+        tvSetName.setText(msetName);
+        tvSetPlace.setText(msetPlace);
         if (from.equals("00")) {
             setTopTitle("点检完成");
-            tvSetName.setText("点检部位:");
+            setPlace.setText("点检部位:");
             tvOver.setText("点检已经完成");
             layBg.setBackgroundResource(R.drawable.home_top_shape_blue);
         } else {
             setTopTitle("润滑完成");
-            tvSetName.setText("润滑部位:");
+            setPlace.setText("润滑部位:");
             tvOver.setText("润滑已经完成");
             layBg.setBackgroundResource(R.drawable.home_top_shape_orange1);
         }

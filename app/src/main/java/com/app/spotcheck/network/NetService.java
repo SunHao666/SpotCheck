@@ -96,4 +96,8 @@ public interface NetService {
 
     @POST("keywords/getInfo")
     Call<BaseCallModel<KeyWordsBean>> getKeyWordInfo(@Body RequestBody body);
+
+    //保存关键字
+    @POST("keywords/saveKeyword")
+    Call<BaseCallModel> saveKeyword(@Body RequestBody body);
 }

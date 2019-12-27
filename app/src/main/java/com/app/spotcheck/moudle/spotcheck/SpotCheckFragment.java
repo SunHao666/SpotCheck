@@ -1,14 +1,15 @@
 package com.app.spotcheck.moudle.spotcheck;
 
-import android.view.LayoutInflater;
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
@@ -18,10 +19,11 @@ import com.app.spotcheck.base.view.ScrollableViewPager;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.KeyWordsBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
+import com.app.spotcheck.moudle.search.SearchActivity;
+import com.app.spotcheck.network.Contant;
 import com.google.android.material.tabs.TabLayout;
-import com.zhy.view.flowlayout.FlowLayout;
-import com.zhy.view.flowlayout.TagAdapter;
-import com.zhy.view.flowlayout.TagFlowLayout;
+import com.king.zxing.CaptureActivity;
+import com.king.zxing.Intents;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,17 +46,11 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     public List<Fragment> fragments = new ArrayList<>();
     @BindView(R.id.viewPager)
     ScrollableViewPager viewPager;
-    @BindView(R.id.id_flowlayout)
-    TagFlowLayout idFlowlayout;
-    @BindView(R.id.lay_tag)
-    LinearLayout layTag;
     private MViewPagerAdapter adapter;
     private int tab = 0;
     private boolean isParer = false;
     KeyWordsBean bean = new KeyWordsBean();
-    private TagAdapter searchAdapter;
-    private List<String> tags = new ArrayList<>();
-
+    private int currentTab = 0;
     public static SpotCheckFragment newInstance() {
         return new SpotCheckFragment();
     }
@@ -62,7 +58,7 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-        requestSearch();
+
     }
 
     @Override
@@ -73,8 +69,6 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     @Override
     protected void initData() {
     }
-
-
 
     @Override
     protected SpotCheckPresenter initPresenter() {
@@ -92,31 +86,9 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
 
         initTablayout();
 
-        initSearch();
     }
 
-    private void initSearch() {
-        searchAdapter = new TagAdapter<String>(tags) {
-            @Override
-            public View getView(FlowLayout parent, int position, String s) {
-                TextView tv = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.tv,
-                        idFlowlayout, false);
-                tv.setText(s);
-                return tv;
-            }
-        };
-        idFlowlayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener()
-        {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent)
-            {
-                ToastWrapper.show(tags.get(position));
-                layTag.setVisibility(View.GONE);
-                return true;
-            }
-        });
-        idFlowlayout.setAdapter(searchAdapter);
-    }
+
 
     private void initTablayout() {
         for (int i = 0; i < tabNames.length; i++) {
@@ -125,7 +97,7 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
         }
         tablayout.addOnTabSelectedListener(this);
         viewPager.setScanScroll(false);
-        adapter = new MViewPagerAdapter(getActivity().getSupportFragmentManager(), getActivity(), fragments, tabNames);
+        adapter = new MViewPagerAdapter(getChildFragmentManager(), getActivity(), fragments, tabNames);
         viewPager.setAdapter(adapter);
         tablayout.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(tab);
@@ -145,28 +117,67 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     @Override
     public void showSearchSuccess(KeyWordsBean bean) {
         this.bean = bean;
-        tags.clear();
-        searchAdapter.notifyDataChanged();
-        for (int i = 0; i < bean.getSearchList().size(); i++) {
-            tags.add(bean.getSearchList().get(i).getKEYWORDS());
-        }
+//        tags.clear();
+//        searchAdapter.notifyDataChanged();
+//        for (int i = 0; i < bean.getSearchList().size(); i++) {
+//            tags.add(bean.getSearchList().get(i).getKEYWORDS());
+//        }
     }
 
     @OnClick({R.id.scan, R.id.lay_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.scan:
+                scanCheck();
                 break;
             case R.id.lay_search:
-                layTag.setVisibility(View.VISIBLE);
-
+                Intent intent =new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("usekind","1");
+                startActivityForResult(intent,1004);
                 break;
+        }
+    }
+
+    private void scanCheck() {
+        tvSearch.setText("");
+        startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1001);
+//        Contant.CHECKQRCODE  = "E002M05P0002";
+//        Contant.CHECKSEARCH = "";
+//        viewPager.setCurrentItem(1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data == null){ return;}
+        String result = data.getStringExtra(Intents.Scan.RESULT);
+        if(TextUtils.isEmpty(result)|| !result.contains("qrcode=")){
+            ToastWrapper.show("二维码格式不正确");
+            return;
+        }
+        LogUtils.error("scan before="+result);
+        result = result.substring(7,result.length());
+        LogUtils.error(result);
+        if(requestCode == 1001){
+            Contant.CHECKQRCODE  = result;
+            Contant.CHECKSEARCH = "";
+            viewPager.setCurrentItem(1);
+        }else if(requestCode == 1004 && resultCode == 2004){
+            String key = data.getStringExtra("key");
+            if(!TextUtils.isEmpty(key)){
+                tvSearch.setText(key);
+                Contant.CHECKQRCODE  = "";
+                Contant.CHECKSEARCH = key;
+                viewPager.setCurrentItem(1);
+            }
         }
     }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
 
+        currentTab = tab.getPosition();
+        LogUtils.error("currentTab="+currentTab);
     }
 
     @Override
@@ -192,7 +203,7 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
         super.onHiddenChanged(hidden);
         LogUtils.error("SpotCheck onHidder"+hidden);
         if(!hidden){//显示中
-            requestSearch();
+//            requestSearch();
         }
     }
 

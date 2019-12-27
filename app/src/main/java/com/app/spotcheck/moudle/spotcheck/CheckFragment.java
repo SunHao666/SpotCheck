@@ -42,7 +42,6 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     List<SpotCheckAllBean.SearchListBean> datas = new ArrayList<>();
     boolean isVisibleToUser = false;
     private MCheckAdapter adapter;
-
     public CheckFragment(int tab) {
         this.tab = tab;
     }
@@ -94,6 +93,8 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     @Override
     public void showError(String error) {
         ToastWrapper.show(error);
+        datas.clear();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -105,6 +106,7 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         LogUtils.error("tab="+tab+",是否显示："+isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
         if(isVisibleToUser){
             if(mPresenter == null){
                 mPresenter = new SpotCheckPresenter();
@@ -118,7 +120,8 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     public void onResume() {
         super.onResume();
         LogUtils.error("tab="+tab+",onResume：");
-//        initRequest();
+        if(isVisibleToUser)
+        initRequest();
     }
 
     private void initRequest() {

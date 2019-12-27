@@ -1,6 +1,8 @@
 package com.app.spotcheck.moudle.home;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
 import com.app.spotcheck.moudle.scanlub.ScanLubActivity;
 import com.app.spotcheck.network.Contant;
 import com.king.zxing.CaptureActivity;
+import com.king.zxing.Intents;
 
 import java.util.List;
 
@@ -67,14 +70,14 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.fetch();
+//        mPresenter.fetch();
     }
 
     @Override
     protected void initData() {
         long logtime = SPUtils.getInstance(getActivity()).getLong("logtime");
         LogUtils.error("logtime"+logtime);
-//        mPresenter.fetch();
+        mPresenter.fetch();
     }
 
     @Override
@@ -97,12 +100,21 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
         HomeBean.CHKINFOBean chkinfo = bean.getCHKINFO();
         HomeBean.LUBINFOBean lubinfo = bean.getLUBINFO();
         homeCheckNoNum.setText(chkinfo.getCHK_UNNUM()+"");
-        homePlanTime.setText(chkinfo.getCHK_EXECSTARTTIME() + "~" + chkinfo.getCHK_EXECENDTIME());
+        if(chkinfo.getCHK_EXECSTARTTIME() == null || chkinfo.getCHK_EXECENDTIME() == null){
+            homePlanLubTime.setText("");
+        }else{
+            homePlanTime.setText(chkinfo.getCHK_EXECSTARTTIME() + "~" + chkinfo.getCHK_EXECENDTIME());
+        }
+
         tvDaji.setText(chkinfo.getCHK_MAINNAME());
         tvChecnkPlace.setText(chkinfo.getCHK_PARTNAME());
 
         homeLubNoNum.setText(lubinfo.getLUB_UNNUM()+"");
-        homePlanLubTime.setText(lubinfo.getLUB_EXECSTARTTIME() + "~" + lubinfo.getLUB_EXECENDTIME());
+        if(lubinfo.getLUB_EXECSTARTTIME() == null || lubinfo.getLUB_EXECENDTIME() == null){
+            homePlanLubTime.setText("");
+        }else{
+            homePlanLubTime.setText(lubinfo.getLUB_EXECSTARTTIME() + "~" + lubinfo.getLUB_EXECENDTIME());
+        }
         tvLubDaji.setText(lubinfo.getLUB_MAINNAME());
         tvLubPlace.setText(lubinfo.getLUB_PARTNAME());
     }
@@ -128,21 +140,23 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_home_check:
-//                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1001);
+                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1001);
 //                mPresenter.scanCheck(Contant.CHECKQRCODE);
-                Contant.CHECKQRCODE  = "E002M05P0002";
-                onCheckScanClick.onClick(1);
+//                Contant.CHECKQRCODE  = "E002M05P0002";
+//                Contant.CHECKSEARCH  = "";
+//                onCheckScanClick.onClick(1);
                 break;
             case R.id.iv_home_setpro:
-//                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1002);
-                Intent intent = new Intent(getActivity(), PatralCheckActivity.class);
-                intent.putExtra("execid","E002M05P0002");
-                startActivity(intent);
+                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1002);
+//                Intent intent = new Intent(getActivity(), PatralCheckActivity.class);
+//                intent.putExtra("execid","E002M05P0002");
+//                startActivity(intent);
                 break;
             case R.id.iv_home_lub:
-                Contant.LUBQRCODE = "E001M01L0001";
-                onLubScanClick.onClick(1);
-//                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1003);
+//                Contant.LUBQRCODE = "E011M03L0001";
+//                Contant.LUBSEARCH = "";
+//                onLubScanClick.onClick(1);
+                startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1003);
 //                startActivity(new Intent(getActivity(), ScanLubActivity.class));
                 break;
         }
@@ -151,16 +165,29 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(data == null){
+            return;
+        }
+        String result = data.getStringExtra(Intents.Scan.RESULT);
+        if(TextUtils.isEmpty(result)|| !result.contains("qrcode=")){
+            ToastWrapper.show("二维码格式不正确");
+            return;
+        }
+        LogUtils.error("scan before="+result);
+        result = result.substring(7,result.length());
+        LogUtils.error(result);
         if(requestCode == 1001){
+            Contant.CHECKQRCODE  = result;
+            Contant.CHECKSEARCH  = "";
             onCheckScanClick.onClick(1);
-            Contant.CHECKQRCODE  = "E002M05P0002";
         }else if(requestCode == 1002){
             Intent intent = new Intent(getActivity(), PatralCheckActivity.class);
-            intent.putExtra("execid","E002M05P0001");
+            intent.putExtra("execid",result);
             startActivity(intent);
         }else if(requestCode == 1003){
+            Contant.LUBQRCODE = result;
+            Contant.LUBSEARCH = "";
             onLubScanClick.onClick(1);
-            Contant.LUBQRCODE = "E002M05P0002";
         }
     }
 

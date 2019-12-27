@@ -60,6 +60,15 @@ public class MLubAdapter extends RecyclerView.Adapter<MLubAdapter.ViewHolder> {
             holder.tvWaitLub.setVisibility(View.GONE);
             holder.tvOver.setVisibility(View.VISIBLE);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(datas.get(position).getEXECSTATUS().equals("0")){
+                    listener.onClick(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -91,5 +100,14 @@ public class MLubAdapter extends RecyclerView.Adapter<MLubAdapter.ViewHolder> {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    OnLubClickListener listener;
+    public interface OnLubClickListener{
+        void onClick(int position);
+    }
+
+    public void setOnLubClickListener(OnLubClickListener listener){
+        this.listener = listener;
     }
 }
