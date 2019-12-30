@@ -1,7 +1,6 @@
 package com.app.spotcheck.moudle;
 
-import android.app.Activity;
-import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,20 +17,24 @@ import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.BasePresenter;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
-import com.app.spotcheck.moudle.event.SpotCheckEvent;
 import com.app.spotcheck.moudle.home.HomeFragment;
-import com.app.spotcheck.moudle.login.LoginActivity;
 import com.app.spotcheck.moudle.lubrication.LubricationFragment;
 import com.app.spotcheck.moudle.mine.MineFragment;
 import com.app.spotcheck.moudle.spotcheck.SpotCheckFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.greenrobot.eventbus.EventBus;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class MainActivity extends BaseActivity<BasePresenter> implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity<BasePresenter> implements BottomNavigationView.OnNavigationItemSelectedListener ,EasyPermissions.PermissionCallbacks{
+
+    public static final int CAMERA = 1;
+    public static final int WRITE_EXTERNAL_STORAGE = 2;
+    private static final int RC_PERMISSIONS = 119;
 
     @BindView(R.id.layout_container)
     FrameLayout layoutContainer;
@@ -43,10 +47,9 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
     // 当前正在显示的Fragment
     private Fragment mCurrentFragment;
 
-
     @Override
     protected void initData() {
-
+        checkPression();
     }
 
     @Override
@@ -160,6 +163,8 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
         }
     }
 
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -179,6 +184,55 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
         } else {
             finish();
             System.exit(0);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            //用户勾选了“不再询问”，引导用户去设置页面打开权限
+            new AppSettingsDialog.Builder(this)
+                    .setTitle("权限申请")
+                    .setRationale("应用程序运行缺少必要的权限，请前往设置页面打开")
+                    .setPositiveButton("去设置")
+                    .setNegativeButton("取消")
+                    .setRequestCode(110)
+                    .build()
+                    .show();
+        }
+    }
+
+
+    @AfterPermissionGranted(RC_PERMISSIONS)
+    private void checkPression() {
+        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+        if (EasyPermissions.hasPermissions(this, permissions)) {
+            //权限获取成功
+        }else {
+            //没有权限，调用方法申请权限
+            EasyPermissions.requestPermissions(this, "程序运行需要存储权限和相机权限", RC_PERMISSIONS, permissions);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            //用户从设置页面返回，
         }
     }
 }

@@ -51,6 +51,7 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     private boolean isParer = false;
     KeyWordsBean bean = new KeyWordsBean();
     private int currentTab = 0;
+    private boolean isVisible =true;
     public static SpotCheckFragment newInstance() {
         return new SpotCheckFragment();
     }
@@ -58,7 +59,10 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-
+        Contant.TAB_SELECT = 1;
+        if(!isVisible){
+            LogUtils.error("CheckFragment onResume");
+        }
     }
 
     @Override
@@ -68,6 +72,8 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
 
     @Override
     protected void initData() {
+        Contant.TAB_SELECT = 1;
+        LogUtils.error("CheckFragment initData");
     }
 
     @Override
@@ -150,15 +156,16 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(data == null){ return;}
-        String result = data.getStringExtra(Intents.Scan.RESULT);
-        if(TextUtils.isEmpty(result)|| !result.contains("qrcode=")){
-            ToastWrapper.show("二维码格式不正确");
-            return;
-        }
-        LogUtils.error("scan before="+result);
-        result = result.substring(7,result.length());
-        LogUtils.error(result);
+
         if(requestCode == 1001){
+            String result = data.getStringExtra(Intents.Scan.RESULT);
+            if(TextUtils.isEmpty(result)|| !result.contains("qrcode=")){
+                ToastWrapper.show("二维码格式不正确");
+                return;
+            }
+            LogUtils.error("scan before="+result);
+            result = result.substring(7,result.length());
+            LogUtils.error(result);
             Contant.CHECKQRCODE  = result;
             Contant.CHECKSEARCH = "";
             viewPager.setCurrentItem(1);
@@ -202,7 +209,10 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         LogUtils.error("SpotCheck onHidder"+hidden);
+        isVisible = hidden;
         if(!hidden){//显示中
+            Contant.TAB_SELECT = 1;
+            LogUtils.error("CheckFragment onHiddenChanged");
 //            requestSearch();
         }
     }

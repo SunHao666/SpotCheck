@@ -50,7 +50,7 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
 
     @Override
     protected void initData() {
-        LogUtils.error("tab="+tab+",initData");
+        LogUtils.error("check tab="+tab+",initData");
 //        initRequest();
     }
 
@@ -105,9 +105,10 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        LogUtils.error("tab="+tab+",是否显示："+isVisibleToUser);
+        LogUtils.error("check  tab="+tab+",setUserVisibleHint："+isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
-        if(isVisibleToUser){
+        if(Contant.TAB_SELECT ==1 && isVisibleToUser){
+            LogUtils.error("check  tab="+tab+",setUserVisibleHint："+isVisibleToUser);
             if(mPresenter == null){
                 mPresenter = new SpotCheckPresenter();
             }
@@ -119,16 +120,17 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     @Override
     public void onResume() {
         super.onResume();
-        LogUtils.error("tab="+tab+",onResume：");
-        if(isVisibleToUser)
-        initRequest();
+        if(Contant.TAB_SELECT ==1 && isVisibleToUser) {
+            LogUtils.error("check  tab="+tab+",onResume：");
+            initRequest();
+        }
     }
 
     private void initRequest() {
         LogUtils.error("tab="+tab+",CHECKQRCODE="+Contant.CHECKQRCODE);
-        if(TextUtils.isEmpty(Contant.CHECKQRCODE) && TextUtils.isEmpty(Contant.CHECKSEARCH)){
-            return;
-        }
+//        if(TextUtils.isEmpty(Contant.CHECKQRCODE) && TextUtils.isEmpty(Contant.CHECKSEARCH)){
+//            return;
+//        }
         if(tab == 0){
             mPresenter.getCheckPlanList(Contant.CHECKQRCODE,Contant.CHECKSEARCH);
         }else if(tab == 1){

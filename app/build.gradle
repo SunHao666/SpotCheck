@@ -51,4 +51,7 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.github.MarnonDev:EasyStatusView:v1.0.0'
     implementation 'com.hyman:flowlayout-lib:1.1.2'
+
+    // For developers using AndroidX in their applications
+    implementation 'pub.devrel:easypermissions:3.0.0'
 }

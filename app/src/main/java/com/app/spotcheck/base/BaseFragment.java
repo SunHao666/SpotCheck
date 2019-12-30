@@ -10,6 +10,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,13 +51,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
 
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if(hidden){
-
-        }
-    }
 
     @Override
     public final void onDestroyView() {

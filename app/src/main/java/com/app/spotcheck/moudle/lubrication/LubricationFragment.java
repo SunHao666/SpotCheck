@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
 import com.app.spotcheck.base.utils.LogUtils;
+import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.view.ScrollableViewPager;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.LubAllBean;
@@ -52,13 +53,15 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
     private ViewPagerLubAdapter adapter;
     private int tab = 0;
     private boolean isParer = false;
+    private boolean isVisible = true;
     public static LubricationFragment newInstance() {
         return new LubricationFragment();
     }
 
     @Override
     protected void initData() {
-
+        Contant.TAB_SELECT = 2;
+        LogUtils.error("LubFragment initData");
     }
 
     @Override
@@ -75,6 +78,16 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
     protected void initView() {
         initTablayout();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isVisible){
+            Contant.TAB_SELECT = 2;
+            LogUtils.error("LubFragment onResume");
+        }
+    }
+
     private void initTablayout() {
         for (int i = 0; i < tabNames.length; i++) {
             tablayout.addTab(tablayout.newTab());
@@ -96,6 +109,16 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
     @Override
     public void showError(String error) {
 
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isVisible = hidden;
+        if(!hidden){
+            LogUtils.error("LubFragment onHiddenChanged");
+            Contant.TAB_SELECT = 2;
+        }
     }
 
     @OnClick({R.id.scan, R.id.lay_search})
@@ -124,15 +147,16 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(data == null){ return;}
-        String result = data.getStringExtra(Intents.Scan.RESULT);
-        if(TextUtils.isEmpty(result)|| !result.contains("qrcode=")){
-            ToastWrapper.show("二维码格式不正确");
-            return;
-        }
-        LogUtils.error("scan before="+result);
-        result = result.substring(7,result.length());
-        LogUtils.error(result);
+
         if(requestCode == 1003){
+            String result = data.getStringExtra(Intents.Scan.RESULT);
+            if(TextUtils.isEmpty(result)|| !result.contains("qrcode=")){
+                ToastWrapper.show("二维码格式不正确");
+                return;
+            }
+            LogUtils.error("scan before="+result);
+            result = result.substring(7,result.length());
+            LogUtils.error(result);
             Contant.LUBQRCODE = result;
             Contant.LUBSEARCH = "";
             viewPager.setCurrentItem(1);

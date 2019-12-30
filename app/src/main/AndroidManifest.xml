@@ -13,14 +13,14 @@
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network"
         android:theme="@style/AppTheme">
-        <activity android:name=".moudle.MainActivity">
-           
+        <activity android:name=".moudle.MainActivity" android:screenOrientation="portrait">
+
         </activity>
-        <activity android:name=".moudle.scancheck.ScanCheckActivity" />
-        <activity android:name=".moudle.scancheck.scanresult.ScanCheckResultActivity" />
-        <activity android:name=".moudle.scancheck.checkexception.CheckExceptionActivity" />
-        <activity android:name=".moudle.patralcheck.PatralCheckActivity" />
-        <activity android:name=".moudle.scanlub.ScanLubActivity" />
+        <activity android:name=".moudle.scancheck.ScanCheckActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.scancheck.scanresult.ScanCheckResultActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.scancheck.checkexception.CheckExceptionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.patralcheck.PatralCheckActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.scanlub.ScanLubActivity" android:screenOrientation="portrait"/>
         <activity android:name=".moudle.login.LoginActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.spotcheck.R;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.LubBean;
+import com.app.spotcheck.moudle.spotcheck.MCheckAdapter;
 
 import java.util.List;
 
@@ -25,8 +26,8 @@ import butterknife.ButterKnife;
  * @Author: 作者名
  * @CreateDate: 2019/12/20 13:43
  */
-public class MLubAdapter extends RecyclerView.Adapter<MLubAdapter.ViewHolder> {
-
+public class MLubAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int EMPTTY = 1;
     private Context context;
     private List<LubAllBean.SearchListBean> datas;
     private int tab;
@@ -39,45 +40,75 @@ public class MLubAdapter extends RecyclerView.Adapter<MLubAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.item_lub, parent, false);
-        return new ViewHolder(inflate);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(viewType == EMPTTY){
+            View inflate = LayoutInflater.from(context).inflate(R.layout.empty, parent, false);
+            return new MLubAdapter.EmptyViewHolder(inflate);
+        }else {
+            View inflate = LayoutInflater.from(context).inflate(R.layout.item_lub, parent, false);
+            return new MLubAdapter.ConViewHolder(inflate);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvTitle.setText(datas.get(position).getPARTNAME());
-        holder.tvPlanTime.setText(datas.get(position).getPLANTIME());
-        holder.tvLubPlace.setText(datas.get(position).getPARTNAME());
-        holder.tvLubTime.setText(datas.get(position).getFINISHTIME());
-        //待润滑
-        if(datas.get(position).getEXECSTATUS().equals("0")){
-            holder.layCheckPlan.setVisibility(View.GONE);
-            holder.tvWaitLub.setVisibility(View.VISIBLE);
-            holder.tvOver.setVisibility(View.GONE);
-        }else if(datas.get(position).getEXECSTATUS().equals("1")){
-            holder.layCheckPlan.setVisibility(View.VISIBLE);
-            holder.tvWaitLub.setVisibility(View.GONE);
-            holder.tvOver.setVisibility(View.VISIBLE);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof EmptyViewHolder){
+
+        }else{
+            ConViewHolder holder1 = (ConViewHolder) holder;
+            holder1.tvTitle.setText(datas.get(position).getPARTNAME());
+            holder1.tvPlanTime.setText(datas.get(position).getPLANTIME());
+            holder1.tvLubPlace.setText(datas.get(position).getPARTNAME());
+            holder1.tvLubTime.setText(datas.get(position).getFINISHTIME());
+            //待润滑
+            if(datas.get(position).getEXECSTATUS().equals("0")){
+                holder1.layCheckPlan.setVisibility(View.GONE);
+                holder1.tvWaitLub.setVisibility(View.VISIBLE);
+                holder1.tvOver.setVisibility(View.GONE);
+            }else if(datas.get(position).getEXECSTATUS().equals("1")){
+                holder1.layCheckPlan.setVisibility(View.VISIBLE);
+                holder1.tvWaitLub.setVisibility(View.GONE);
+                holder1.tvOver.setVisibility(View.VISIBLE);
+            }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(datas.get(position).getEXECSTATUS().equals("0")){
+                        listener.onClick(position);
+                    }
+                }
+            });
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(datas.get(position).getEXECSTATUS().equals("0")){
-                    listener.onClick(position);
-                }
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
-        return datas.size();
+        if(datas.size() == 0){
+            return 1;
+        }else{
+            return datas.size();
+        }
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if(datas.size() == 0){
+            return EMPTTY;
+        }else{
+            return super.getItemViewType(position);
+        }
+    }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class EmptyViewHolder extends RecyclerView.ViewHolder {
+
+        public EmptyViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
+
+    class ConViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_title)
         TextView tvTitle;
         @BindView(R.id.tv_plan_time)
@@ -96,7 +127,7 @@ public class MLubAdapter extends RecyclerView.Adapter<MLubAdapter.ViewHolder> {
         @BindView(R.id.lay_check_plan)
         LinearLayout layCheckPlan;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ConViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

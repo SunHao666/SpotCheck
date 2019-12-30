@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.spotcheck.R;
+import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 
 import java.util.List;
@@ -26,8 +27,9 @@ import butterknife.OnClick;
  * @Author: 作者名
  * @CreateDate: 2019/12/20 13:43
  */
-public class MCheckAdapter extends RecyclerView.Adapter<MCheckAdapter.ViewHolder> {
+public class MCheckAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int EMPTTY = 1;
     private Context context;
     private List<SpotCheckAllBean.SearchListBean> datas;
     private int tab;
@@ -40,45 +42,77 @@ public class MCheckAdapter extends RecyclerView.Adapter<MCheckAdapter.ViewHolder
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(context).inflate(R.layout.item_check, parent, false);
-        return new ViewHolder(inflate);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LogUtils.error("viewType="+viewType);
+        if(viewType == EMPTTY){
+            View inflate = LayoutInflater.from(context).inflate(R.layout.empty, parent, false);
+            return new EmptyViewHolder(inflate);
+        }else{
+            View inflate = LayoutInflater.from(context).inflate(R.layout.item_check, parent, false);
+            return new ConViewHolder(inflate);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvTitle.setText(datas.get(position).getPARTNAME());
-        holder.tvCheckedNum.setText("已点检项目"+datas.get(position).getCHECKNUM()+"项");
-        holder.tvUncheckNum.setText(datas.get(position).getUNCHECKNUM()+"");
-        holder.tvCheckTime.setText(datas.get(position).getEXECSTARTTIME()+"~"+datas.get(position).getEXECENDTIME());
-        holder.tvCheckPlace.setText(datas.get(position).getMAINNAME());
-        if(tab == 0){
-            holder.layUncheckNum.setVisibility(View.VISIBLE);
-            holder.tvCheckedNum.setVisibility(View.VISIBLE);
-        }else if(tab == 1){
-            holder.layUncheckNum.setVisibility(View.VISIBLE);
-            holder.tvCheckedNum.setVisibility(View.GONE);
-        }else if(tab == 2){
-            holder.layUncheckNum.setVisibility(View.GONE);
-            holder.tvCheckedNum.setVisibility(View.VISIBLE);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof EmptyViewHolder ){
+
+        }else if(holder instanceof ConViewHolder ){
+            ConViewHolder holder1 = (ConViewHolder) holder;
+            holder1.tvTitle.setText(datas.get(position).getPARTNAME());
+            holder1.tvCheckedNum.setText("已点检项目"+datas.get(position).getCHECKNUM()+"项");
+            holder1.tvUncheckNum.setText(datas.get(position).getUNCHECKNUM()+"");
+            holder1.tvCheckTime.setText(datas.get(position).getEXECSTARTTIME()+"~"+datas.get(position).getEXECENDTIME());
+            holder1.tvCheckPlace.setText(datas.get(position).getMAINNAME());
+            if(tab == 0){
+                holder1.layUncheckNum.setVisibility(View.VISIBLE);
+                holder1.tvCheckedNum.setVisibility(View.VISIBLE);
+            }else if(tab == 1){
+                holder1.layUncheckNum.setVisibility(View.VISIBLE);
+                holder1.tvCheckedNum.setVisibility(View.GONE);
+            }else if(tab == 2){
+                holder1.layUncheckNum.setVisibility(View.GONE);
+                holder1.tvCheckedNum.setVisibility(View.VISIBLE);
+            }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onCheckItemClickListener.onClick(position,tab);
+                }
+            });
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCheckItemClickListener.onClick(position,tab);
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
-        return datas.size();
+        if(datas.size() == 0){
+            return 1;
+        }else{
+            return datas.size();
+        }
     }
 
 
+    @Override
+    public int getItemViewType(int position) {
+        LogUtils.error("position="+position);
+        if(datas.size() == 0){
+            return EMPTTY;
+        }else{
+            return super.getItemViewType(position);
+        }
+    }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class EmptyViewHolder extends RecyclerView.ViewHolder {
+
+        public EmptyViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
+
+    class ConViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_title)
         TextView tvTitle;
         @BindView(R.id.tv_checked_num)
@@ -100,7 +134,7 @@ public class MCheckAdapter extends RecyclerView.Adapter<MCheckAdapter.ViewHolder
         @BindView(R.id.lay_check_card)
         RelativeLayout layCheckCard;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ConViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }

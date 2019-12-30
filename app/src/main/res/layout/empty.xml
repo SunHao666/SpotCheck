@@ -5,9 +5,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="请通过搜索或者扫描二维码\n获取设备信息"
-        android:textSize="@dimen/sp_16"
+        android:drawableTop="@drawable/none"
+        android:text="没有符合条件的记录"
+        android:textSize="@dimen/sp_15"
+        android:textColor="#9E9E9E"
+        android:drawablePadding="@dimen/dp_25"
         android:layout_gravity="center"
-        android:gravity="center"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_89"
         />
 </LinearLayout>

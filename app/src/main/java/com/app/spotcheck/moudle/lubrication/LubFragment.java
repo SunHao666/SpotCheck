@@ -45,7 +45,7 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
 
     @Override
     protected void initData() {
-
+        LogUtils.error("lub tab="+tab+",initData");
     }
 
     @Override
@@ -94,16 +94,30 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
     @Override
     public void onResume() {
         super.onResume();
-        LogUtils.error("tab="+tab+",onResume：");
-        if(isVisibleToUser)
+        if(Contant.TAB_SELECT ==2 && isVisibleToUser) {
+            LogUtils.error("lub tab="+tab+",onResume");
             initRequest();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LogUtils.error("lub tab="+tab+",onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LogUtils.error("lub tab="+tab+",onStop");
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        this.isVisibleToUser = isVisibleToUser;
-        if(isVisibleToUser){
+        this.isVisibleToUser = getUserVisibleHint();
+        if(Contant.TAB_SELECT ==2 && isVisibleToUser){
+            LogUtils.error("lub tab="+tab+",setUserVisibleHint");
             if(mPresenter == null){
                 mPresenter = new LubPresenter();
             }
@@ -114,9 +128,9 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
 
     private void initRequest() {
         LogUtils.error("tab="+tab+",LUBQRCODE="+Contant.LUBQRCODE);
-        if(TextUtils.isEmpty(Contant.LUBQRCODE) && TextUtils.isEmpty(Contant.LUBSEARCH)){
-            return;
-        }
+//        if(TextUtils.isEmpty(Contant.LUBQRCODE) && TextUtils.isEmpty(Contant.LUBSEARCH)){
+//            return;
+//        }
         if(tab == 0){
             mPresenter.getLubPlanList(Contant.LUBQRCODE,Contant.LUBSEARCH,"");
         }else if(tab == 1){

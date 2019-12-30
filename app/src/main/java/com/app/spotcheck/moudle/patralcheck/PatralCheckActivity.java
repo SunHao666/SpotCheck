@@ -2,18 +2,13 @@ package com.app.spotcheck.moudle.patralcheck;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.ListPopupWindow;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,8 +21,6 @@ import com.app.spotcheck.base.wrapper.PopuwindowListView;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.PROBLEMKINDBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
-import com.app.spotcheck.moudle.bean.ScanCheckBean;
-import com.app.spotcheck.moudle.scancheck.checkexception.CheckExceptionActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -40,7 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -293,4 +285,6 @@ public class PatralCheckActivity extends BaseActivity<PatralCheckPresenter> impl
             }
         }
     }
+
+
 }

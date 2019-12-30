@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
+import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.MineBean;
+import com.app.spotcheck.network.Contant;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,13 +29,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
     RecyclerView rvMonthCheck;
     @BindView(R.id.rv_month_lub)
     RecyclerView rvMonthLub;
-
+    private boolean isVisible = true;
     public static MineFragment newInstance() {
         return new MineFragment();
     }
 
     @Override
     protected void initData() {
+        Contant.TAB_SELECT = 3;
+        LogUtils.error("HomeFragment initData");
         String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
         mPresenter.fetch(loginname);
     }
@@ -43,6 +47,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
         super.onResume();
 //        String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
 //        mPresenter.fetch(loginname);
+        if(!isVisible){
+            Contant.TAB_SELECT = 3;
+            LogUtils.error("MineFragment onResume");
+            String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
+            mPresenter.fetch(loginname);
+        }
     }
 
     @Override
@@ -92,7 +102,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineVie
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        isVisible = hidden;
         if(!hidden){
+            Contant.TAB_SELECT = 3;
+            LogUtils.error("MineFragment onHiddenChanged");
             String loginname = SPUtils.getInstance(getActivity()).getString("Loginname");
             mPresenter.fetch(loginname);
         }
