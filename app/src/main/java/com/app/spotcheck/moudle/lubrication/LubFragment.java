@@ -3,6 +3,7 @@ package com.app.spotcheck.moudle.lubrication;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,9 @@ import com.app.spotcheck.moudle.spotcheck.MCheckAdapter;
 import com.app.spotcheck.moudle.spotcheck.SpotCheckPresenter;
 import com.app.spotcheck.moudle.spotcheck.SpotCheckView;
 import com.app.spotcheck.network.Contant;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +40,8 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     private int tab = 0;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     List<LubAllBean.SearchListBean> datas = new ArrayList<>();
     private MLubAdapter adapter;
     boolean isVisibleToUser = false;
@@ -60,6 +66,13 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
 
     @Override
     protected void initView() {
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                initRequest();
+            }
+        });
+
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MLubAdapter(getActivity(),datas,tab);
         recyclerview.setAdapter(adapter);
@@ -82,6 +95,7 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
         LogUtils.error("lub bean size = "+bean.getSearchList().size());
         datas.addAll(bean.getSearchList());
         adapter.notifyDataSetChanged();
+        refreshLayout.finishRefresh();
     }
 
     @Override
@@ -89,6 +103,7 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
         ToastWrapper.show(error);
         datas.clear();
         adapter.notifyDataSetChanged();
+        refreshLayout.finishRefresh();
     }
 
     @Override

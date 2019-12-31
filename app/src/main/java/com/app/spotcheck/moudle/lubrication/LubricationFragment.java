@@ -62,6 +62,9 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
     protected void initData() {
         Contant.TAB_SELECT = 2;
         LogUtils.error("LubFragment initData");
+        if(TextUtils.isEmpty(Contant.LUBQRCODE) && TextUtils.isEmpty(Contant.LUBSEARCH)){
+            tvSearch.setText("");
+        }
     }
 
     @Override
@@ -85,6 +88,9 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
         if(!isVisible){
             Contant.TAB_SELECT = 2;
             LogUtils.error("LubFragment onResume");
+            if(TextUtils.isEmpty(Contant.LUBQRCODE) && TextUtils.isEmpty(Contant.LUBSEARCH)){
+                tvSearch.setText("");
+            }
         }
     }
 
@@ -117,6 +123,9 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
         isVisible = hidden;
         if(!hidden){
             LogUtils.error("LubFragment onHiddenChanged");
+            if(TextUtils.isEmpty(Contant.LUBQRCODE) && TextUtils.isEmpty(Contant.LUBSEARCH)){
+                tvSearch.setText("");
+            }
             Contant.TAB_SELECT = 2;
         }
     }
@@ -151,7 +160,7 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
         if(requestCode == 1003){
             String result = data.getStringExtra(Intents.Scan.RESULT);
             if(TextUtils.isEmpty(result)|| !result.contains("qrcode=")){
-                ToastWrapper.show("二维码格式不正确");
+                showQrcodeDialog();
                 return;
             }
             LogUtils.error("scan before="+result);

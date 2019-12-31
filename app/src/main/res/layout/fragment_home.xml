@@ -135,11 +135,15 @@
             android:textColor="#1F1F1F"
             android:textSize="@dimen/sp_17" />
     </LinearLayout>
-
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_below="@id/lay_check_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/lay_check_title"
+
         android:scrollbars="none">
 
         <RelativeLayout
@@ -484,4 +488,5 @@
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </RelativeLayout>

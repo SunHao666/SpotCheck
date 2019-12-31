@@ -30,7 +30,6 @@
         android:paddingRight="@dimen/dp_20"
         android:paddingTop="@dimen/dp_15"
         android:paddingBottom="@dimen/dp_15"
-        android:text="test1"
         android:lines="1"
         />
 
@@ -51,7 +50,6 @@
         android:paddingTop="@dimen/dp_15"
         android:paddingBottom="@dimen/dp_15"
         android:inputType="textPassword"
-        android:text="123456"
         android:lines="1"
         />
 

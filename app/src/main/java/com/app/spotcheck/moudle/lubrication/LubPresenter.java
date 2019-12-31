@@ -46,7 +46,9 @@ public class LubPresenter extends BasePresenter<LubView> {
 
                     @Override
                     protected void onFailed(int code, String msg) {
-                        mView.showError(msg);
+                        if(code != -1){
+                            mView.showError(msg);
+                        }
                     }
                 });
     }

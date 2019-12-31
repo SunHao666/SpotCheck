@@ -24,6 +24,9 @@ import com.app.spotcheck.moudle.scanlub.ScanLubActivity;
 import com.app.spotcheck.network.Contant;
 import com.king.zxing.CaptureActivity;
 import com.king.zxing.Intents;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.List;
 
@@ -66,6 +69,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     RelativeLayout noRunhuaNum;
     @BindView(R.id.lay_has_runhua_num)
     LinearLayout layHasRunhuaNum;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     HomeBean bean;
     private boolean isVisible = true;
     public static HomeFragment newInstance() {
@@ -116,7 +121,13 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
 
     @Override
     protected void initView() {
-
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Contant.TAB_SELECT = 0;
+                mPresenter.fetch();
+            }
+        });
     }
 
     @Override
@@ -124,7 +135,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
         this.bean = bean;
         HomeBean.CHKINFOBean chkinfo = bean.getCHKINFO();
         HomeBean.LUBINFOBean lubinfo = bean.getLUBINFO();
-        if (chkinfo.getCHK_UNNUM() == 0) {
+        if (chkinfo == null || chkinfo.getCHK_UNNUM() == 0) {
+            homeCheckNoNum.setText("0");
             noNum.setVisibility(View.VISIBLE);
             layHasNum.setVisibility(View.GONE);
         } else {
@@ -132,7 +144,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
             layHasNum.setVisibility(View.VISIBLE);
             homeCheckNoNum.setText(chkinfo.getCHK_UNNUM() + "");
             if (chkinfo.getCHK_EXECSTARTTIME() == null || chkinfo.getCHK_EXECENDTIME() == null) {
-                homePlanLubTime.setText("");
+                homePlanTime.setText("");
             } else {
                 homePlanTime.setText(chkinfo.getCHK_EXECSTARTTIME() + "~" + chkinfo.getCHK_EXECENDTIME());
             }
@@ -141,9 +153,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
             tvChecnkPlace.setText(chkinfo.getCHK_PARTNAME());
         }
 
-        if (lubinfo.getLUB_UNNUM() == 0) {
+        if (lubinfo == null || lubinfo.getLUB_UNNUM() == 0) {
             noRunhuaNum.setVisibility(View.VISIBLE);
             layHasRunhuaNum.setVisibility(View.GONE);
+            homeLubNoNum.setText("0");
         } else {
             noRunhuaNum.setVisibility(View.GONE);
             layHasRunhuaNum.setVisibility(View.VISIBLE);
@@ -156,12 +169,13 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
             tvLubDaji.setText(lubinfo.getLUB_MAINNAME());
             tvLubPlace.setText(lubinfo.getLUB_PARTNAME());
         }
-
+        refreshLayout.finishRefresh();
     }
 
     @Override
     public void showError(String error) {
         ToastWrapper.show(error);
+        refreshLayout.finishRefresh();
     }
 
     @Override
@@ -221,11 +235,13 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
                 break;
 
             case R.id.home_check_noNum:
+                Contant.TAB_SELECT = 1;
                 Contant.CHECKQRCODE = "";
                 Contant.CHECKSEARCH = "";
                 onCheckScanClick.onClick(1);
                 break;
             case R.id.home_lub_noNum:
+                Contant.TAB_SELECT = 2;
                 Contant.LUBQRCODE = "";
                 Contant.LUBSEARCH = "";
                 onLubScanClick.onClick(1);
@@ -241,7 +257,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
         }
         String result = data.getStringExtra(Intents.Scan.RESULT);
         if (TextUtils.isEmpty(result) || !result.contains("qrcode=")) {
-            ToastWrapper.show("二维码格式不正确");
+//            ToastWrapper.show("二维码格式不正确");
+            showQrcodeDialog();
             return;
         }
         LogUtils.error("scan before=" + result);

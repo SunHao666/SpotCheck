@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_dialog"
+
+    >
+
+    <TextView
+        android:id="@+id/tv_tan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="二维码没有定义"
+        android:textSize="@dimen/sp_18"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableTop="@drawable/qcode_tan"
+        android:paddingRight="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_45"
+        android:paddingTop="@dimen/dp_45"
+        android:paddingLeft="@dimen/dp_35"
+        android:layout_centerInParent="true"
+        />
+
+    <ImageView
+        android:id="@+id/iv_clode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/qcode_clode"
+        android:padding="@dimen/dp_5"
+        android:layout_alignParentRight="true"
+        />
+</RelativeLayout>

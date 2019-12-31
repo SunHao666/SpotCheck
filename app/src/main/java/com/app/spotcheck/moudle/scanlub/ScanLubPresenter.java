@@ -43,7 +43,7 @@ public class ScanLubPresenter extends BasePresenter<ScanLubView> {
 
         Map<String,String> map = new HashMap<>();
         map.put("lrecno",lrecno);
-        map.put("workhours",lrecno);
+        map.put("workhours",workhours);
         map.put("stophours",stophours);
         map.put("execman",loginname);
         map.put("remark",remark);

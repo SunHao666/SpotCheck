@@ -56,7 +56,7 @@ public class MLubAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         }else{
             ConViewHolder holder1 = (ConViewHolder) holder;
-            holder1.tvTitle.setText(datas.get(position).getPARTNAME());
+            holder1.tvTitle.setText(datas.get(position).getMAINNAME());
             holder1.tvPlanTime.setText(datas.get(position).getPLANTIME());
             holder1.tvLubPlace.setText(datas.get(position).getPARTNAME());
             holder1.tvLubTime.setText(datas.get(position).getFINISHTIME());

@@ -59,11 +59,11 @@ public class MCheckAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         }else if(holder instanceof ConViewHolder ){
             ConViewHolder holder1 = (ConViewHolder) holder;
-            holder1.tvTitle.setText(datas.get(position).getPARTNAME());
+            holder1.tvTitle.setText(datas.get(position).getMAINNAME());
             holder1.tvCheckedNum.setText("已点检项目"+datas.get(position).getCHECKNUM()+"项");
             holder1.tvUncheckNum.setText(datas.get(position).getUNCHECKNUM()+"");
             holder1.tvCheckTime.setText(datas.get(position).getEXECSTARTTIME()+"~"+datas.get(position).getEXECENDTIME());
-            holder1.tvCheckPlace.setText(datas.get(position).getMAINNAME());
+            holder1.tvCheckPlace.setText(datas.get(position).getPARTNAME());
             if(tab == 0){
                 holder1.layUncheckNum.setVisibility(View.VISIBLE);
                 holder1.tvCheckedNum.setVisibility(View.VISIBLE);

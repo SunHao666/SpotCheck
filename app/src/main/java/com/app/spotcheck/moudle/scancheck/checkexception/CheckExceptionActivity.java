@@ -150,6 +150,7 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
         map.put("id", toRequestBody(bean.getID() + ""));
         map.put("mainid", toRequestBody(bean.getMAINID()));
         map.put("partid", toRequestBody(bean.getPARTID()));
+        map.put("execid",toRequestBody(bean.getEXECID()));
         map.put("itemname", toRequestBody(bean.getITEMNAME()));
         map.put("execman", toRequestBody(Loginname));
         map.put("problem", toRequestBody(etInfo.getText().toString()));

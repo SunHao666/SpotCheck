@@ -62,6 +62,9 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
         Contant.TAB_SELECT = 1;
         if(!isVisible){
             LogUtils.error("CheckFragment onResume");
+            if(TextUtils.isEmpty(Contant.CHECKQRCODE) && TextUtils.isEmpty(Contant.CHECKSEARCH)){
+                tvSearch.setText("");
+            }
         }
     }
 
@@ -74,6 +77,9 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     protected void initData() {
         Contant.TAB_SELECT = 1;
         LogUtils.error("CheckFragment initData");
+        if(TextUtils.isEmpty(Contant.CHECKQRCODE) && TextUtils.isEmpty(Contant.CHECKSEARCH)){
+            tvSearch.setText("");
+        }
     }
 
     @Override
@@ -160,7 +166,7 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
         if(requestCode == 1001){
             String result = data.getStringExtra(Intents.Scan.RESULT);
             if(TextUtils.isEmpty(result)|| !result.contains("qrcode=")){
-                ToastWrapper.show("二维码格式不正确");
+                showQrcodeDialog();
                 return;
             }
             LogUtils.error("scan before="+result);
@@ -212,6 +218,9 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
         isVisible = hidden;
         if(!hidden){//显示中
             Contant.TAB_SELECT = 1;
+            if(TextUtils.isEmpty(Contant.CHECKQRCODE) && TextUtils.isEmpty(Contant.CHECKSEARCH)){
+                tvSearch.setText("");
+            }
             LogUtils.error("CheckFragment onHiddenChanged");
 //            requestSearch();
         }

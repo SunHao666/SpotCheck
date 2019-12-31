@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SpotCheck</string>
+    <string name="app_name">设备管家</string>
     <string name="action_cancel">取消</string>
     <string name="action_confirm">确定</string>
     <string name="main_home">首页</string>
@@ -16,14 +16,14 @@
     <string name="home_pro">巡查问题</string>
     <string name="home_lub">设备润滑</string>
     <string name="check">点检</string>
-    <string name="home_nocheck">未完成的点击部位</string>
+    <string name="home_nocheck">未完成的点检部位</string>
     <string name="home_check_plan">最近需进行点检的计划</string>
     <string name="home_daji">大机:</string>
     <string name="home_check_place">点检部位:</string>
     <string name="home_wait_event">代办事项</string>
     <string name="lub">润滑</string>
     <string name="item_check_place">部位:</string>
-    <string name="item_check_plan">计算点检时间:</string>
+    <string name="item_check_plan">计划点检时间:</string>
     <string name="plan_lub_time">计划润滑时间</string>
     <string name="item_lub_place">润滑部位</string>
     <string name="item_lub_time">润滑时间</string>
