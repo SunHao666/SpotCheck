@@ -17,6 +17,8 @@ import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.HomeBean;
+import com.app.spotcheck.moudle.bean.LubAllBean;
+import com.app.spotcheck.moudle.bean.PatralCheckBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.patralcheck.PatralCheckActivity;
 import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
@@ -173,21 +175,37 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     }
 
     @Override
-    public void showError(String error) {
-        ToastWrapper.show(error);
+    public void showError(int code,String error) {
+        if(code == -3000){
+            showQrcodeDialog();
+        }else{
+            ToastWrapper.show(error);
+        }
         refreshLayout.finishRefresh();
     }
 
     @Override
     public void showScanSuccess(SpotCheckAllBean bean, String qrcode) {
-        List<SpotCheckAllBean.SearchListBean> searchList = bean.getSearchList();
-        if (searchList == null || searchList.size() == 0) {
-            ToastWrapper.show("暂无待检项目");
-        } else {
+//        List<SpotCheckAllBean.SearchListBean> searchList = bean.getSearchList();
+//        if (searchList == null || searchList.size() == 0) {
+//            ToastWrapper.show("暂无待检项目");
+//        } else {
             //跳转至点检待检
             onCheckScanClick.onClick(1);
-            Contant.CHECKQRCODE = qrcode;
-        }
+//            Contant.CHECKQRCODE = qrcode;
+//        }
+    }
+
+    @Override
+    public void showLubSuccess(LubAllBean bean, String qrcode) {
+        onLubScanClick.onClick(1);
+    }
+
+    @Override
+    public void showPatralSuccess(PatralCheckBean bean, String qrcode) {
+        Intent intent = new Intent(getActivity(), PatralCheckActivity.class);
+        intent.putExtra("execid", qrcode);
+        startActivity(intent);
     }
 
     @OnClick({R.id.iv_home_check, R.id.iv_home_setpro, R.id.iv_home_lub, R.id.lay_has_num, R.id.lay_has_runhua_num,
@@ -248,7 +266,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
                 break;
         }
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -267,15 +284,13 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
         if (requestCode == 1001) {
             Contant.CHECKQRCODE = result;
             Contant.CHECKSEARCH = "";
-            onCheckScanClick.onClick(1);
+            mPresenter.scanCheck(result);
         } else if (requestCode == 1002) {
-            Intent intent = new Intent(getActivity(), PatralCheckActivity.class);
-            intent.putExtra("execid", result);
-            startActivity(intent);
+            mPresenter.scanPatralCheck(result);
         } else if (requestCode == 1003) {
             Contant.LUBQRCODE = result;
             Contant.LUBSEARCH = "";
-            onLubScanClick.onClick(1);
+            mPresenter.scanLub(result);
         } else  if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
             //用户从设置页面返回，
         }

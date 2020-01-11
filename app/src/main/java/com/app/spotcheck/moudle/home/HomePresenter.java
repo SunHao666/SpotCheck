@@ -5,6 +5,8 @@ import com.app.spotcheck.base.BaseView;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
+import com.app.spotcheck.moudle.bean.LubAllBean;
+import com.app.spotcheck.moudle.bean.PatralCheckBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.network.BaseCallback;
@@ -37,7 +39,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
                         if(mView == null){
                             return;
                         }
-                        mView.showError(msg);
+                        mView.showError(code,msg);
                     }
         });
     }
@@ -55,7 +57,43 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
                     @Override
                     protected void onFailed(int code, String msg) {
-                        mView.showError(msg);
+                        mView.showError(code,msg);
+                    }
+                });
+    }
+
+    public void scanPatralCheck(String qrcode){
+        Map<String,String> map = new HashMap<>();
+        map.put("qrcode",qrcode);
+        NetManager.getInstance().api().gotoAddRepair(convertMapToBody(map))
+                .enqueue(new BaseCallback<PatralCheckBean>() {
+                    @Override
+                    protected void onSuccess(PatralCheckBean bean) {
+                        mView.showPatralSuccess(bean,qrcode);
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        mView.showError(code,msg);
+                    }
+                });
+    }
+
+    public void scanLub(String qrcode){
+        Map<String,Object> map = new HashMap<>();
+        map.put("qrcode",qrcode);
+        map.put("mainname","");
+        map.put("execstatus","0");//0：未完成；1：完成
+        NetManager.getInstance().api().getLubPlanList(convertMapToBody(map))
+                .enqueue(new BaseCallback<LubAllBean>() {
+                    @Override
+                    protected void onSuccess(LubAllBean bean) {
+                        mView.showLubSuccess(bean,qrcode);
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        mView.showError(code,msg);
                     }
                 });
     }

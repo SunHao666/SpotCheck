@@ -3,6 +3,8 @@ package com.app.spotcheck.moudle.home;
 import com.app.spotcheck.base.BaseView;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
+import com.app.spotcheck.moudle.bean.LubAllBean;
+import com.app.spotcheck.moudle.bean.PatralCheckBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 
 /**
@@ -15,7 +17,11 @@ public interface HomeView {
 
     void showSuccess(HomeBean bean);
 
-    void showError(String error);
+    void showError(int code,String error);
 
     void showScanSuccess(SpotCheckAllBean bean, String qrcode);
+
+    void showLubSuccess(LubAllBean bean, String qrcode);
+
+    void showPatralSuccess(PatralCheckBean bean, String qrcode);
 }

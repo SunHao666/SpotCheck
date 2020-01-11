@@ -36,6 +36,7 @@ public class NetManager {
                 .writeTimeout(TIMEOUT,TimeUnit.SECONDS)
                 .addInterceptor(new HeadInterceptor())
                 .addInterceptor(new RetrofitLogInterceptor())
+                .addInterceptor(new PathInterceptor())
                 .build();
         return okHttpClient;
     }

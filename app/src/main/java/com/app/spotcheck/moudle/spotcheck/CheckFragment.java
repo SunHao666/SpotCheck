@@ -3,11 +3,13 @@ package com.app.spotcheck.moudle.spotcheck;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
+import com.app.spotcheck.base.utils.DialogUtils;
 import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.KeyWordsBean;
@@ -29,7 +31,7 @@ import butterknife.BindView;
  * @Author: 作者名
  * @CreateDate: 2019/12/19 20:52
  */
-public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements SpotCheckView {
+public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements SpotCheckView, SpotCheckFragment.CheckClearListener {
 
 
     @BindView(R.id.recyclerview)
@@ -40,6 +42,7 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     List<SpotCheckAllBean.SearchListBean> datas = new ArrayList<>();
     boolean isVisibleToUser = false;
     private MCheckAdapter adapter;
+    private DialogUtils loading;
 
     public CheckFragment(int tab) {
         this.tab = tab;
@@ -50,6 +53,8 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     protected void initData() {
         LogUtils.error("check tab=" + tab + ",initData");
 //        initRequest();
+        SpotCheckFragment fragment = (SpotCheckFragment) getParentFragment();
+        fragment.setCheckClearListener(this);
     }
 
     @Override
@@ -94,7 +99,9 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
         LogUtils.error("bean size = " + bean.getSearchList().size());
         datas.addAll(bean.getSearchList());
         adapter.notifyDataSetChanged();
-        refreshLayout.finishRefresh();
+        if(refreshLayout != null){
+            refreshLayout.finishRefresh();
+        }
     }
 
     @Override
@@ -102,12 +109,38 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
         ToastWrapper.show(error);
         datas.clear();
         adapter.notifyDataSetChanged();
-        refreshLayout.finishRefresh();
+        if(refreshLayout != null){
+            refreshLayout.finishRefresh();
+        }
     }
 
     @Override
     public void showSearchSuccess(KeyWordsBean bean) {
 
+    }
+
+    @Override
+    public void showFinish() {
+        datas.clear();
+        adapter.notifyDataSetChanged();
+        if(refreshLayout!= null){
+            refreshLayout.finishRefresh();
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        if(loading == null){
+            loading = new DialogUtils(getActivity(),R.style.CustomDialog);
+        }
+        loading.show();
+    }
+
+    @Override
+    public void dissLoading() {
+        if(loading != null && loading.isShowing()){
+            loading.dismiss();
+        }
     }
 
     @Override
@@ -148,4 +181,12 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
         }
     }
 
+    @Override
+    public void clear(int ptab) {
+        Contant.CHECKQRCODE = "";
+        Contant.CHECKSEARCH = "";
+        LogUtils.error("ptab"+ptab);
+        if(isVisibleToUser)
+            initRequest();
+    }
 }

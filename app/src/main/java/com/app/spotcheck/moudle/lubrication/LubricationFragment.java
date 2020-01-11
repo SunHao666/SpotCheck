@@ -1,7 +1,9 @@
 package com.app.spotcheck.moudle.lubrication;
 
 import android.content.Intent;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,6 +50,8 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
     LinearLayout laySearch;
     @BindView(R.id.viewPager)
     ScrollableViewPager viewPager;
+    @BindView(R.id.iv_delete)
+    ImageView iv_delete;
     public String[] tabNames = {"全部润滑工作", "待润滑", "已完成"};
     public List<Fragment> fragments = new ArrayList<>();
     private ViewPagerLubAdapter adapter;
@@ -80,6 +84,44 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
     @Override
     protected void initView() {
         initTablayout();
+        iv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvSearch.setText("");
+                Contant.LUBSEARCH = "";
+                if(getTab() == 0){
+                    viewPager.setCurrentItem(1);
+                    viewPager.setCurrentItem(0);
+                }else if(getTab() == 1){
+                    viewPager.setCurrentItem(2);
+                    viewPager.setCurrentItem(1);
+                }else if(getTab() == 2){
+                    viewPager.setCurrentItem(1);
+                    viewPager.setCurrentItem(2);
+                }
+            }
+        });
+        tvSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(TextUtils.isEmpty(s)){
+                    iv_delete.setVisibility(View.GONE);
+                }else{
+                    iv_delete.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
     @Override
@@ -118,6 +160,11 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
     }
 
     @Override
+    public void showFinsh() {
+
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         isVisible = hidden;
@@ -127,16 +174,26 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
                 tvSearch.setText("");
             }
             Contant.TAB_SELECT = 2;
+            if(getTab() == 0){
+                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(0);
+            }else if(getTab() == 1){
+                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(1);
+            }else if(getTab() == 2){
+                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(2);
+            }
         }
     }
 
-    @OnClick({R.id.scan, R.id.lay_search})
+    @OnClick({R.id.scan, R.id.tv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.scan:
                 scanLub();
                 break;
-            case R.id.lay_search:
+            case R.id.tv_search:
                 Intent intent =new Intent(getActivity(), SearchActivity.class);
                 intent.putExtra("usekind","2");
                 startActivityForResult(intent,1005);
@@ -200,5 +257,9 @@ public class LubricationFragment extends BaseFragment<LubPresenter> implements L
         if(isParer){
             viewPager.setCurrentItem(tab);
         }
+    }
+
+    public int getTab(){
+        return tab;
     }
 }

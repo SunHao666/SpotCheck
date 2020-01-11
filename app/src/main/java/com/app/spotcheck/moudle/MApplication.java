@@ -11,6 +11,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 public class MApplication extends Application {
+
+    private static MApplication intance;
     static {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
@@ -24,6 +26,10 @@ public class MApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        intance = this;
+    }
 
+    public static MApplication getIntance() {
+        return intance;
     }
 }

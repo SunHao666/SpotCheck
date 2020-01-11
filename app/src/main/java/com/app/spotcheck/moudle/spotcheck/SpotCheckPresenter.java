@@ -34,6 +34,8 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
                     protected void onFailed(int code, String msg) {
                         if(code != -1){
                             mView.showError(msg);
+                        }else{
+                            mView.showFinish();
                         }
                     }
                 });
@@ -54,6 +56,8 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
         protected void onFailed(int code, String msg) {
             if(code != -1){
                 mView.showError(msg);
+            }else{
+                mView.showFinish();
             }
         }
     });
@@ -75,6 +79,8 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
                     protected void onFailed(int code, String msg) {
                         if(code != -1){
                             mView.showError(msg);
+                        }else{
+                            mView.showFinish();
                         }
                     }
                 });
@@ -95,6 +101,8 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
                     protected void onFailed(int code, String msg) {
                         if(code != -1){
                             mView.showError(msg);
+                        }else{
+                            mView.showFinish();
                         }
                     }
                 });

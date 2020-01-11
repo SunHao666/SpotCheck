@@ -17,4 +17,10 @@ public interface SpotCheckView extends BaseView {
     void showError(String error);
 
     void showSearchSuccess(KeyWordsBean bean);
+
+    void showFinish();
+
+    void showLoading();
+
+    void dissLoading();
 }

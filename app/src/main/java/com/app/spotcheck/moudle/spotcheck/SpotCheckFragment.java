@@ -1,8 +1,11 @@
 package com.app.spotcheck.moudle.spotcheck;
 
 import android.content.Intent;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +28,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.king.zxing.CaptureActivity;
 import com.king.zxing.Intents;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +38,7 @@ import butterknife.OnClick;
 
 public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implements SpotCheckView, TabLayout.OnTabSelectedListener {
     @BindView(R.id.tv_search)
-    TextView tvSearch;
+    EditText tvSearch;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tablayout)
@@ -42,6 +47,8 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     ImageView scan;
     @BindView(R.id.lay_search)
     LinearLayout laySearch;
+    @BindView(R.id.iv_delete)
+    ImageView iv_delete;
     public String[] tabNames = {"全部点检部位", "待检部位", "已检部位"};
     public List<Fragment> fragments = new ArrayList<>();
     @BindView(R.id.viewPager)
@@ -97,6 +104,47 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     protected void initView() {
 
         initTablayout();
+        iv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvSearch.setText("");
+                Contant.CHECKSEARCH = "";
+//                viewPager.setCurrentItem(1);
+//                if(listener != null){
+//                    listener.clear(tablayout.getSelectedTabPosition());
+//                }
+                if(getTab() == 0){
+                    viewPager.setCurrentItem(1);
+                    viewPager.setCurrentItem(0);
+                }else if(getTab() == 1){
+                    viewPager.setCurrentItem(2);
+                    viewPager.setCurrentItem(1);
+                }else if(getTab() == 2){
+                    viewPager.setCurrentItem(1);
+                    viewPager.setCurrentItem(2);
+                }
+            }
+        });
+        tvSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(TextUtils.isEmpty(s)){
+                    iv_delete.setVisibility(View.GONE);
+                }else{
+                    iv_delete.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 
@@ -136,13 +184,28 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
 //        }
     }
 
-    @OnClick({R.id.scan, R.id.lay_search})
+    @Override
+    public void showFinish() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void dissLoading() {
+
+    }
+
+    @OnClick({R.id.scan, R.id.tv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.scan:
                 scanCheck();
                 break;
-            case R.id.lay_search:
+            case R.id.tv_search:
                 Intent intent =new Intent(getActivity(), SearchActivity.class);
                 intent.putExtra("usekind","1");
                 startActivityForResult(intent,1004);
@@ -191,6 +254,7 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
 
         currentTab = tab.getPosition();
         LogUtils.error("currentTab="+currentTab);
+
     }
 
     @Override
@@ -211,6 +275,9 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
         }
     }
 
+    public int getTab(){
+        return tab;
+    }
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -220,6 +287,16 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
             Contant.TAB_SELECT = 1;
             if(TextUtils.isEmpty(Contant.CHECKQRCODE) && TextUtils.isEmpty(Contant.CHECKSEARCH)){
                 tvSearch.setText("");
+            }
+            if(getTab() == 0){
+                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(0);
+            }else if(getTab() == 1){
+                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(1);
+            }else if(getTab() == 2){
+                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(2);
             }
             LogUtils.error("CheckFragment onHiddenChanged");
 //            requestSearch();
@@ -233,4 +310,13 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
         String userid = SPUtils.getInstance(getActivity()).getString("Loginid");
         mPresenter.getCheckSearch(usekind,userid);
     }
+
+    public interface CheckClearListener{
+        void clear(int tab);
+    }
+    CheckClearListener listener;
+
+    public void setCheckClearListener(CheckClearListener listener){
+        this.listener = listener;
+    };
 }

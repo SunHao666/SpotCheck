@@ -1,5 +1,7 @@
 package com.app.spotcheck.moudle.login;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,8 +16,10 @@ import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.BasePresenter;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
+import com.app.spotcheck.moudle.MApplication;
 import com.app.spotcheck.moudle.MainActivity;
 import com.app.spotcheck.moudle.bean.LoginBean;
+import com.app.spotcheck.network.Contant;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +46,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     TextView tvB1;
     @BindView(R.id.tv_b2)
     TextView tvB2;
-
+    public int press = 0;
     @Override
     protected void initData() {
 
@@ -61,6 +65,47 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void initView() {
         toolbar.setVisibility(View.GONE);
+        findViewById(R.id.iv_logo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                press++;
+                if(press == 3){
+                    showAddressDialog();
+                }
+            }
+        });
+    }
+
+    private void showAddressDialog() {
+
+        String path = SPUtils.getInstance(MApplication.getIntance()).getString("path");
+        if(TextUtils.isEmpty(path)){
+            path = "hqmjml7980.xicp.net";
+        }
+        EditText editText = new EditText(this);
+        editText.setText(path);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("请输入访问地址")
+                .setView(editText)
+                .setCancelable(false)
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        press =0;
+                    }
+                })
+                .setPositiveButton("确认修改", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(!TextUtils.isEmpty(editText.getText().toString())){
+                            SPUtils.getInstance(LoginActivity.this).put("path",editText.getText().toString());
+                        }
+                        dialog.dismiss();
+                        press =0;
+                    }
+                });
+        builder.show();
     }
 
     @OnClick(R.id.btn_login)

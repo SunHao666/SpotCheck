@@ -95,12 +95,23 @@ public class LubFragment extends BaseFragment<LubPresenter> implements LubView {
         LogUtils.error("lub bean size = "+bean.getSearchList().size());
         datas.addAll(bean.getSearchList());
         adapter.notifyDataSetChanged();
-        refreshLayout.finishRefresh();
+        if(refreshLayout != null){
+            refreshLayout.finishRefresh();
+        }
     }
 
     @Override
     public void showError(String error) {
         ToastWrapper.show(error);
+        datas.clear();
+        adapter.notifyDataSetChanged();
+        if(refreshLayout != null){
+            refreshLayout.finishRefresh();
+        }
+    }
+
+    @Override
+    public void showFinsh() {
         datas.clear();
         adapter.notifyDataSetChanged();
         refreshLayout.finishRefresh();

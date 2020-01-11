@@ -51,13 +51,13 @@
                         android:textSize="@dimen/sp_14"
                         android:textColor="#515151"
                         />
+
                     <TextView
                         android:id="@+id/tv_set_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp_14"
-                        android:textColor="#1F1F1F"
-                        />
+                        android:textColor="#3489DA"
+                        android:textSize="@dimen/sp_14" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="#1F1F1F"
+                        android:textColor="#3489DA"
                         />
                 </LinearLayout>
             </LinearLayout>

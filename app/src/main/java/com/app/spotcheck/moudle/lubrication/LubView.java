@@ -15,4 +15,6 @@ public interface LubView {
     void showSuccess(LubAllBean bean);
 
     void showError(String error);
+
+    void showFinsh();
 }

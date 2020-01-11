@@ -21,6 +21,7 @@ import com.app.spotcheck.moudle.home.HomeFragment;
 import com.app.spotcheck.moudle.lubrication.LubricationFragment;
 import com.app.spotcheck.moudle.mine.MineFragment;
 import com.app.spotcheck.moudle.spotcheck.SpotCheckFragment;
+import com.app.spotcheck.network.Contant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
@@ -76,6 +77,7 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
         mHomeFragment.setOnCheckScanClick(new HomeFragment.OnCheckScanClick() {
             @Override
             public void onClick(int position) {
+                mSpotCheckFragment.setTab(0);
                 if (mSpotCheckFragment == null)
                     mSpotCheckFragment = SpotCheckFragment.newInstance();
                 mSpotCheckFragment.setTab(1);
@@ -145,11 +147,15 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
                 switchFragment(mHomeFragment);
                 return true;
             case R.id.tab_two://分类
+                Contant.CHECKQRCODE= "";
+                Contant.CHECKSEARCH="";
                 if (mSpotCheckFragment == null)
                     mSpotCheckFragment = SpotCheckFragment.newInstance();
                 switchFragment(mSpotCheckFragment);
                 return true;
             case R.id.tab_three://购物车
+                Contant.LUBQRCODE= "";
+                Contant.LUBSEARCH="";
                 if (mLubricationFragment == null)
                     mLubricationFragment = LubricationFragment.newInstance();
                 switchFragment(mLubricationFragment);

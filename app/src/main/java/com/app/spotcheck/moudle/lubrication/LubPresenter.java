@@ -48,6 +48,8 @@ public class LubPresenter extends BasePresenter<LubView> {
                     protected void onFailed(int code, String msg) {
                         if(code != -1){
                             mView.showError(msg);
+                        }else{
+                            mView.showFinsh();
                         }
                     }
                 });

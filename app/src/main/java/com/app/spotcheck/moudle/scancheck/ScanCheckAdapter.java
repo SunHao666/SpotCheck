@@ -37,7 +37,7 @@ public class ScanCheckAdapter extends RecyclerView.Adapter<ScanCheckAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvContent.setText(data.get(position).getCHECKCONTEXT());
+        holder.tvContent.setText(position+1+"、"+data.get(position).getCHECKCONTEXT());
         if (position % 2 == 0) {
             holder.itemView.setBackgroundColor(Color.parseColor("#EAF2F8"));
         }
