@@ -2,6 +2,8 @@ package com.app.spotcheck.network;
 
 
 import com.app.spotcheck.moudle.bean.CheckExceptionBean;
+import com.app.spotcheck.moudle.bean.DeviceInfoBean;
+import com.app.spotcheck.moudle.bean.DeviceListBean;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.KeyWordsBean;
@@ -21,6 +23,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
@@ -100,4 +103,17 @@ public interface NetService {
     //保存关键字
     @POST("keywords/saveKeyword")
     Call<BaseCallModel> saveKeyword(@Body RequestBody body);
+
+    //全部设备
+    @POST("repair/getDevList")
+    Call<BaseCallModel<DeviceListBean>> getDeviceList(@Body RequestBody body);
+
+    //设备问题
+    @POST("repair/getRecordListByDevMain")
+    Call<BaseCallModel<DeviceInfoBean>> getDeviceInfo(@Body RequestBody body);
+
+    //设备保存
+    @FormUrlEncoded
+    @POST("repair/repairRecordFinish")
+    Call<BaseCallModel<Object>> saveDeviceInfo(@FieldMap Map<String, String> map);
 }

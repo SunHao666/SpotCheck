@@ -14,7 +14,11 @@
         android:name=".moudle.MApplication"
         android:theme="@style/AppTheme">
         <activity android:name=".moudle.MainActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".moudle.scancheck.ScanCheckActivity" android:screenOrientation="portrait"/>
         <activity android:name=".moudle.scancheck.scanresult.ScanCheckResultActivity" android:screenOrientation="portrait"/>
@@ -22,17 +26,19 @@
         <activity android:name=".moudle.patralcheck.PatralCheckActivity" android:screenOrientation="portrait"/>
         <activity android:name=".moudle.scanlub.ScanLubActivity" android:screenOrientation="portrait"/>
         <activity android:name=".moudle.login.LoginActivity" android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name="com.king.zxing.CaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CaptureTheme"/>
         <activity android:name=".moudle.search.SearchActivity" />
+        <activity android:name=".moudle.device.deviceinfo.DeviceInfoActivity" />
+        <activity android:name=".moudle.device.devicesave.DeviceInfoSaveActivity" />
     </application>
 
 </manifest>

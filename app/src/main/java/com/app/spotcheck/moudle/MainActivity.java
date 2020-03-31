@@ -17,6 +17,7 @@ import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.BasePresenter;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
+import com.app.spotcheck.moudle.device.DeviceListFragment;
 import com.app.spotcheck.moudle.home.HomeFragment;
 import com.app.spotcheck.moudle.lubrication.LubricationFragment;
 import com.app.spotcheck.moudle.mine.MineFragment;
@@ -45,8 +46,10 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
     private SpotCheckFragment mSpotCheckFragment;
     private LubricationFragment mLubricationFragment;
     private MineFragment mMineFragment;
+    private DeviceListFragment mDeviceFragment;
     // 当前正在显示的Fragment
     private Fragment mCurrentFragment;
+    private DeviceListFragment deviceListFragment;
 
     @Override
     protected void initData() {
@@ -107,6 +110,7 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
 //        mLubricationFragment = (LubricationFragment) manager.findFragmentByTag(LubricationFragment.class.getName());
 //        mMineFragment = (MineFragment) manager.findFragmentByTag(MineFragment.class.getName());
         mHomeFragment = new HomeFragment();
+        deviceListFragment = new DeviceListFragment();
         mSpotCheckFragment = new SpotCheckFragment();
         mLubricationFragment = new LubricationFragment();
         mMineFragment = new MineFragment();
@@ -163,6 +167,10 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
             case R.id.tab_four://我的
                 if (mMineFragment == null) mMineFragment = MineFragment.newInstance();
                 switchFragment(mMineFragment);
+                return true;
+            case R.id.tab_two_zero://设备
+                if (mDeviceFragment == null)  mDeviceFragment= DeviceListFragment.newInstance();
+                switchFragment(mDeviceFragment);
                 return true;
             default:
                 return false;
