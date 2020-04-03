@@ -247,7 +247,7 @@
                 android:layout_centerVertical="true"
                 android:lines="1"
                 />
-            <EditText
+            <TextView
                 android:id="@+id/et_work_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -292,12 +292,14 @@
                 android:layout_alignParentRight="true"
                 android:layout_toRightOf="@id/name2"
                 android:layout_marginLeft="@dimen/dp_5"
+                android:inputType="number"
                 android:lines="1"
                 android:padding="@dimen/dp_9"
                 android:hint="请输入"
                 android:background="@null"
                 android:textSize="@dimen/sp_14"
                 android:textColor="#515151"/>
+
         </RelativeLayout>
 
         <TextView
@@ -312,29 +314,27 @@
             android:layout_marginLeft="@dimen/dp_30"
             android:layout_marginTop="@dimen/dp_9"
             />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_80"
-            android:layout_marginLeft="@dimen/dp_30"
-            android:layout_marginRight="@dimen/dp_30"
-            android:background="@drawable/shape_blue_five"
-            android:layout_marginTop="@dimen/dp_9"
-            >
 
-            <EditText
-                android:id="@+id/et_devs_repair_content"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_80"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="@dimen/dp_5"
-                android:lines="1"
-                android:padding="@dimen/dp_9"
-                android:hint="请在此填写"
-                android:background="@null"
-                android:textSize="@dimen/sp_14"
-                android:textColor="#515151"/>
-        </RelativeLayout>
+                android:layout_height="@dimen/dp_95"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_marginRight="@dimen/dp_30"
+                android:layout_marginTop="@dimen/dp_6"
+                android:background="@drawable/shape_blue_five"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/et_devs_repair_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:padding="@dimen/dp_9"
+                    android:hint="请输入"
+                    android:background="@null"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="#515151"/>
+            </LinearLayout>
+
 
         <Button
             android:id="@+id/btn_devs_save"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.spotcheck.R;
@@ -14,6 +15,7 @@ import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.DeviceInfoBean;
 import com.app.spotcheck.moudle.device.DeveiceListAdapter;
+import com.app.spotcheck.moudle.device.devicesave.DeviceInfoSaveActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,7 @@ public class DeviceInfoActivity extends BaseActivity<DeviceInfoPresenter> implem
     RecyclerView rvDeviceInfo;
     private DialogUtils loading;
     private DeveiceInfoAdapter adapter;
-    private List<DeviceInfoBean.DeviceInfoListBean.DeviceInfoInnerBean> data = new ArrayList<>();
+    private List<DeviceInfoBean.ListBean.SearchListBean> data = new ArrayList<>();
     private String mainid;
 
     @Override
@@ -66,8 +68,33 @@ public class DeviceInfoActivity extends BaseActivity<DeviceInfoPresenter> implem
                 finish();
             }
         });
+        rvDeviceInfo.setLayoutManager(new LinearLayoutManager(this));
         adapter = new DeveiceInfoAdapter(this,data);
         rvDeviceInfo.setAdapter(adapter);
+        adapter.setOnCheckItemClickListener(new DeveiceInfoAdapter.OnCheckItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                // TODO: 2020/3/31
+                DeviceInfoBean.ListBean.SearchListBean searchListBean = data.get(position);
+                String mainname = searchListBean.getMAINNAME();
+                String partname = searchListBean.getPARTNAME();
+                String findtime = searchListBean.getFINDTIME();
+                String problemkind = searchListBean.getPROBLEMKIND();
+                String itemname = searchListBean.getITEMNAME();
+                String problem = searchListBean.getPROBLEM();
+                String recid = searchListBean.getRECID();
+
+                Intent intent = new Intent(DeviceInfoActivity.this, DeviceInfoSaveActivity.class);
+                intent.putExtra("MAINNAME",mainname);
+                intent.putExtra("PARTNAME",partname);
+                intent.putExtra("FINDTIME",findtime);
+                intent.putExtra("PROBLEMKIND",problemkind);
+                intent.putExtra("ITEMNAME",itemname);
+                intent.putExtra("PROBLEM",problem);
+                intent.putExtra("recid",recid);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -89,26 +116,17 @@ public class DeviceInfoActivity extends BaseActivity<DeviceInfoPresenter> implem
     public void showSuccess(DeviceInfoBean bean) {
         data.clear();
         adapter.notifyDataSetChanged();
-        LogUtils.error("bean size = " + bean.getList().get(0).getSearchList().size());
-        data.addAll(bean.getList().get(0).getSearchList());
+        LogUtils.error("bean size = " + bean.getList().getSearchList().size());
+        data.addAll(bean.getList().getSearchList());
         adapter.notifyDataSetChanged();
-        List<DeviceInfoBean.DeviceInfoTextBean> info = bean.getInfo();
-        if(info.size()<1){
+        DeviceInfoBean.InfoBean info = bean.getInfo();
+        if(info==null){
             return;
         }
-        adapter.setOnCheckItemClickListener(new DeveiceInfoAdapter.OnCheckItemClickListener() {
-            @Override
-            public void onClick(int position) {
-                // TODO: 2020/3/31
-
-
-            }
-        });
-        DeviceInfoBean.DeviceInfoTextBean deviceInfoTextBean = info.get(0);
-        tvDevinfoId.setText(deviceInfoTextBean.getMAINID());
-        tvDevinfoName.setText(deviceInfoTextBean.getMAINNAME());
-        tvDevinfoRespectTime.setText(deviceInfoTextBean.getRESTARTDATE());
-        tvDevinfoStopTime.setText(deviceInfoTextBean.getSTOPDATE());
+        tvDevinfoId.setText(info.getMAINID());
+        tvDevinfoName.setText(info.getMAINNAME());
+        tvDevinfoRespectTime.setText(info.getRESTARTDATE());
+        tvDevinfoStopTime.setText(info.getSTOPDATE());
     }
 
     @Override

@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
 
 public class DeveiceInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public Context context;
-    public List<DeviceInfoBean.DeviceInfoListBean.DeviceInfoInnerBean> data;
+    public List<DeviceInfoBean.ListBean.SearchListBean> data;
     private static final int EMPTTY = 1;
 
 
-    public DeveiceInfoAdapter(Context context, List<DeviceInfoBean.DeviceInfoListBean.DeviceInfoInnerBean> data) {
+    public DeveiceInfoAdapter(Context context, List<DeviceInfoBean.ListBean.SearchListBean> data) {
         this.context = context;
         this.data = data;
     }
@@ -50,13 +50,13 @@ public class DeveiceInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         } else if (holder instanceof ViewHolder) {
             ViewHolder holder1 = (ViewHolder) holder;
-            holder1.tvNo.setText("NO." + position + 1);
+            holder1.tvNo.setText("NO." + (position + 1));
             holder1.tvTitle.setText(data.get(position).getMAINNAME());
             holder1.tvFindTime.setText(data.get(position).getFINDTIME());
             holder1.tvFindType.setText(data.get(position).getFINDTYPE());
             holder1.tvDevinfoName.setText(data.get(position).getITEMNAME());
             holder1.tvDevQuestionName.setText(data.get(position).getPROBLEM());
-            holder1.tvDevQuestionName.setText(data.get(position).getPROBLEMKIND());
+            holder1.tvDevinfoQuestionType.setText(data.get(position).getPROBLEMKIND());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

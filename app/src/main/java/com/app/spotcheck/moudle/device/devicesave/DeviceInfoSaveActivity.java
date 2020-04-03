@@ -9,8 +9,10 @@ import android.widget.TextView;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
+import com.app.spotcheck.base.utils.BasisTimesUtils;
 import com.app.spotcheck.base.utils.DialogUtils;
 import com.app.spotcheck.base.utils.SPUtils;
+import com.app.spotcheck.moudle.device.deviceinfo.DeviceInfoActivity;
 import com.luck.picture.lib.tools.ToastUtils;
 
 import butterknife.BindView;
@@ -32,7 +34,7 @@ public class DeviceInfoSaveActivity extends BaseActivity<DeviceSavePresenter> im
     @BindView(R.id.name1)
     TextView name1;
     @BindView(R.id.et_work_time)
-    EditText etWorkTime;
+    TextView etWorkTime;
     @BindView(R.id.name2)
     TextView name2;
     @BindView(R.id.et_dev_work_hour)
@@ -85,6 +87,14 @@ public class DeviceInfoSaveActivity extends BaseActivity<DeviceSavePresenter> im
         tvDevsFindType.setText(problemkind);
         tvDevsProject.setText(itemname);
         tvDevsDesc.setText(problem);
+        //日期选择
+        etWorkTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDate();
+            }
+        });
+
 
         btnDevsSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +119,22 @@ public class DeviceInfoSaveActivity extends BaseActivity<DeviceSavePresenter> im
                         etDevsRepairContent.getText().toString(),loginname);
             }
         });
+    }
+
+    private void showDate() {
+        BasisTimesUtils.showDatePickerDialog(DeviceInfoSaveActivity.this, BasisTimesUtils.THEME_HOLO_LIGHT, "请选择年月日", 2020, 1, 1, new BasisTimesUtils.OnDatePickerListener() {
+
+            @Override
+            public void onConfirm(int year, int month, int dayOfMonth) {
+//                ToastUtils.s(DeviceInfoSaveActivity.this,year + "-" + month + "-" + dayOfMonth);
+                etWorkTime.setText(year + "-" + month + "-" + dayOfMonth);
+            }
+
+            @Override
+            public void onCancel() {
+            }
+        });
+
     }
 
     @Override

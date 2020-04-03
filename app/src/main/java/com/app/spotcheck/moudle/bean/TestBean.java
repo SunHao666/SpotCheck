@@ -2,7 +2,8 @@ package com.app.spotcheck.moudle.bean;
 
 import java.util.List;
 
-public class DeviceInfoBean {
+public class TestBean {
+
 
     /**
      * List : {"searchList":[{"PROBLEM":"悬梁磨损","RECID":"ef2f74db7e134c69b1d2616fb12ebd28","FINDTYPE":"1","MAINID":"E004","PARTID":"M02P0002","PROBLEMKIND":"A","MAINNAME":"1#堆料机","REPAIRWORK":null,"FINISHFLG":"0","PARTNAME":"俯仰机构","REPAIRTIME":null,"FINDTIME":"2020-03-29","ITEMNAME":"液压系统"}]}
