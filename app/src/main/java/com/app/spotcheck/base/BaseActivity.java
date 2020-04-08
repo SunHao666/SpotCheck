@@ -104,7 +104,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends TransitionAc
     protected abstract T initPresenter();
 
     @Override
-    protected final void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         mPresenter.dettachView(this);
         mUnbind.unbind();

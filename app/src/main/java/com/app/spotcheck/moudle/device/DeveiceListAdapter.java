@@ -50,7 +50,7 @@ public class DeveiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         } else if (holder instanceof ViewHolder) {
             ViewHolder holder1 = (ViewHolder) holder;
-            holder1.tvNo.setText("NO." + position + 1);
+            holder1.tvNo.setText("NO." + (position + 1));
             holder1.tvTitle.setText(data.get(position).getMAINNAME());
             holder1.tvWaitRepair.setText(data.get(position).getREPCOUNT());
             holder1.tvDeviceId.setText(data.get(position).getMAINID());

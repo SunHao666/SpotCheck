@@ -35,6 +35,7 @@
         <activity android:name=".moudle.search.SearchActivity" />
         <activity android:name=".moudle.device.deviceinfo.DeviceInfoActivity" />
         <activity android:name=".moudle.device.devicesave.DeviceInfoSaveActivity" />
+        <activity android:name=".moudle.voice.VoiceActivity" />
     </application>
 
 </manifest>

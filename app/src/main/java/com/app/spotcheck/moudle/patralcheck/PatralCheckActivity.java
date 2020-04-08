@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,8 @@ import com.app.spotcheck.base.wrapper.PopuwindowListView;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.PROBLEMKINDBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
+import com.app.spotcheck.moudle.device.devicesave.DeviceInfoSaveActivity;
+import com.app.spotcheck.moudle.voice.VoiceActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -59,7 +62,8 @@ public class PatralCheckActivity extends BaseActivity<PatralCheckPresenter> impl
     EditText etInfo;
     @BindView(R.id.btn_ex_save)
     Button btnExSave;
-
+    @BindView(R.id.tv_input_voice)
+    TextView tv_input_voice;
     @BindView(R.id.rv_take_photo)
     RecyclerView mRecyclerView;
     private int maxSelectNum = 3;//最多到几张还可以选择
@@ -95,13 +99,17 @@ public class PatralCheckActivity extends BaseActivity<PatralCheckPresenter> impl
         initWidget();
     }
 
-    @OnClick({R.id.lay_pro_type, R.id.btn_ex_save})
+    @OnClick({R.id.lay_pro_type, R.id.btn_ex_save,R.id.tv_input_voice})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.lay_pro_type:
                 if(data.size()>0){
                     showPopu();
                 }
+                break;
+            case R.id.tv_input_voice:
+                Intent intent1 = new Intent(PatralCheckActivity.this, VoiceActivity.class);
+                startActivityForResult(intent1,1000);
                 break;
             case R.id.btn_ex_save:
                 if(!checkNull()){
@@ -111,6 +119,7 @@ public class PatralCheckActivity extends BaseActivity<PatralCheckPresenter> impl
                 break;
         }
     }
+
 
     private void save() {
 //        photoList	照片列表
@@ -267,6 +276,10 @@ public class PatralCheckActivity extends BaseActivity<PatralCheckPresenter> impl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(data == null){
+            return;
+        }
+
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
@@ -282,6 +295,14 @@ public class PatralCheckActivity extends BaseActivity<PatralCheckPresenter> impl
                     adapter.setList(selectList);
                     adapter.notifyDataSetChanged();
                     break;
+
+            }
+        }
+
+        if(requestCode == 1000){
+            String voicetext = data.getStringExtra("voicetext");
+            if(!TextUtils.isEmpty(voicetext)){
+                etInfo.append(voicetext);
             }
         }
     }

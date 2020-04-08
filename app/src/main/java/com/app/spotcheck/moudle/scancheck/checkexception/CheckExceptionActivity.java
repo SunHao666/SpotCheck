@@ -3,6 +3,7 @@ package com.app.spotcheck.moudle.scancheck.checkexception;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +25,8 @@ import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.MainActivity;
 import com.app.spotcheck.moudle.bean.CheckExceptionBean;
 import com.app.spotcheck.moudle.bean.PROBLEMKINDBean;
+import com.app.spotcheck.moudle.patralcheck.PatralCheckActivity;
+import com.app.spotcheck.moudle.voice.VoiceActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -59,6 +62,8 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     Button btnExSave;
     @BindView(R.id.lay_pro_type)
     LinearLayout layProType;
+    @BindView(R.id.tv_input_voice)
+    TextView tv_input_voice;
     CheckExceptionBean bean;
     public List<PROBLEMKINDBean> data = new ArrayList<>();
     @BindView(R.id.rv_take_photo)
@@ -118,7 +123,7 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     }
 
 
-    @OnClick({R.id.lay_pro_type, R.id.btn_ex_save})
+    @OnClick({R.id.lay_pro_type, R.id.btn_ex_save,R.id.tv_input_voice})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.lay_pro_type:
@@ -126,6 +131,10 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
                 break;
             case R.id.btn_ex_save:
                 save();
+                break;
+            case R.id.tv_input_voice:
+                Intent intent1 = new Intent(CheckExceptionActivity.this, VoiceActivity.class);
+                startActivityForResult(intent1,1000);
                 break;
         }
     }
@@ -260,6 +269,9 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(data == null){
+            return;
+        }
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
@@ -275,6 +287,12 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
                     adapter.setList(selectList);
                     adapter.notifyDataSetChanged();
                     break;
+            }
+        }
+        if(requestCode == 1000){
+            String voicetext = data.getStringExtra("voicetext");
+            if(!TextUtils.isEmpty(voicetext)){
+                etInfo.append(voicetext);
             }
         }
     }

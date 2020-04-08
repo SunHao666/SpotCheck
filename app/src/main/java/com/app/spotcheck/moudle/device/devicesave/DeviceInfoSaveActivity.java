@@ -7,13 +7,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.utils.BasisTimesUtils;
 import com.app.spotcheck.base.utils.DialogUtils;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.moudle.device.deviceinfo.DeviceInfoActivity;
+import com.app.spotcheck.moudle.event.DeviceEvent;
+import com.app.spotcheck.moudle.voice.VoiceActivity;
 import com.luck.picture.lib.tools.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 
@@ -41,6 +47,8 @@ public class DeviceInfoSaveActivity extends BaseActivity<DeviceSavePresenter> im
     EditText etDevWorkHour;
     @BindView(R.id.name3)
     TextView name3;
+    @BindView(R.id.tv_input_voice)
+    TextView tv_input_voice;
     @BindView(R.id.et_devs_repair_content)
     EditText etDevsRepairContent;
     @BindView(R.id.btn_devs_save)
@@ -119,6 +127,14 @@ public class DeviceInfoSaveActivity extends BaseActivity<DeviceSavePresenter> im
                         etDevsRepairContent.getText().toString(),loginname);
             }
         });
+
+        tv_input_voice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(DeviceInfoSaveActivity.this, VoiceActivity.class);
+                startActivityForResult(intent1,1000);
+            }
+        });
     }
 
     private void showDate() {
@@ -140,6 +156,7 @@ public class DeviceInfoSaveActivity extends BaseActivity<DeviceSavePresenter> im
     @Override
     public void showSuccess(String bean) {
         ToastUtils.s(DeviceInfoSaveActivity.this,bean);
+        EventBus.getDefault().post(new DeviceEvent());
         finish();
     }
 
@@ -163,4 +180,17 @@ public class DeviceInfoSaveActivity extends BaseActivity<DeviceSavePresenter> im
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data == null){
+            return;
+        }
+        if(requestCode == 1000){
+            String voicetext = data.getStringExtra("voicetext");
+            if(!TextUtils.isEmpty(voicetext)){
+                etDevsRepairContent.append(voicetext);
+            }
+        }
+    }
 }

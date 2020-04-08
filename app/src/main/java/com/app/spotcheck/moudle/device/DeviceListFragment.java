@@ -15,11 +15,18 @@ import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.DeviceListBean;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.device.deviceinfo.DeviceInfoActivity;
+import com.app.spotcheck.moudle.event.BaseEvent;
+import com.app.spotcheck.moudle.event.DeviceEvent;
+import com.app.spotcheck.moudle.login.LoginActivity;
 import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
 import com.app.spotcheck.moudle.spotcheck.MCheckAdapter;
+import com.app.spotcheck.network.Contant;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +41,7 @@ public class DeviceListFragment extends BaseFragment<DevicePresenter> implements
     RecyclerView rvDeviceList;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-
+    private boolean isVisible = true;
     List<DeviceListBean.DataBean> data = new ArrayList<>();
     private DeveiceListAdapter adapter;
 
@@ -120,6 +127,32 @@ public class DeviceListFragment extends BaseFragment<DevicePresenter> implements
     public void dissLoading() {
         if(loading != null && loading.isShowing()){
             loading.dismiss();
+        }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshView(DeviceEvent event){
+        initRequest();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Contant.TAB_SELECT = 0;
+        isVisible = hidden;
+        if (!hidden) {
+            LogUtils.error("HomeFragment onHiddenChanged");
+            mPresenter.fetch();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        mPresenter.fetch();
+        if(!isVisible){
+            Contant.TAB_SELECT = 0;
+            LogUtils.error("HomeFragment onResume");
+            mPresenter.fetch();
         }
     }
 }

@@ -16,6 +16,7 @@ import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.DeviceInfoBean;
 import com.app.spotcheck.moudle.device.DeveiceListAdapter;
 import com.app.spotcheck.moudle.device.devicesave.DeviceInfoSaveActivity;
+import com.app.spotcheck.moudle.voice.VoiceActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class DeviceInfoActivity extends BaseActivity<DeviceInfoPresenter> implem
     TextView tvDevinfoRespectTime;
     @BindView(R.id.rv_device_info)
     RecyclerView rvDeviceInfo;
+
     private DialogUtils loading;
     private DeveiceInfoAdapter adapter;
     private List<DeviceInfoBean.ListBean.SearchListBean> data = new ArrayList<>();
@@ -46,6 +48,12 @@ public class DeviceInfoActivity extends BaseActivity<DeviceInfoPresenter> implem
     protected void initData() {
         Intent intent = getIntent();
         mainid = intent.getStringExtra("mainid");
+//        mPresenter.fetch(mainid);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mPresenter.fetch(mainid);
     }
 
@@ -61,13 +69,14 @@ public class DeviceInfoActivity extends BaseActivity<DeviceInfoPresenter> implem
 
     @Override
     protected void initView() {
-        setTopTitle("设备列表");
+        setTopTitle("待维修的问题");
         setTopLeftButton(R.drawable.back, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+
         rvDeviceInfo.setLayoutManager(new LinearLayoutManager(this));
         adapter = new DeveiceInfoAdapter(this,data);
         rvDeviceInfo.setAdapter(adapter);
