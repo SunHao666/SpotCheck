@@ -96,6 +96,7 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
             @Override
             public void onClick(View view) {
                 finish();
+                //
             }
         });
         initWidget();
