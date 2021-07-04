@@ -32,10 +32,13 @@
             android:name="com.king.zxing.CaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CaptureTheme"/>
-        <activity android:name=".moudle.search.SearchActivity" />
-        <activity android:name=".moudle.device.deviceinfo.DeviceInfoActivity" />
-        <activity android:name=".moudle.device.devicesave.DeviceInfoSaveActivity" />
-        <activity android:name=".moudle.voice.VoiceActivity" />
+        <activity android:name=".moudle.search.SearchActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.device.deviceinfo.DeviceInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.device.devicesave.DeviceInfoSaveActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.voice.VoiceActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.report.ReportRepairActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.repair.detail1.RepairDetail1Activity" />
+        <activity android:name=".moudle.repair.detail2.RepairDetail2Activity" />
     </application>
 
 </manifest>

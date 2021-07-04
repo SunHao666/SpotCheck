@@ -1,32 +1,30 @@
 package com.app.spotcheck.moudle.scancheck;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
-import com.app.spotcheck.base.utils.CommonAdapter;
+import com.app.spotcheck.base.utils.IntentKeys;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
-import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
+import com.app.spotcheck.moudle.event.HomeEvent;
 import com.app.spotcheck.moudle.scancheck.checkexception.CheckExceptionActivity;
 import com.app.spotcheck.moudle.scancheck.scanresult.ScanCheckResultActivity;
-import com.app.spotcheck.network.Contant;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -40,25 +38,26 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
     TextView tvSetName;
     @BindView(R.id.tv_set_place)
     TextView tvSetPlace;
+//    @BindView(R.id.tv_electric)
+//    TextView tvElectric;
     @BindView(R.id.btn_check_ok)
     Button btnCheckOk;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     private List<ScanCheckBean.SearchListBean> beans = new ArrayList<>();
     private ScanCheckAdapter adapter;
-    private String execid;
+    private String taskId;
     private List<Integer> execids = new ArrayList<>();
     ScanCheckBean bean;
     @Override
     protected void initData() {
-        execid = getIntent().getStringExtra("EXECID");
-//        String execid ="cb611e9d3fa64ca197d0b76ee78bb6f1";
+        taskId = getIntent().getStringExtra("TaskId");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.fetch(execid);
+        mPresenter.fetch(taskId);
     }
 
     @Override
@@ -73,7 +72,6 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
 
     @Override
     protected void initView() {
-        setTopTitle("设备点检项目");
         setTopLeftButton(R.drawable.back, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,13 +79,15 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
             }
         });
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        recyclerview.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         adapter = new ScanCheckAdapter(this,beans);
         recyclerview.setAdapter(adapter);
         adapter.setOnItemClickListener(new ScanCheckAdapter.CheckItemClickListener() {
             @Override
             public void onClick(int position) {
                 Intent intent = new Intent(ScanCheckActivity.this, CheckExceptionActivity.class);
-                intent.putExtra("id",beans.get(position).getID());
+                intent.putExtra(IntentKeys.CK_ID,beans.get(position).getCKID());
+                intent.putExtra(IntentKeys.TASK_ID,taskId);
                 startActivity(intent);
             }
         });
@@ -96,7 +96,7 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
     @OnClick(R.id.btn_check_ok)
     public void onViewClicked() {
         String loginname = SPUtils.getInstance(this).getString("Loginname");
-        mPresenter.saveCheckReult(execid,loginname,execids);
+        mPresenter.saveCheckReult(taskId,loginname,execids);
     }
 
 
@@ -105,14 +105,16 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
         this.bean = bean;
         beans.clear();
         adapter.notifyDataSetChanged();
-        tvSetName.setText(bean.getMAINNAME());
-        tvSetPlace.setText(bean.getPARTNAME());
+        setTopTitle("["+bean.getMAINNAME()+"]["+bean.getPARTNAME()+"]");
+//        tvSetName.setText(bean.getMAINNAME());
+//        tvSetPlace.setText(bean.getPARTNAME());
+//        tvElectric.setText(bean.getITEMKIND());
         List<ScanCheckBean.SearchListBean> searchList = bean.getSearchList();
         beans.addAll(searchList);
         adapter.notifyDataSetChanged();
         btnCheckOk.setEnabled(true);
         for (int i = 0; i < beans.size(); i++) {
-            execids.add(beans.get(i).getID());
+            execids.add(beans.get(i).getCKID());
         }
     }
 

@@ -2,6 +2,7 @@ package com.app.spotcheck.base;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,11 +13,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -33,6 +34,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * 通用Activity基类.
@@ -42,7 +45,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends TransitionAc
     public Toolbar toolbar;
     private FrameLayout viewContent;
     private TextView mTitle;
-
+    private AlertDialog dialog;
 
     private Unbinder mUnbind;
     public T mPresenter;
@@ -99,6 +102,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends TransitionAc
         }
     }
 
+    public void setTopTitle(String title,int size) {
+        if (!TextUtils.isEmpty(title)) {
+            mTitle.setText(title);
+            mTitle.setTextSize(sp2px(this,size));
+        }
+    }
     protected abstract void initData();
 
     protected abstract T initPresenter();
@@ -139,4 +148,41 @@ public abstract class BaseActivity<T extends BasePresenter> extends TransitionAc
         }
     }
 
+    public static int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
+    public static int sp2px(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+    }
+
+    public void showQrcodeDialog(){
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_qrcode, null);
+        ImageView iv_clode = view.findViewById(R.id.iv_clode);
+        iv_clode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(dialog != null && dialog.isShowing()){
+                    dialog.dismiss();
+                }
+
+            }
+        });
+        dialog = new AlertDialog.Builder(this)
+                .setView(view)
+                .create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+    }
+
+    public RequestBody toRequestBody(String value) {
+        if(value == null){
+            value = "";
+        }
+        RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), value);
+        return requestBody;
+    }
 }

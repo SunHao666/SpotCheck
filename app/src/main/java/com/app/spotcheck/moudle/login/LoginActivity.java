@@ -20,6 +20,7 @@ import com.app.spotcheck.moudle.MApplication;
 import com.app.spotcheck.moudle.MainActivity;
 import com.app.spotcheck.moudle.bean.LoginBean;
 import com.app.spotcheck.network.Contant;
+import com.app.spotcheck.utils.GlobalKey;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,7 +70,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             @Override
             public void onClick(View v) {
                 press++;
-                if(press == 3){
+                if(press == 30){
                     showAddressDialog();
                 }
             }
@@ -125,8 +126,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     public void showResult(String success,LoginBean bean) {
         SPUtils.getInstance(this).put("logtime",bean.getLogtime());
-        SPUtils.getInstance(this).put("Loginname",bean.getLoginname());
-        SPUtils.getInstance(this).put("Loginid",bean.getLoginid());
+        SPUtils.getInstance(this).put(GlobalKey.KEY_LOGINNAME,bean.getLoginname());
+        SPUtils.getInstance(this).put(GlobalKey.KEY_LOGINID,bean.getLoginid());
+        SPUtils.getInstance(this).put(GlobalKey.KEY_DEPARTMENTNAME,bean.getDepartmentName());
         disLoding();
         ToastWrapper.show(success);
         MainActivity.show(LoginActivity.this,MainActivity.class);

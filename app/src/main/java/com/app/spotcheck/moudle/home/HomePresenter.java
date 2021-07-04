@@ -7,6 +7,7 @@ import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
+import com.app.spotcheck.moudle.bean.RepairReportScanBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.network.BaseCallback;
@@ -70,6 +71,23 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     @Override
                     protected void onSuccess(PatralCheckBean bean) {
                         mView.showPatralSuccess(bean,qrcode);
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        mView.showError(code,msg);
+                    }
+                });
+    }
+    /*维修*/
+    public void scanResult(String qrcode){
+        Map<String,String> map = new HashMap<>();
+        map.put("qrcode",qrcode);
+        NetManager.getInstance().api().getDevByQcode(convertMapToBody(map))
+                .enqueue(new BaseCallback<RepairReportScanBean>() {
+                    @Override
+                    protected void onSuccess(RepairReportScanBean bean) {
+                        mView.showRepairSuccess(bean,qrcode);
                     }
 
                     @Override

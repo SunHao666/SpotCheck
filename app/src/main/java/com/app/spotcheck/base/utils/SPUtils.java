@@ -22,7 +22,6 @@ public class SPUtils {
 
     private static Map<String, SPUtils> sSPMap = new HashMap<>();
     private SharedPreferences sp;
-
     /**
      * 获取SP实例
      *

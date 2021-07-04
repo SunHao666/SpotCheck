@@ -16,13 +16,13 @@ public interface IRecogListener {
 
     /**
      * CALLBACK_EVENT_ASR_BEGIN
-     * onAsrReady后检查到用户开始说话
+     * onAsrReady后点检到用户开始说话
      */
     void onAsrBegin();
 
     /**
      * CALLBACK_EVENT_ASR_END
-     * 检查到用户开始说话停止，或者ASR_STOP 输入事件调用后，
+     * 点检到用户开始说话停止，或者ASR_STOP 输入事件调用后，
      */
     void onAsrEnd();
 

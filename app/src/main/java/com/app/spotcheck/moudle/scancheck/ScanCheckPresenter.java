@@ -28,7 +28,9 @@ public class ScanCheckPresenter extends BasePresenter<ScanCheckView> {
 
     public void fetch(String execid){
         Map<String,String> map = new HashMap<>();
-        map.put("execid",execid);
+        map.put("taskId",execid);
+//        map.put("taskId",
+//                "9f231f6db2c24b129e343df067aec3e4");
         NetManager.getInstance().api().getUnCheckItemList(convertMapToBody(map))
                 .enqueue(new BaseCallback<ScanCheckBean>() {
                     @Override

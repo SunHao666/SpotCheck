@@ -2,6 +2,7 @@ package com.app.spotcheck.network;
 
 
 import com.app.spotcheck.moudle.bean.CheckExceptionBean;
+import com.app.spotcheck.moudle.bean.DepartmentBean;
 import com.app.spotcheck.moudle.bean.DeviceInfoBean;
 import com.app.spotcheck.moudle.bean.DeviceListBean;
 import com.app.spotcheck.moudle.bean.HomeBean;
@@ -10,6 +11,10 @@ import com.app.spotcheck.moudle.bean.KeyWordsBean;
 import com.app.spotcheck.moudle.bean.LoginBean;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
+import com.app.spotcheck.moudle.bean.ProKindBean;
+import com.app.spotcheck.moudle.bean.RepairDetailBean;
+import com.app.spotcheck.moudle.bean.RepairItemBean;
+import com.app.spotcheck.moudle.bean.RepairReportScanBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.moudle.bean.ScanLubBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
@@ -116,4 +121,41 @@ public interface NetService {
     @FormUrlEncoded
     @POST("repair/repairRecordFinish")
     Call<BaseCallModel<Object>> saveDeviceInfo(@FieldMap Map<String, String> map);
+
+    //故障类型
+    @FormUrlEncoded
+    @POST("common/problemKindInfo")
+    Call<BaseCallModel<ProKindBean>> problemKindInfo(@FieldMap Map<String, String> map);
+
+    @POST("repair/getDevByQcode")
+    Call<BaseCallModel<RepairReportScanBean>> getDevByQcode(@Body RequestBody body);
+
+    //巡检异常保存
+    @Multipart
+    @POST("repair/saveRepairApply")
+    Call<BaseCallModel> saveRepairApply(@PartMap Map<String, RequestBody> params, @Part() List<MultipartBody.Part> parts);
+
+    @POST("repair/getRecordList")
+    Call<BaseCallModel<RepairItemBean>> getRecordList(@Body RequestBody body);
+
+    @POST("repair/gotoApplyCheck")
+    Call<BaseCallModel<RepairDetailBean>> gotoApplyCheck(@Body RequestBody body);
+
+    @POST("repair/saveApplyCommitDel")
+    Call<BaseCallModel<String>> saveApplyCommitDel(@Body RequestBody body);
+
+    @POST("repair/saveApplyCommit")
+    Call<BaseCallModel<String>> saveApplyCommit(@Body RequestBody body);
+
+    @POST("repair/gotoDispatch")
+    Call<BaseCallModel<RepairDetailBean>> gotoDispatch(@Body RequestBody body);
+
+    @POST("repair/saveDispatch")
+    Call<BaseCallModel<String>> saveDispatch(@Body RequestBody body);
+
+    //故障类型
+    @FormUrlEncoded
+    @POST("common/getDepartmentList")
+    Call<BaseCallModel<DepartmentBean>> getDepartmentList(@FieldMap Map<String, String> map);
+
 }

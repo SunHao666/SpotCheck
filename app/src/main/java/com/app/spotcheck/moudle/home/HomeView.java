@@ -5,7 +5,9 @@ import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
+import com.app.spotcheck.moudle.bean.RepairReportScanBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
+import com.luck.picture.lib.tools.ValueOf;
 
 /**
  * @ClassName: HomeView
@@ -24,4 +26,7 @@ public interface HomeView {
     void showLubSuccess(LubAllBean bean, String qrcode);
 
     void showPatralSuccess(PatralCheckBean bean, String qrcode);
+    void showRepairSuccess(RepairReportScanBean bean, String qrcode);
+
+
 }

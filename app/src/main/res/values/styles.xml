@@ -21,4 +21,24 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
+    <style name="check_label_style1">
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="check_label_style2">
+        <item name="android:textSize">@dimen/sp_10</item>
+        <item name="android:textColor">#222222</item>
+    </style>
+
+    <style name="exception_part_style1">
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#222222</item>
+    </style>
+    <style name="exception_part_style2">
+        <item name="android:textSize">@dimen/sp_10</item>
+        <item name="android:textColor">#737373</item>
+    </style>
 </resources>

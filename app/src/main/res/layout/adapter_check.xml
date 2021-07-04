@@ -1,20 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:toos="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/tv_content"
-        android:layout_width="@dimen/dp_0"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:orientation="horizontal"
         android:paddingLeft="@dimen/dp_30"
         android:paddingRight="@dimen/dp_15"
         android:paddingTop="@dimen/dp_15"
         android:paddingBottom="@dimen/dp_15"
-        android:textSize="@dimen/sp_13"
-        android:textColor="#222222"
-        />
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_14"
+            android:textColor="#222222"
+            android:layout_marginTop="@dimen/dp_2"
+            tools:text="1"
+            />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5">
+            <com.google.android.flexbox.FlexboxLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:flexWrap="wrap"
+                app:alignItems="stretch"
+                app:alignContent="stretch" >
+                <TextView
+                    android:id="@+id/mPrejectTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_check_label"
+                    android:gravity="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_9"
+                    tools:text="上小车检查项目"/>
+                <TextView
+                    android:id="@+id/mItemsTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:background="@drawable/shape_check_label"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_9"
+                    tools:text="机械1"/>
+            </com.google.android.flexbox.FlexboxLayout>
+
+           <!-- <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_13"
+                android:textColor="#3489DA"
+                />-->
+            <TextView
+                android:id="@+id/mPartsTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="@dimen/dp_5"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/colorAccent"
+                tools:text="#xsdfsdfs"
+                />
+            <TextView
+                android:id="@+id/tv_content2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="@dimen/dp_5"
+                android:textSize="@dimen/sp_13"
+                android:textColor="#222222"
+                android:visibility="gone"
+                tools:text="检查内瓤"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <ImageView
         android:layout_width="wrap_content"

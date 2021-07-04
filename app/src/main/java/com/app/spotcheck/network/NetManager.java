@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -30,13 +31,16 @@ public class NetManager {
     }
 
     private OkHttpClient getClient() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         okHttpClient = new OkHttpClient.Builder()
                 .callTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT,TimeUnit.SECONDS)
                 .writeTimeout(TIMEOUT,TimeUnit.SECONDS)
                 .addInterceptor(new HeadInterceptor())
                 .addInterceptor(new RetrofitLogInterceptor())
-                .addInterceptor(new PathInterceptor())
+//                .addInterceptor(new PathInterceptor())
+                .addInterceptor(interceptor)
                 .build();
         return okHttpClient;
     }

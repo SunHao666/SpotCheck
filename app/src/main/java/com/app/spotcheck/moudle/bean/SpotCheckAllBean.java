@@ -50,6 +50,15 @@ public class SpotCheckAllBean {
         private int UNCHECKNUM;
         private String MAINID;
         private int CHECKNUM;
+        private String TASKID;
+
+        public String getTASKID() {
+            return TASKID;
+        }
+
+        public void setTASKID(String TASKID) {
+            this.TASKID = TASKID;
+        }
 
         public String getPARTID() {
             return PARTID;

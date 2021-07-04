@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F4">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3489DA">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="维修记录列表"
+                android:textSize="@dimen/sp_17"
+                android:textColor="#FFFFFF"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/dp_14"
+                />
+
+            <ImageView
+                android:id="@+id/mRepairAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/repair_add"
+                android:padding="@dimen/dp_5"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_18"
+                android:layout_marginLeft="@dimen/dp_11"
+                />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabTextColor="#515151"
+        app:tabSelectedTextColor="#5099F8"
+        app:tabIndicatorColor="#5099F8"
+        app:tabIndicatorGravity="bottom"
+        app:tabIndicatorFullWidth="false"/>
+    <com.app.spotcheck.base.view.ScrollableViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

@@ -2,12 +2,16 @@ package com.app.spotcheck.moudle.scancheck.checkexception;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.TextAppearanceSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,15 +21,13 @@ import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.adapter.FullyGridLayoutManager;
 import com.app.spotcheck.base.adapter.GridImageAdapter;
-import com.app.spotcheck.base.adapter.TakePhotoAdapter;
 import com.app.spotcheck.base.utils.GlideEngine;
+import com.app.spotcheck.base.utils.IntentKeys;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.PopuwindowListView;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
-import com.app.spotcheck.moudle.MainActivity;
 import com.app.spotcheck.moudle.bean.CheckExceptionBean;
 import com.app.spotcheck.moudle.bean.PROBLEMKINDBean;
-import com.app.spotcheck.moudle.patralcheck.PatralCheckActivity;
 import com.app.spotcheck.moudle.voice.VoiceActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -39,17 +41,21 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+/**
+ * 点检异常问题登记
+ */
 public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter> implements CheckExceptionView {
     @BindView(R.id.tv_set_name)
     TextView tvSetName;
     @BindView(R.id.tv_set_place)
     TextView tvSetPlace;
+    //    @BindView(R.id.tv_electric)
+//    TextView tvElectric;
     @BindView(R.id.tv_check_project)
     TextView tvCheckProject;
     @BindView(R.id.tv_check_content)
@@ -61,22 +67,26 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     @BindView(R.id.btn_ex_save)
     Button btnExSave;
     @BindView(R.id.lay_pro_type)
-    LinearLayout layProType;
+    RelativeLayout layProType;
     @BindView(R.id.tv_input_voice)
     TextView tv_input_voice;
+    @BindView(R.id.mPartsTv)
+    TextView mPartsTv;
     CheckExceptionBean bean;
     public List<PROBLEMKINDBean> data = new ArrayList<>();
     @BindView(R.id.rv_take_photo)
     RecyclerView mRecyclerView;
     private int maxSelectNum = 3;//最多到几张还可以选择
     private List<LocalMedia> selectList = new ArrayList<>();
-    private int id;
+    private int ckId;
+    private String taskId;
     private GridImageAdapter adapter;
 
     @Override
     protected void initData() {
-        id = getIntent().getIntExtra("id", 0);
-        mPresenter.fetch(id);
+        ckId = getIntent().getIntExtra(IntentKeys.CK_ID, 0);
+        taskId = getIntent().getStringExtra(IntentKeys.TASK_ID);
+        mPresenter.fetch(ckId);
     }
 
     @Override
@@ -105,10 +115,32 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     @Override
     public void showSuccess(CheckExceptionBean bean) {
         this.bean = bean;
-        tvSetName.setText(bean.getMAINNAME());
-        tvSetPlace.setText(bean.getPARTNAME());
-        tvCheckProject.setText(bean.getITEMNAME());
-        tvCheckContent.setText(bean.getCHECKCONTEXT());
+        String lable = bean.getMAINNAME()+"/"+bean.getPARTNAME();
+        int preIndex = lable.indexOf("/");
+        SpannableString styledText = new SpannableString(lable);
+        styledText.setSpan(new TextAppearanceSpan(this, R.style.exception_part_style1), 0, preIndex, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        styledText.setSpan(new TextAppearanceSpan(this, R.style.exception_part_style2), preIndex, lable.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        mPartsTv.setText(styledText);
+
+        tvCheckProject.setText(bean.getITEMS() + " " + bean.getPARTS());
+        //开启线程获取行数，进行判断和设置对齐方式
+        tvCheckProject.post(() -> {
+            if (tvCheckProject.getLineCount() > 1)
+                //多余一行左对齐
+                tvCheckProject.setGravity(Gravity.LEFT);
+            else
+                //一行右对齐
+                tvCheckProject.setGravity(Gravity.RIGHT);
+        });
+        tvCheckContent.setText(bean.getCHECKITEM());
+        tvCheckContent.post(() -> {
+            if (tvCheckContent.getLineCount() > 1)
+                //多余一行左对齐
+                tvCheckContent.setGravity(Gravity.LEFT);
+            else
+                //一行右对齐
+                tvCheckContent.setGravity(Gravity.RIGHT);
+        });
         data.addAll(bean.getPROBLEMKIND());
     }
 
@@ -124,7 +156,7 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     }
 
 
-    @OnClick({R.id.lay_pro_type, R.id.btn_ex_save,R.id.tv_input_voice})
+    @OnClick({R.id.lay_pro_type, R.id.btn_ex_save, R.id.tv_input_voice})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.lay_pro_type:
@@ -135,7 +167,7 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
                 break;
             case R.id.tv_input_voice:
                 Intent intent1 = new Intent(CheckExceptionActivity.this, VoiceActivity.class);
-                startActivityForResult(intent1,1000);
+                startActivityForResult(intent1, 1000);
                 break;
         }
     }
@@ -158,17 +190,18 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
         String Loginname = SPUtils.getInstance(this).getString("Loginname");
         Map<String, RequestBody> map = new HashMap<>();
         map.put("id", toRequestBody(bean.getID() + ""));
+        map.put("taskId", toRequestBody(taskId));
         map.put("mainid", toRequestBody(bean.getMAINID()));
         map.put("partid", toRequestBody(bean.getPARTID()));
-        map.put("execid",toRequestBody(bean.getEXECID()));
+        map.put("execid", toRequestBody(bean.getEXECID()));
         map.put("itemname", toRequestBody(bean.getITEMNAME()));
         map.put("execman", toRequestBody(Loginname));
         map.put("problem", toRequestBody(etInfo.getText().toString()));
         map.put("problemkind", toRequestBody(tvProType.getText().toString()));
-
+        map.put("ckId", toRequestBody(String.valueOf(ckId)));
         List<MultipartBody.Part> parts = new ArrayList<>();
         for (int i = 0; i < selectList.size(); i++) {
-            if(selectList.get(i).isCompressed()){
+            if (selectList.get(i).isCompressed()) {
                 File file = new File(selectList.get(i).getCompressPath());
                 RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 MultipartBody.Part part = MultipartBody.Part.createFormData("photoList", file.getName(), requestFile);
@@ -179,6 +212,9 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     }
 
     public RequestBody toRequestBody(String value) {
+        if (null == value) {
+            value = "";
+        }
         RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), value);
         return requestBody;
     }
@@ -270,7 +306,7 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data == null){
+        if (data == null) {
             return;
         }
         if (resultCode == RESULT_OK) {
@@ -290,9 +326,9 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
                     break;
             }
         }
-        if(requestCode == 1000){
+        if (requestCode == 1000) {
             String voicetext = data.getStringExtra("voicetext");
-            if(!TextUtils.isEmpty(voicetext)){
+            if (!TextUtils.isEmpty(voicetext)) {
                 etInfo.append(voicetext);
             }
         }

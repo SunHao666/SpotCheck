@@ -1,12 +1,14 @@
 package com.app.spotcheck.moudle.bean;
 
+import java.io.Serializable;
+
 /**
  * @ClassName: LoginBean
  * @Description: java类作用描述
  * @Author: 作者名
  * @CreateDate: 2019/12/18 15:12
  */
-public class LoginBean {
+public class LoginBean implements Serializable {
 
     /**
      * WorkClassName : 机电1班
@@ -18,6 +20,24 @@ public class LoginBean {
     private String Loginid;
     private long logtime;
     private String Loginname;
+    private String DepartmentId;	//部门ID
+    private String DepartmentName;	//部门名称
+
+    public String getDepartmentId() {
+        return DepartmentId;
+    }
+
+    public void setDepartmentId(String departmentId) {
+        DepartmentId = departmentId;
+    }
+
+    public String getDepartmentName() {
+        return DepartmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        DepartmentName = departmentName;
+    }
 
     public String getLoginname() {
         return Loginname;

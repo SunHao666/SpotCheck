@@ -32,7 +32,7 @@ public class ChainRecogListener implements IRecogListener {
     }
 
     /**
-     * onAsrReady后检查到用户开始说话
+     * onAsrReady后点检到用户开始说话
      */
     @Override
     public void onAsrBegin() {
@@ -42,7 +42,7 @@ public class ChainRecogListener implements IRecogListener {
     }
 
     /**
-     * 检查到用户开始说话停止，或者ASR_STOP 输入事件调用后，
+     * 点检到用户开始说话停止，或者ASR_STOP 输入事件调用后，
      */
     @Override
     public void onAsrEnd() {

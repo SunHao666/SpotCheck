@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.app.spotcheck"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -57,4 +57,7 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
     implementation project(path: ':core')
 
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+    implementation 'com.github.li-xiaojun:XPopup:2.2.24'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }

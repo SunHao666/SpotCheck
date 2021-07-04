@@ -10,17 +10,17 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.BasePresenter;
+import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
-import com.app.spotcheck.moudle.device.DeviceListFragment;
-import com.app.spotcheck.moudle.home.HomeFragment;
+import com.app.spotcheck.moudle.home.HomeNewFragment;
 import com.app.spotcheck.moudle.lubrication.LubricationFragment;
 import com.app.spotcheck.moudle.mine.MineFragment;
+import com.app.spotcheck.moudle.repair.RepairFragment;
 import com.app.spotcheck.moudle.spotcheck.SpotCheckFragment;
 import com.app.spotcheck.network.Contant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,22 +34,22 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends BaseActivity<BasePresenter> implements BottomNavigationView.OnNavigationItemSelectedListener ,EasyPermissions.PermissionCallbacks{
 
-    public static final int CAMERA = 1;
-    public static final int WRITE_EXTERNAL_STORAGE = 2;
     private static final int RC_PERMISSIONS = 119;
+    public int checkFrom = -1;
+    public int lubFrom = -1;
 
     @BindView(R.id.layout_container)
     FrameLayout layoutContainer;
     @BindView(R.id.bottomnavigationview)
     BottomNavigationView bottomnavigationview;
-    private HomeFragment mHomeFragment;
+
+    private HomeNewFragment mHomeFragment;
     private SpotCheckFragment mSpotCheckFragment;
     private LubricationFragment mLubricationFragment;
+    private RepairFragment mRepairFrament;
     private MineFragment mMineFragment;
-    private DeviceListFragment mDeviceFragment;
     // 当前正在显示的Fragment
     private Fragment mCurrentFragment;
-    private DeviceListFragment deviceListFragment;
 
     @Override
     protected void initData() {
@@ -68,16 +68,14 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
 
     @Override
     protected void initView() {
-        // "内存重启"时(例如修改手机字体大小), 恢复之前的Fragment.
-        // 注意此方法只有在父类的onCreate(Bundle)调用之后才有效.
-        retrieveFragments();
+        initFragment();
         bottomnavigationview.setOnNavigationItemSelectedListener(this);
         toolbar.setVisibility(View.GONE);
         initListener();
     }
 
     private void initListener() {
-        mHomeFragment.setOnCheckScanClick(new HomeFragment.OnCheckScanClick() {
+        mHomeFragment.setOnCheckScanClick(new HomeNewFragment.OnCheckScanClick() {
             @Override
             public void onClick(int position) {
                 mSpotCheckFragment.setTab(0);
@@ -88,7 +86,7 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
             }
         });
 
-        mHomeFragment.setOnLubScanClick(new HomeFragment.OnLubScanClick() {
+        mHomeFragment.setOnLubScanClick(new HomeNewFragment.OnLubScanClick() {
             @Override
             public void onClick(int position) {
                 if (mLubricationFragment == null)
@@ -103,16 +101,11 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
     /**
      * 找回FragmentManager中存储的Fragment
      */
-    private void retrieveFragments() {
-        FragmentManager manager = getSupportFragmentManager();
-//        mHomeFragment = (HomeFragment) manager.findFragmentByTag(HomeFragment.class.getName());
-//        mSpotCheckFragment = (SpotCheckFragment) manager.findFragmentByTag(SpotCheckFragment.class.getName());
-//        mLubricationFragment = (LubricationFragment) manager.findFragmentByTag(LubricationFragment.class.getName());
-//        mMineFragment = (MineFragment) manager.findFragmentByTag(MineFragment.class.getName());
-        mHomeFragment = new HomeFragment();
-        deviceListFragment = new DeviceListFragment();
+    private void initFragment() {
+        mHomeFragment = new HomeNewFragment();
         mSpotCheckFragment = new SpotCheckFragment();
         mLubricationFragment = new LubricationFragment();
+        mRepairFrament = RepairFragment.getInstance();
         mMineFragment = new MineFragment();
         switchFragment(mHomeFragment);
     }
@@ -147,31 +140,44 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.tab_one://首页
-                if (mHomeFragment == null) mHomeFragment = HomeFragment.newInstance();
+                if (mHomeFragment == null) mHomeFragment = HomeNewFragment.newInstance();
                 switchFragment(mHomeFragment);
                 return true;
-            case R.id.tab_two://分类
-                Contant.CHECKQRCODE= "";
-                Contant.CHECKSEARCH="";
+            case R.id.tab_two://点检
+                if(checkFrom != 1){
+                    Contant.CHECKQRCODE= "";
+                    Contant.CHECKSEARCH= "";
+                }else{
+                    checkFrom = -1;
+                    Contant.CHECKSEARCH= "";
+                }
+                LogUtils.error("onNavigationItemSelected"+Contant.CHECKQRCODE);
                 if (mSpotCheckFragment == null)
                     mSpotCheckFragment = SpotCheckFragment.newInstance();
                 switchFragment(mSpotCheckFragment);
                 return true;
-            case R.id.tab_three://购物车
-                Contant.LUBQRCODE= "";
-                Contant.LUBSEARCH="";
+            case R.id.tab_three://润滑
+                if(lubFrom != 1){
+                    Contant.LUBQRCODE= "";
+                    Contant.LUBSEARCH="";
+                }else{
+                    lubFrom = -1;
+                    Contant.LUBSEARCH="";
+                }
+
                 if (mLubricationFragment == null)
                     mLubricationFragment = LubricationFragment.newInstance();
                 switchFragment(mLubricationFragment);
                 return true;
-            case R.id.tab_four://我的
+            case R.id.tab_four://维修
+                if (mRepairFrament == null)  mRepairFrament= RepairFragment.getInstance();
+                switchFragment(mRepairFrament);
+                return true;
+            case R.id.tab_five://我的
                 if (mMineFragment == null) mMineFragment = MineFragment.newInstance();
                 switchFragment(mMineFragment);
                 return true;
-            case R.id.tab_two_zero://设备
-                if (mDeviceFragment == null)  mDeviceFragment= DeviceListFragment.newInstance();
-                switchFragment(mDeviceFragment);
-                return true;
+
             default:
                 return false;
         }
@@ -181,7 +187,6 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             exit();
             return true;

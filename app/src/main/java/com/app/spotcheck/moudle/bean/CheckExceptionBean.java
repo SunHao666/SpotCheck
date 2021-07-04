@@ -15,7 +15,7 @@ public class CheckExceptionBean {
      * ID : 18
      * ITEMNAME : 电动机
      */
-
+    private String ITEMKIND;
     private String MAINNAME;
     private String CHECKCONTEXT;
     private String FINISHFLG;
@@ -25,6 +25,50 @@ public class CheckExceptionBean {
     private String ITEMNAME;
     private String PARTID;
     private String MAINID;
+    private String ITEMS;
+    private String PARTS;
+    private String CHECKITEM;
+    private int CKID;
+
+    public int getCKID() {
+        return CKID;
+    }
+
+    public void setCKID(int CKID) {
+        this.CKID = CKID;
+    }
+
+    public String getITEMS() {
+        return ITEMS;
+    }
+
+    public void setITEMS(String ITEMS) {
+        this.ITEMS = ITEMS;
+    }
+
+    public String getPARTS() {
+        return PARTS;
+    }
+
+    public void setPARTS(String PARTS) {
+        this.PARTS = PARTS;
+    }
+
+    public String getCHECKITEM() {
+        return CHECKITEM;
+    }
+
+    public void setCHECKITEM(String CHECKITEM) {
+        this.CHECKITEM = CHECKITEM;
+    }
+
+    public String getITEMKIND() {
+        return ITEMKIND;
+    }
+
+    public void setITEMKIND(String ITEMKIND) {
+        this.ITEMKIND = ITEMKIND;
+    }
 
     public String getPARTID() {
         return PARTID;

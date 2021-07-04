@@ -1,6 +1,8 @@
 package com.app.spotcheck.moudle.spotcheck;
 
 import android.content.Intent;
+import android.provider.SyncStateContract;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,11 +16,16 @@ import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.KeyWordsBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
+import com.app.spotcheck.moudle.event.ScanCheckEvent;
 import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
 import com.app.spotcheck.network.Contant;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +90,7 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
             public void onClick(int position, int tab) {
                 if (tab == 1) {
                     Intent intent = new Intent(getActivity(), ScanCheckActivity.class);
-                    intent.putExtra("EXECID", datas.get(position).getEXECID());
+                    intent.putExtra("TaskId", datas.get(position).getTASKID());
                     startActivity(intent);
                 }
             }
@@ -189,4 +196,5 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
         if(isVisibleToUser)
             initRequest();
     }
+
 }

@@ -41,12 +41,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-/**
- * @ClassName: PatralCheckActivity
- * @Description: java类作用描述
- * @Author: 作者名
- * @CreateDate: 2019/12/21 17:18
- */
+
 public class PatralCheckActivity extends BaseActivity<PatralCheckPresenter> implements PatralCheckView {
     @BindView(R.id.tv_set_name)
     TextView tvSetName;
@@ -151,10 +146,7 @@ public class PatralCheckActivity extends BaseActivity<PatralCheckPresenter> impl
         mPresenter.save(map, parts);
     }
 
-    public RequestBody toRequestBody(String value) {
-        RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), value);
-        return requestBody;
-    }
+
 
     private boolean checkNull() {
         boolean isnull = false;

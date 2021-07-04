@@ -21,7 +21,7 @@ public class CheckExceptionPresenter extends BasePresenter<CheckExceptionView> {
 
     public void fetch(int id) {
         Map<String,Object> map = new HashMap<>();
-        map.put("id",id);
+        map.put("ckId",id);
         NetManager.getInstance().api().getUnCheckItemInfo(convertMapToBody(map))
                 .enqueue(new BaseCallback<CheckExceptionBean>() {
                     @Override

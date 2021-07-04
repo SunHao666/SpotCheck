@@ -67,7 +67,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="点检部位:"
+                        android:text="检查部位:"
                         android:textSize="@dimen/sp_14"
                         android:textColor="#515151"
                         />

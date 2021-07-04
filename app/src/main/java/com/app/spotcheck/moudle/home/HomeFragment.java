@@ -16,10 +16,14 @@ import com.app.spotcheck.base.BaseFragment;
 import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
+import com.app.spotcheck.moudle.MainActivity;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
+import com.app.spotcheck.moudle.bean.RepairReportScanBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
+import com.app.spotcheck.moudle.event.HomeEvent;
+import com.app.spotcheck.moudle.event.ScanCheckEvent;
 import com.app.spotcheck.moudle.patralcheck.PatralCheckActivity;
 import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
 import com.app.spotcheck.moudle.scanlub.ScanLubActivity;
@@ -29,6 +33,10 @@ import com.king.zxing.Intents;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -95,11 +103,11 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     public void onResume() {
         super.onResume();
 //        mPresenter.fetch();
-        if(!isVisible){
+//        if(!isVisible){
             Contant.TAB_SELECT = 0;
             LogUtils.error("HomeFragment onResume");
             mPresenter.fetch();
-        }
+//        }
     }
 
     @Override
@@ -118,7 +126,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
 
     @Override
     protected int getContentViewLayout() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_new_home;
     }
 
     @Override
@@ -208,6 +216,11 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
         startActivity(intent);
     }
 
+    @Override
+    public void showRepairSuccess(RepairReportScanBean bean, String qrcode) {
+
+    }
+
     @OnClick({R.id.iv_home_check, R.id.iv_home_setpro, R.id.iv_home_lub, R.id.lay_has_num, R.id.lay_has_runhua_num,
             R.id.home_check_noNum, R.id.home_lub_noNum})
     public void onViewClicked(View view) {
@@ -240,7 +253,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
                     return;
                 }
                 Intent intent = new Intent(getActivity(), ScanCheckActivity.class);
-                intent.putExtra("EXECID",bean.getCHKINFO().getCHK_RECID());
+                intent.putExtra("TaskId",bean.getCHKINFO().getCHK_RECID());
                 startActivity(intent);
                 break;
             case R.id.lay_has_runhua_num:
@@ -284,12 +297,18 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
         if (requestCode == 1001) {
             Contant.CHECKQRCODE = result;
             Contant.CHECKSEARCH = "";
+            if(getActivity() instanceof MainActivity){
+                ((MainActivity)getActivity()).checkFrom = 1;
+            }
             mPresenter.scanCheck(result);
         } else if (requestCode == 1002) {
             mPresenter.scanPatralCheck(result);
         } else if (requestCode == 1003) {
             Contant.LUBQRCODE = result;
             Contant.LUBSEARCH = "";
+            if(getActivity() instanceof MainActivity){
+                ((MainActivity)getActivity()).checkFrom = 1;
+            }
             mPresenter.scanLub(result);
         } else  if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
             //用户从设置页面返回，
@@ -360,4 +379,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    private void update(HomeEvent event){
+        Contant.TAB_SELECT = 0;
+        mPresenter.fetch();
+    }
 }

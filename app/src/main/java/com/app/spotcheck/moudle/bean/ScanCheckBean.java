@@ -17,7 +17,26 @@ public class ScanCheckBean {
     private String FINISHFLG;
     private String EXECID;
     private String PARTNAME;
+    private String ITEMKIND;
+    private String TASKID;
+
     private List<SearchListBean> searchList;
+
+    public String getTASKID() {
+        return TASKID;
+    }
+
+    public void setTASKID(String TASKID) {
+        this.TASKID = TASKID;
+    }
+
+    public String getITEMKIND() {
+        return ITEMKIND;
+    }
+
+    public void setITEMKIND(String ITEMKIND) {
+        this.ITEMKIND = ITEMKIND;
+    }
 
     public String getMAINNAME() {
         return MAINNAME;
@@ -71,6 +90,60 @@ public class ScanCheckBean {
         private String EXECID;
         private int ID;
         private String ITEMNAME;
+        private String ITEMS;
+        private String PARTS;
+        private String CHECKITEM;
+        private String ITEMKIND;
+        private String TASKID;
+        private int CKID;
+
+        public String getTASKID() {
+            return TASKID;
+        }
+
+        public void setTASKID(String TASKID) {
+            this.TASKID = TASKID;
+        }
+
+        public int getCKID() {
+            return CKID;
+        }
+
+        public void setCKID(int CKID) {
+            this.CKID = CKID;
+        }
+
+        public String getITEMKIND() {
+            return ITEMKIND;
+        }
+
+        public void setITEMKIND(String ITEMKIND) {
+            this.ITEMKIND = ITEMKIND;
+        }
+
+        public String getITEMS() {
+            return ITEMS;
+        }
+
+        public void setITEMS(String ITEMS) {
+            this.ITEMS = ITEMS;
+        }
+
+        public String getPARTS() {
+            return PARTS;
+        }
+
+        public void setPARTS(String PARTS) {
+            this.PARTS = PARTS;
+        }
+
+        public String getCHECKITEM() {
+            return CHECKITEM;
+        }
+
+        public void setCHECKITEM(String CHECKITEM) {
+            this.CHECKITEM = CHECKITEM;
+        }
 
         public String getCHECKCONTEXT() {
             return CHECKCONTEXT;

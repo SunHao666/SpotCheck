@@ -53,6 +53,7 @@ public class HomeBean {
         private int CHK_UNNUM;
         private String CHK_EXECSTARTTIME;
 
+
         public String getCHK_EXECENDTIME() {
             return CHK_EXECENDTIME;
         }

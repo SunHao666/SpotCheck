@@ -1,7 +1,9 @@
 package com.app.spotcheck.moudle.scancheck;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,10 +39,18 @@ public class ScanCheckAdapter extends RecyclerView.Adapter<ScanCheckAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvContent.setText(position+1+"、"+data.get(position).getCHECKCONTEXT());
-        if (position % 2 == 0) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#EAF2F8"));
-        }
+        ScanCheckBean.SearchListBean bean = data.get(position);
+        holder.tvNum.setText(String.valueOf(position + 1));
+        holder.mPrejectTv.setText(bean.getITEMKIND());
+        holder.mItemsTv.setText(bean.getITEMS());
+
+        String lable = "<"+bean.getPARTS()+">"+bean.getCHECKITEM();
+        int preIndex = lable.indexOf(">");
+        SpannableString styledText = new SpannableString(lable);
+        styledText.setSpan(new TextAppearanceSpan(context, R.style.check_label_style1), 0, preIndex, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        styledText.setSpan(new TextAppearanceSpan(context, R.style.check_label_style2), preIndex+1, lable.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+
+        holder.mPartsTv.setText(styledText);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,11 +65,23 @@ public class ScanCheckAdapter extends RecyclerView.Adapter<ScanCheckAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_content)
-        TextView tvContent;
+        //        @BindView(R.id.tv_content)
+//        TextView tvContent;
+        @BindView(R.id.mPrejectTv)
+        TextView mPrejectTv;
+        @BindView(R.id.mItemsTv)
+        TextView mItemsTv;
+        @BindView(R.id.mPartsTv)
+        TextView mPartsTv;
+
+        @BindView(R.id.tv_content2)
+        TextView tvContent2;
+        @BindView(R.id.tv_num)
+        TextView tvNum;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

@@ -106,7 +106,7 @@ public class AutoCheck {
                 sb.append("【无报错】【").append(testName).append(" 】  ").append("\n");
             }
             if (config.withInfo && check.hasInfo()) {
-                sb.append("【请手动检查】【").append(testName).append("】 ").append(check.getInfoMessage()).append("\n");
+                sb.append("【请手动点检】【").append(testName).append("】 ").append(check.getInfoMessage()).append("\n");
             }
             if (config.withLog && (config.withLogOnSuccess || hasError) && check.hasLog()) {
                 sb.append("【log】:" + check.getLogMessage()).append("\n");
@@ -134,19 +134,19 @@ public class AutoCheck {
     }
 
     private void commonSetting(Map<String, Object> params) {
-        checks.put("检查申请的Android权限", new PermissionCheck(context));
-        checks.put("检查so文件是否存在", new JniCheck(context));
+        checks.put("点检申请的Android权限", new PermissionCheck(context));
+        checks.put("点检so文件是否存在", new JniCheck(context));
         AppInfoCheck infoCheck = null;
         try {
             infoCheck = new AppInfoCheck(context, params);
-            checks.put("检查AppId AppKey SecretKey", infoCheck);
+            checks.put("点检AppId AppKey SecretKey", infoCheck);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            Log.e(TAG, "检查AppId AppKey SecretKey 错误", e);
+            Log.e(TAG, "点检AppId AppKey SecretKey 错误", e);
             return;
         }
         if (enableOffline) {
-            checks.put("检查包名", new ApplicationIdCheck(context, infoCheck.appId));
+            checks.put("点检包名", new ApplicationIdCheck(context, infoCheck.appId));
         }
 
     }
@@ -342,7 +342,7 @@ public class AutoCheck {
 
         @Override
         public void check() {
-            infoMessage = "如果您集成过程中遇见离线命令词或者唤醒初始化问题，请检查网页上appId：" + appId
+            infoMessage = "如果您集成过程中遇见离线命令词或者唤醒初始化问题，请点检网页上appId：" + appId
                     + "  应用填写了Android包名："
                     + getApplicationId();
         }

@@ -36,13 +36,16 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         mUnbind = ButterKnife.bind(this, view);
         ToastWrapper.init(getActivity());
         mPresenter = initPresenter();
-
+        initEventBus();
         if(mPresenter == null){
             throw new RuntimeException("mPresenter no init");
         }
         mPresenter.attachView(this);
         initData();
         return view;
+    }
+
+    protected void initEventBus() {
     }
 
     protected abstract void initData();
@@ -60,9 +63,13 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     @Override
     public final void onDestroyView() {
         super.onDestroyView();
+        destoryEventBus();
         mUnbind.unbind();
         mUnbind = null;
         mPresenter.dettachView(this);
+    }
+
+    protected void destoryEventBus() {
     }
 
     @LayoutRes
