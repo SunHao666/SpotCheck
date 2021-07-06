@@ -29,6 +29,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     private Unbinder mUnbind;
     public T mPresenter;
     private AlertDialog dialog;
+    public boolean isPared;
 
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
             throw new RuntimeException("mPresenter no init");
         }
         mPresenter.attachView(this);
-        initData();
+
         return view;
     }
 
@@ -53,10 +54,11 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     protected abstract T initPresenter();
 
     @Override
-    public final void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
-
+        isPared = true;
+        initData();
     }
 
 

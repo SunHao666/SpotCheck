@@ -20,6 +20,7 @@ import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.moudle.bean.RepairItemBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.spotcheck.MCheckAdapter;
+import com.bumptech.glide.load.resource.bitmap.BitmapEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,13 @@ public class RepairItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder1.mDeviceNameTv.setText(styledText);
 
             holder1.mStartTimeTv.setText(bean.getAPPLYTIME());
-            holder1.mEndTimeTv.setText(bean.getFINISHCHECKTIME());
+            if (!bean.getFINISHCHECKTIME().isEmpty()){
+                holder1.mEndTimeTv.setText(bean.getFINISHCHECKTIME());
+                holder1.mEndTime.setVisibility(View.VISIBLE);
+            }else {
+                holder1.mEndTime.setVisibility(View.GONE);
+            }
+
             holder1.mRepairContentTv.setText(bean.getPROBLEM());
             getState(bean.getREPSTATE_VALUE(),bean.getREPSTATE_CODE(),holder1);
             holder1.itemView.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +148,8 @@ public class RepairItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView mStartTimeTv;
         @BindView(R.id.mEndTimeTv)
         TextView mEndTimeTv;
+        @BindView(R.id.mEndTime)
+        TextView mEndTime;
         @BindView(R.id.mRepairContentTv)
         TextView mRepairContentTv;
 

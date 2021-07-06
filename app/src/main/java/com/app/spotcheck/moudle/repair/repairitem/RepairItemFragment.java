@@ -1,8 +1,11 @@
 package com.app.spotcheck.moudle.repair.repairitem;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,8 +17,12 @@ import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.RepairItemBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.event.RepairList1Event;
+import com.app.spotcheck.moudle.repair.RepairFragment;
 import com.app.spotcheck.moudle.repair.detail1.RepairDetail1Activity;
 import com.app.spotcheck.moudle.repair.detail2.RepairDetail2Activity;
+import com.app.spotcheck.moudle.repair.detail3.RepairDetail3Activity;
+import com.app.spotcheck.moudle.repair.detail4.RepairDetail4Activity;
+import com.app.spotcheck.moudle.repair.detail5.RepairDetail5Activity;
 import com.app.spotcheck.moudle.repair.repairitem.adapter.RepairItemAdapter;
 import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
 import com.app.spotcheck.moudle.spotcheck.MCheckAdapter;
@@ -47,8 +54,9 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
     private String mainid;
     private String mainname;
     private String state;
-
     List<RepairItemBean.SearchListBean> datas = new ArrayList<>();
+    private boolean isVisibleToUser;
+
 
     public static RepairItemFragment getInstance(int tab) {
         instance = new RepairItemFragment(tab);
@@ -61,10 +69,11 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
 
     @Override
     protected void initData() {
-        initRequest();
+        onLazy();
     }
 
     private void initRequest() {
+        LogUtils.error("repairList tab ------->"+tab);
         state = String.valueOf(tab);
         mPresenter.getRepairItemList(mainid, mainname, state);
     }
@@ -105,13 +114,24 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
                     Intent intent = new Intent(getActivity(), RepairDetail2Activity.class);
                     intent.putExtra(GlobalKey.KEY_REPID,datas.get(position).getREPID());
                     startActivity(intent);
+                }else if (tab == 3) {
+                    Intent intent = new Intent(getActivity(), RepairDetail3Activity.class);
+                    intent.putExtra(GlobalKey.KEY_REPID,datas.get(position).getREPID());
+                    startActivity(intent);
+                }else if (tab == 4) {
+                    Intent intent = new Intent(getActivity(), RepairDetail4Activity.class);
+                    intent.putExtra(GlobalKey.KEY_REPID,datas.get(position).getREPID());
+                    startActivity(intent);
+                }else if (tab == 5) {
+                    Intent intent = new Intent(getActivity(), RepairDetail5Activity.class);
+                    intent.putExtra(GlobalKey.KEY_REPID,datas.get(position).getREPID());
+                    startActivity(intent);
                 }
 
 
             }
         });
         recyclerview.setAdapter(adapter);
-
     }
 
     @Override
@@ -135,10 +155,15 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
         }
     }
 
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refreshList(RepairList1Event event){
-        tab = event.tab;
-        initRequest();
+        if(tab == event.tab){
+            initRequest();
+            if(getParentFragment() instanceof RepairFragment){
+                ((RepairFragment)getParentFragment()).setCurrentTab(tab);
+            }
+        }
     }
 
     @Override
@@ -152,4 +177,25 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
         super.destoryEventBus();
         EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        LogUtils.error("lazy---->"+tab+"Hidden---------->"+hidden);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        LogUtils.error("lazy---->"+tab+"isVisibleToUser---------->"+isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
+        onLazy();
+    }
+
+    public void onLazy(){
+        if(isVisibleToUser && isPared){
+            initRequest();
+        }
+    }
+
 }

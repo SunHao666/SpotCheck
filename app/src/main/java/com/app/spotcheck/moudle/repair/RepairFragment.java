@@ -1,5 +1,11 @@
 package com.app.spotcheck.moudle.repair;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.app.spotcheck.R;
@@ -7,8 +13,10 @@ import com.app.spotcheck.base.BaseFragment;
 import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.view.ScrollableViewPager;
 import com.app.spotcheck.moudle.repair.repairitem.RepairItemFragment;
+import com.app.spotcheck.moudle.report.ReportRepairActivity;
 import com.app.spotcheck.moudle.spotcheck.CheckFragment;
 import com.app.spotcheck.moudle.spotcheck.MViewPagerAdapter;
+import com.baidu.speech.utils.LogUtil;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -21,12 +29,14 @@ import butterknife.BindView;
  */
 public class RepairFragment extends BaseFragment<RepairPresenter> implements RepairView,TabLayout.OnTabSelectedListener  {
     private static RepairFragment instance;
-    public String[] tabNames = {"待审核申请", "待派工", "维修中","待完工审核","已完工"};
+    public String[] tabNames = {"待审核", "待派工", "维修中","待完工","已完工"};
     public List<Fragment> fragments = new ArrayList<>();
     private int currentTab = 0;
     private MViewPagerAdapter adapter;
     @BindView(R.id.tablayout)
     TabLayout tablayout;
+    @BindView(R.id.mRepairAdd)
+    ImageView mRepairAdd;
     @BindView(R.id.viewPager)
     ScrollableViewPager viewPager;
 
@@ -55,6 +65,12 @@ public class RepairFragment extends BaseFragment<RepairPresenter> implements Rep
     @Override
     protected void initView() {
         initTablayout();
+        mRepairAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ReportRepairActivity.class));
+            }
+        });
     }
 
 
@@ -86,5 +102,9 @@ public class RepairFragment extends BaseFragment<RepairPresenter> implements Rep
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    public void setCurrentTab(int tab){
+        viewPager.setCurrentItem(tab);
     }
 }

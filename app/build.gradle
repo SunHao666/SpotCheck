@@ -58,6 +58,6 @@ dependencies {
     implementation project(path: ':core')
 
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
-    implementation 'com.github.li-xiaojun:XPopup:2.2.24'
+    implementation 'com.lxj:xpopup:1.8.10'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }

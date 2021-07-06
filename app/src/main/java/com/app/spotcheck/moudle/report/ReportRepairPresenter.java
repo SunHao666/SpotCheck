@@ -4,6 +4,7 @@ import com.app.spotcheck.base.BasePresenter;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
 import com.app.spotcheck.moudle.bean.ProKindBean;
 import com.app.spotcheck.moudle.bean.RepairReportScanBean;
+import com.app.spotcheck.moudle.bean.ReportSearchBean;
 import com.app.spotcheck.network.BaseCallModel;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
@@ -72,6 +73,43 @@ class ReportRepairPresenter extends BasePresenter<ReportRepairView> {
                     @Override
                     public void onFailure(Call<BaseCallModel> call, Throwable t) {
                         mView.showError(100,t.getMessage());
+                        mView.hideLoad();
+                    }
+                });
+    }
+
+    public void getdevParts(String mainname) {
+        Map<String,String> map = new HashMap<>();
+        map.put("mainname",mainname);
+//        NetManager.getInstance().api().getdevParts(convertMapToBody(map))
+//                .enqueue(new BaseCallback<RepairReportScanBean>() {
+//                    @Override
+//                    protected void onSuccess(RepairReportScanBean bean) {
+////                        mView.showScanSuccess(bean,qrcode);
+//                    }
+//
+//                    @Override
+//                    protected void onFailed(int code, String msg) {
+//                        mView.showError(code,msg);
+//                    }
+//                });
+    }
+
+    public void search(String mainname) {
+        mView.showLoad();
+        Map<String,String> map = new HashMap<>();
+        map.put("mainname",mainname);
+        NetManager.getInstance().api().getdevParts(convertMapToBody(map))
+                .enqueue(new BaseCallback<ReportSearchBean>() {
+                    @Override
+                    protected void onSuccess(ReportSearchBean bean) {
+                        mView.showSearchList(bean);
+                        mView.hideLoad();
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        mView.showError(code,msg);
                         mView.hideLoad();
                     }
                 });

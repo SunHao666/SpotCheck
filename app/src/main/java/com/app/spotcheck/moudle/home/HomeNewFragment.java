@@ -181,7 +181,7 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
                 onCheckScanClick.onClick(1);
                 break;
             case R.id.mBigRepair:
-                startActivity(new Intent(getActivity(), ReportRepairActivity.class));
+//                startActivity(new Intent(getActivity(), ReportRepairActivity.class));
                 break;
         }
     }

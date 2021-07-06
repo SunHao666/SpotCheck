@@ -15,6 +15,7 @@ import com.app.spotcheck.moudle.bean.ProKindBean;
 import com.app.spotcheck.moudle.bean.RepairDetailBean;
 import com.app.spotcheck.moudle.bean.RepairItemBean;
 import com.app.spotcheck.moudle.bean.RepairReportScanBean;
+import com.app.spotcheck.moudle.bean.ReportSearchBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.moudle.bean.ScanLubBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
@@ -158,4 +159,21 @@ public interface NetService {
     @POST("common/getDepartmentList")
     Call<BaseCallModel<DepartmentBean>> getDepartmentList(@FieldMap Map<String, String> map);
 
+
+    @POST("repair/gotoRepairRec")
+    Call<BaseCallModel<RepairDetailBean>> gotoRepairRec(@Body RequestBody body);
+
+    @POST("repair/saveRepairRec")
+    Call<BaseCallModel<String>> saveRepairRec(@Body RequestBody body);
+
+    @POST("repair/gotoRepairRecRefirm")
+    Call<BaseCallModel<RepairDetailBean>> gotoRepairRecRefirm(@Body RequestBody body);
+
+    @POST("repair/saveRepairRecRefirm")
+    Call<BaseCallModel<String>> saveRepairRecRefirm(@Body RequestBody body);
+
+    @POST("repair/gotoDetail")
+    Call<BaseCallModel<RepairDetailBean>> gotoDetail(@Body RequestBody body);
+    @POST("repair/getdevParts")
+    Call<BaseCallModel<ReportSearchBean>> getdevParts(@Body RequestBody body);
 }

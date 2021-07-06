@@ -11,23 +11,28 @@ import java.util.Map;
 
 class RepairDetail1Presenter extends BasePresenter<RepairDetail1View> {
     public void getDetailInfo(String repid) {
+        mView.showLoading();
         Map<String,String> map = new HashMap<>();
         map.put("repId",repid);
         NetManager.getInstance().api().gotoApplyCheck(convertMapToBody(map))
                 .enqueue(new BaseCallback<RepairDetailBean>() {
                     @Override
                     protected void onSuccess(RepairDetailBean o) {
+                        mView.disLoading();
                         mView.showSuccess(o);
                     }
 
                     @Override
                     protected void onFailed(int code, String msg) {
+                        mView.disLoading();
                         mView.showError(msg);
+
                     }
                 });
     }
 
     public void del(String repid) {
+        mView.showLoading();
         Map<String,String> map = new HashMap<>();
         map.put("repId",repid);
         NetManager.getInstance().api().saveApplyCommitDel(convertMapToBody(map))
@@ -35,6 +40,7 @@ class RepairDetail1Presenter extends BasePresenter<RepairDetail1View> {
                     @Override
                     protected void onSuccess(String o) {
                         mView.showFinish(o);
+                        mView.disLoading();
                     }
 
                     @Override
@@ -44,11 +50,13 @@ class RepairDetail1Presenter extends BasePresenter<RepairDetail1View> {
                         }else{
                             mView.showError(msg);
                         }
+                        mView.disLoading();
                     }
                 });
     }
 
     public void pass(String repid,String applyCheckman,String applyChecktime) {
+        mView.showLoading();
         Map<String,String> map = new HashMap<>();
         map.put("repId",repid);
         map.put("applyCheckman",applyCheckman);
@@ -59,6 +67,7 @@ class RepairDetail1Presenter extends BasePresenter<RepairDetail1View> {
                     @Override
                     protected void onSuccess(String o) {
                         mView.showFinish(o);
+                        mView.disLoading();
                     }
 
                     @Override
@@ -68,6 +77,7 @@ class RepairDetail1Presenter extends BasePresenter<RepairDetail1View> {
                         }else{
                             mView.showError(msg);
                         }
+                        mView.disLoading();
                     }
                 });
     }

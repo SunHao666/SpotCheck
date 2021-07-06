@@ -20,6 +20,79 @@ public class RepairDetailBean {
     private String APPLY_MAN_ID;
     private String APPLY_TIME;
 
+    private String REPAIR_HOUR_D;
+    private String REPAIR_HOUR_F;
+    private String REPAIRSTATE_CODE;
+    private String REPSTATE_VALUE;
+    private String REPAIR_TIME;
+    private int STOPTIME;
+    private String FINISH_CHECK_MAN;
+    private String FINISH_CHECK_TIME;
+
+    public String getREPAIR_HOUR_D() {
+        return REPAIR_HOUR_D;
+    }
+
+    public void setREPAIR_HOUR_D(String REPAIR_HOUR_D) {
+        this.REPAIR_HOUR_D = REPAIR_HOUR_D;
+    }
+
+    public String getREPAIR_HOUR_F() {
+        return REPAIR_HOUR_F;
+    }
+
+    public void setREPAIR_HOUR_F(String REPAIR_HOUR_F) {
+        this.REPAIR_HOUR_F = REPAIR_HOUR_F;
+    }
+
+    public String getREPAIRSTATE_CODE() {
+        return REPAIRSTATE_CODE;
+    }
+
+    public void setREPAIRSTATE_CODE(String REPAIRSTATE_CODE) {
+        this.REPAIRSTATE_CODE = REPAIRSTATE_CODE;
+    }
+
+    public String getREPSTATE_VALUE() {
+        return REPSTATE_VALUE;
+    }
+
+    public void setREPSTATE_VALUE(String REPSTATE_VALUE) {
+        this.REPSTATE_VALUE = REPSTATE_VALUE;
+    }
+
+    public String getREPAIR_TIME() {
+        return REPAIR_TIME;
+    }
+
+    public void setREPAIR_TIME(String REPAIR_TIME) {
+        this.REPAIR_TIME = REPAIR_TIME;
+    }
+
+    public int getSTOPTIME() {
+        return STOPTIME;
+    }
+
+    public void setSTOPTIME(int STOPTIME) {
+        this.STOPTIME = STOPTIME;
+    }
+
+    public String getFINISH_CHECK_MAN() {
+        return FINISH_CHECK_MAN;
+    }
+
+    public void setFINISH_CHECK_MAN(String FINISH_CHECK_MAN) {
+        this.FINISH_CHECK_MAN = FINISH_CHECK_MAN;
+    }
+
+    public String getFINISH_CHECK_TIME() {
+        return FINISH_CHECK_TIME;
+    }
+
+    public void setFINISH_CHECK_TIME(String FINISH_CHECK_TIME) {
+        this.FINISH_CHECK_TIME = FINISH_CHECK_TIME;
+    }
+
     public String getAPPLY_MAN_NAME() {
         return APPLY_MAN_NAME;
     }

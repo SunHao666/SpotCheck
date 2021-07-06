@@ -225,8 +225,13 @@ public class BasisTimesUtils {
     /**
      * 显示日期选择器, 默认白色背景
      */
-    public static BasisTimesUtils showDatePickerDialog(Context context, String title, int year, int month, int day, OnDatePickerListener onDateTimePickerListener) {
-        return showDatePickerDialog(context, AlertDialog.THEME_HOLO_LIGHT, title, year, month, day, onDateTimePickerListener);
+    public static BasisTimesUtils showDatePickerDialog(Context context, String title,OnDatePickerListener onDateTimePickerListener) {
+        Calendar calendar = Calendar.getInstance();
+        int y = calendar.get(Calendar.YEAR);
+        int m = calendar.get(Calendar.MONTH);
+        int d = calendar.get(Calendar.DAY_OF_MONTH);
+
+        return showDatePickerDialog(context, AlertDialog.THEME_HOLO_LIGHT, title, y, m+1, d, onDateTimePickerListener);
     }
 
     /**

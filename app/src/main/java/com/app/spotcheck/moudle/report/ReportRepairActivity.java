@@ -14,19 +14,24 @@ import androidx.annotation.Nullable;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
+import com.app.spotcheck.base.utils.BasisTimesUtils;
 import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.MainActivity;
 import com.app.spotcheck.moudle.bean.ProKindBean;
 import com.app.spotcheck.moudle.bean.RepairReportScanBean;
+import com.app.spotcheck.moudle.bean.ReportSearchBean;
+import com.app.spotcheck.moudle.repair.detail2.RepairDetail2Activity;
 import com.app.spotcheck.network.Contant;
 import com.app.spotcheck.utils.GlobalKey;
+import com.app.spotcheck.widgets.BottomSearchView;
 import com.king.zxing.CaptureActivity;
 import com.king.zxing.Intents;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
+import com.lxj.xpopup.util.XPopupUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,6 +43,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.internal.Utils;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -79,7 +85,7 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
     private String applyman;
     private String applyDepartmentName;
     private String problemKindCode;
-
+    BottomSearchView bottomFullDialog;
     private List<LocalMedia> selectList = new ArrayList<>();
     @Override
     protected void initData() {
@@ -116,11 +122,11 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
         Calendar instance = Calendar.getInstance();
         int year = instance.get(Calendar.YEAR);
         int month = instance.get(Calendar.MONTH);
-        int day = instance.get(Calendar.DAY_OF_MONTH);
+        int day = instance.get(Calendar.DATE);
         StringBuilder sb = new StringBuilder();
         sb.append(year);
         sb.append("-");
-        sb.append(month);
+        sb.append(month+1);
         sb.append("-");
         sb.append(day);
         mRepairDateTv.setText(sb.toString());
@@ -154,7 +160,7 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
         }
     }
 
-    @OnClick({R.id.mSubmitBtn, R.id.mScanIv,R.id.mSearchIv,R.id.lay3})
+    @OnClick({R.id.mSubmitBtn, R.id.mScanIv,R.id.mSearchIv,R.id.lay3,R.id.lay2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mSubmitBtn://提交
@@ -167,9 +173,11 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
                 startActivityForResult(new Intent(this, CaptureActivity.class), 1002);
                 break;
             case R.id.mSearchIv://搜索
+//                mPresenter.getdevParts();
+                showDevPart();
                 break;
             case R.id.lay2://日期
-
+                showDate();
                 break;
             case R.id.lay3://故障类型
                 mPresenter.getExceptionList();
@@ -177,6 +185,56 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
         }
     }
 
+    /**
+     * 显示搜索
+     */
+    private void showDevPart() {
+        BottomSearchView bottomTextView = new BottomSearchView(this, 1);
+        if(bottomFullDialog == null){
+             bottomFullDialog = (BottomSearchView) new XPopup.Builder(this)
+
+                    .asCustom(bottomTextView);
+        }
+        if(!bottomFullDialog.isShow()){
+            bottomFullDialog.show();
+        }
+        bottomFullDialog.findViewById(R.id.closeIV).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomFullDialog.dismiss();
+            }
+        });
+        bottomFullDialog.setDeviceOnClickListener(new BottomSearchView.DeviceOnClickListener() {
+            @Override
+            public void onClick(String mainName, String partName, String mainId, String partId) {
+                setDeviceWithPart(mainName,partName,mainId,partId);
+                bottomFullDialog.dismiss();
+            }
+        });
+        EditText serarchEt = bottomFullDialog.findViewById(R.id.serarchEt);
+        bottomFullDialog.findViewById(R.id.searchTv).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                mPresenter.search(serarchEt.getText().toString());
+            }
+        });
+    }
+
+    private void showDate() {
+        BasisTimesUtils.showDatePickerDialog(ReportRepairActivity.this,
+                "请选择日期", new BasisTimesUtils.OnDatePickerListener() {
+                    @Override
+                    public void onConfirm(int year, int month, int dayOfMonth) {
+                        mRepairDateTv.setText(year+"-"+month+"-"+dayOfMonth);
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                });
+    }
     /*提交申请*/
     private void submit() {
         Map<String, RequestBody> map = new HashMap<>();
@@ -213,7 +271,6 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
         }
 
         new XPopup.Builder(this)
-                .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
                 .asBottomList("故障类型", sList,
                         null, proKindPostion,
                         new OnSelectListener() {
@@ -234,10 +291,7 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
     /*扫描获取设备信息*/
     @Override
     public void showScanSuccess(RepairReportScanBean bean, String qrcode) {
-        mDeviceNameTv.setText(bean.getMAINNAME());
-        mPartNameTv.setText(bean.getPARTNAME());
-        mainID = bean.getMAINID();
-        partID = bean.getPARTID();
+        setDeviceWithPart(bean.getMAINNAME(),bean.getPARTNAME(),bean.getMAINID(),bean.getPARTID());
     }
 
     @Override
@@ -256,6 +310,18 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
         disLoding();
     }
 
+    @Override
+    public void showSearchList(ReportSearchBean bean) {
+        bottomFullDialog.setData(bean);
+
+    }
+
+    public void setDeviceWithPart(String mainName, String partName, String mainId, String partId){
+        mDeviceNameTv.setText(mainName);
+        mPartNameTv.setText(partName);
+        this.mainID = mainId;
+        this.partID = partId;
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

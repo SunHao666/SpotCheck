@@ -13,23 +13,27 @@ import java.util.Map;
 
 class RepairDetail2Presenter extends BasePresenter<RepairDetail2View> {
     public void getDetailInfo(String repid) {
+        mView.showLoading();
         Map<String, String> map = new HashMap<>();
         map.put("repId", repid);
         NetManager.getInstance().api().gotoDispatch(convertMapToBody(map))
                 .enqueue(new BaseCallback<RepairDetailBean>() {
                     @Override
                     protected void onSuccess(RepairDetailBean o) {
+                        mView.disLoading();
                         mView.showSuccess(o);
                     }
 
                     @Override
                     protected void onFailed(int code, String msg) {
+                        mView.disLoading();
                         mView.showError(msg);
                     }
                 });
     }
 
     public void saveDispatch(String repid, String dispatchman, String dispatchtime, String reptime, String repcompany) {
+        mView.showLoading();
         Map<String, String> map = new HashMap<>();
         map.put("repId", repid);
         map.put("dispatchman", dispatchman);
@@ -41,6 +45,7 @@ class RepairDetail2Presenter extends BasePresenter<RepairDetail2View> {
                     @Override
                     protected void onSuccess(String o) {
                         mView.showFinish(o);
+                        mView.disLoading();
                     }
 
                     @Override
@@ -50,22 +55,27 @@ class RepairDetail2Presenter extends BasePresenter<RepairDetail2View> {
                         } else {
                             mView.showError(msg);
                         }
+                        mView.disLoading();
                     }
                 });
     }
 
 
     public void getCompanyList() {
+        mView.showLoading();
         Map<String,String> map = new HashMap<>();
         NetManager.getInstance().api().getDepartmentList(map)
                 .enqueue(new BaseCallback<DepartmentBean>() {
                     @Override
                     protected void onSuccess(DepartmentBean bean) {
                         mView.showCompanyList(bean);
+                        mView.disLoading();
                     }
 
                     @Override
                     protected void onFailed(int code, String msg) {
+                        mView.disLoading();
+                        mView.showError(msg);
                     }
                 });
     }

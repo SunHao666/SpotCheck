@@ -39,6 +39,9 @@
         <activity android:name=".moudle.report.ReportRepairActivity" android:screenOrientation="portrait"/>
         <activity android:name=".moudle.repair.detail1.RepairDetail1Activity" />
         <activity android:name=".moudle.repair.detail2.RepairDetail2Activity" />
+        <activity android:name=".moudle.repair.detail3.RepairDetail3Activity" />
+        <activity android:name=".moudle.repair.detail4.RepairDetail4Activity" />
+        <activity android:name=".moudle.repair.detail5.RepairDetail5Activity" />
     </application>
 
 </manifest>

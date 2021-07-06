@@ -13,4 +13,7 @@ interface RepairDetail2View extends BaseView {
     void showFinish(String msg);
 
     void showCompanyList(DepartmentBean bean);
+    void showLoading();
+
+    void disLoading();
 }

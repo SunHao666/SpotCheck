@@ -7,12 +7,14 @@ import android.widget.TextView;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
+import com.app.spotcheck.base.utils.BasisTimesUtils;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.DepartmentBean;
 import com.app.spotcheck.moudle.bean.ProKindBean;
 import com.app.spotcheck.moudle.bean.RepairDetailBean;
 import com.app.spotcheck.moudle.event.RepairList1Event;
+import com.app.spotcheck.moudle.repair.detail4.RepairDetail4Activity;
 import com.app.spotcheck.utils.GlobalKey;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
@@ -88,7 +90,13 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
 
     @Override
     protected void initView() {
-
+        setTopTitle("维修派工");
+        setTopLeftButton(R.drawable.back, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @OnClick({R.id.mRepairDispatchBtn, R.id.companyLay,R.id.timeLay})
@@ -103,10 +111,24 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
                 mPresenter.getCompanyList();
                 break;
             case R.id.timeLay:  //时间
-
+                showDate();
                 break;
 
         }
+    }
+    private void showDate() {
+        BasisTimesUtils.showDatePickerDialog(RepairDetail2Activity.this,
+                "请选择日期", new BasisTimesUtils.OnDatePickerListener() {
+                    @Override
+                    public void onConfirm(int year, int month, int dayOfMonth) {
+                        mDateSelTv.setText(year+"-"+month+"-"+dayOfMonth);
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                });
     }
 
     @Override
@@ -150,7 +172,7 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
         }
 
         new XPopup.Builder(this)
-                .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
+//                .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
                 .asBottomList("故障类型", sList,
                         null, proKindPostion,
                         new OnSelectListener() {
@@ -162,6 +184,16 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
                             }
                         })
                 .show();
+    }
+
+    @Override
+    public void showLoading() {
+        showLoding();
+    }
+
+    @Override
+    public void disLoading() {
+        disLoding();
     }
 
 }

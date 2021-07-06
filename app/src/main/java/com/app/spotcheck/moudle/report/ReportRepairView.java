@@ -3,6 +3,7 @@ package com.app.spotcheck.moudle.report;
 import com.app.spotcheck.base.BaseView;
 import com.app.spotcheck.moudle.bean.ProKindBean;
 import com.app.spotcheck.moudle.bean.RepairReportScanBean;
+import com.app.spotcheck.moudle.bean.ReportSearchBean;
 import com.luck.picture.lib.tools.ValueOf;
 
 import java.util.List;
@@ -19,4 +20,6 @@ interface ReportRepairView extends BaseView {
 
     void showLoad();
     void hideLoad();
+
+    void showSearchList(ReportSearchBean bean);
 }

@@ -115,6 +115,9 @@ public class RepairItemBean {
         }
 
         public String getFINISHCHECKTIME() {
+            if(null == FINISHCHECKTIME){
+                return "";
+            }
             return FINISHCHECKTIME;
         }
 

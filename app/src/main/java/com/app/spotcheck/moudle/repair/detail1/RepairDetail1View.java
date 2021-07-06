@@ -9,4 +9,8 @@ interface RepairDetail1View extends BaseView {
     void showSuccess(RepairDetailBean bean);
 
     void showFinish(String msg);
+
+    void showLoading();
+
+    void disLoading();
 }

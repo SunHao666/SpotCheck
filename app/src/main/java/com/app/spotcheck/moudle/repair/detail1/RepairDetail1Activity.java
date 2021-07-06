@@ -82,7 +82,13 @@ public class RepairDetail1Activity extends BaseActivity<RepairDetail1Presenter> 
 
     @Override
     protected void initView() {
-
+        setTopTitle("审核维修申请");
+        setTopLeftButton(R.drawable.back, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @OnClick({R.id.mCancleBtn, R.id.mPassBtn})
@@ -125,6 +131,16 @@ public class RepairDetail1Activity extends BaseActivity<RepairDetail1Presenter> 
         ToastWrapper.show(msg);
         EventBus.getDefault().post(new RepairList1Event(1));
         finish();
+    }
+
+    @Override
+    public void showLoading() {
+        showLoding();
+    }
+
+    @Override
+    public void disLoading() {
+        disLoding();
     }
 
 }
