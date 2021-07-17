@@ -87,7 +87,6 @@ public class DeveiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        LogUtils.error("position=" + position);
         if (data.size() == 0) {
             return EMPTTY;
         } else {

@@ -36,6 +36,15 @@ public class ScanLubBean {
     private String PARTNAME;
     private Object FINISHTIME;
     private String LUBTYPE;
+    private String POINTNAME;
+
+    public String getPOINTNAME() {
+        return POINTNAME;
+    }
+
+    public void setPOINTNAME(String POINTNAME) {
+        this.POINTNAME = POINTNAME;
+    }
 
     public String getLRECNO() {
         return LRECNO;

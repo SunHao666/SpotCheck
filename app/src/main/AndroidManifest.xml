@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.app.spotcheck">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"
+        />
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -42,6 +48,9 @@
         <activity android:name=".moudle.repair.detail3.RepairDetail3Activity" />
         <activity android:name=".moudle.repair.detail4.RepairDetail4Activity" />
         <activity android:name=".moudle.repair.detail5.RepairDetail5Activity" />
+        <activity android:name=".moudle.repair.detail2.adddevice.AddDeviceActivity" />
+        <activity android:name=".moudle.repair.detail2.adddevice.time.AddDeviceTimeActivity" />
+        <activity android:name=".moudle.repair.detail2.addperson.AddPersonActivity" />
     </application>
 
 </manifest>

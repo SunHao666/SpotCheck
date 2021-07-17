@@ -14,6 +14,7 @@ import com.app.spotcheck.base.BaseFragment;
 import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
+import com.app.spotcheck.moudle.bean.EventRepairRefresh;
 import com.app.spotcheck.moudle.bean.RepairItemBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.event.RepairList1Event;
@@ -73,12 +74,18 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
     }
 
     private void initRequest() {
-        LogUtils.error("repairList tab ------->"+tab);
+        LogUtils.error("repairList tab ------->" + tab);
+
         state = String.valueOf(tab);
-        mPresenter.getRepairItemList(mainid, mainname, state);
+        String repairRepkind = String.valueOf(Contant.REPAIR_REPKIND);
+        if(tab != 6){
+            mPresenter.getRepairItemList(mainid, mainname, state,repairRepkind);
+        }else{
+            mPresenter.getRepairItemList(mainid, mainname, "",repairRepkind);
+        }
     }
 
-    public void setTab(int tab){
+    public void setTab(int tab) {
         this.tab = tab;
     }
 
@@ -106,25 +113,27 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
         adapter.setOnCheckItemClickListener(new RepairItemAdapter.OnCheckItemClickListener() {
             @Override
             public void onClick(int position, int tab) {
-                if (tab == 1) {
+                String repstate = datas.get(position).getREPSTATE_CODE();
+                int state = Integer.parseInt(repstate);
+                if (state == 1) {
                     Intent intent = new Intent(getActivity(), RepairDetail1Activity.class);
-                    intent.putExtra(GlobalKey.KEY_REPID,datas.get(position).getREPID());
+                    intent.putExtra(GlobalKey.KEY_REPID, datas.get(position).getREPID());
                     startActivity(intent);
-                }else if (tab == 2) {
+                } else if (state == 2) {
                     Intent intent = new Intent(getActivity(), RepairDetail2Activity.class);
-                    intent.putExtra(GlobalKey.KEY_REPID,datas.get(position).getREPID());
+                    intent.putExtra(GlobalKey.KEY_REPID, datas.get(position).getREPID());
                     startActivity(intent);
-                }else if (tab == 3) {
+                } else if (state == 3) {
                     Intent intent = new Intent(getActivity(), RepairDetail3Activity.class);
-                    intent.putExtra(GlobalKey.KEY_REPID,datas.get(position).getREPID());
+                    intent.putExtra(GlobalKey.KEY_REPID, datas.get(position).getREPID());
                     startActivity(intent);
-                }else if (tab == 4) {
+                } else if (state == 4) {
                     Intent intent = new Intent(getActivity(), RepairDetail4Activity.class);
-                    intent.putExtra(GlobalKey.KEY_REPID,datas.get(position).getREPID());
+                    intent.putExtra(GlobalKey.KEY_REPID, datas.get(position).getREPID());
                     startActivity(intent);
-                }else if (tab == 5) {
+                } else if (state == 5 ) {
                     Intent intent = new Intent(getActivity(), RepairDetail5Activity.class);
-                    intent.putExtra(GlobalKey.KEY_REPID,datas.get(position).getREPID());
+                    intent.putExtra(GlobalKey.KEY_REPID, datas.get(position).getREPID());
                     startActivity(intent);
                 }
 
@@ -140,7 +149,7 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
         adapter.notifyDataSetChanged();
         datas.addAll(bean.getSearchList());
         adapter.notifyDataSetChanged();
-        if(refreshLayout != null){
+        if (refreshLayout != null) {
             refreshLayout.finishRefresh();
         }
     }
@@ -150,18 +159,18 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
         ToastWrapper.show(msg);
         datas.clear();
         adapter.notifyDataSetChanged();
-        if(refreshLayout != null){
+        if (refreshLayout != null) {
             refreshLayout.finishRefresh();
         }
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void refreshList(RepairList1Event event){
-        if(tab == event.tab){
+    public void refreshList(RepairList1Event event) {
+        if (tab == event.tab) {
             initRequest();
-            if(getParentFragment() instanceof RepairFragment){
-                ((RepairFragment)getParentFragment()).setCurrentTab(tab);
+            if (getParentFragment() instanceof RepairFragment) {
+                ((RepairFragment) getParentFragment()).setCurrentTab(tab);
             }
         }
     }
@@ -181,21 +190,30 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        LogUtils.error("lazy---->"+tab+"Hidden---------->"+hidden);
+        LogUtils.error("lazy---->" + tab + "Hidden---------->" + hidden);
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        LogUtils.error("lazy---->"+tab+"isVisibleToUser---------->"+isVisibleToUser);
+        LogUtils.error("lazy---->" + tab + "isVisibleToUser---------->" + isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
         onLazy();
     }
 
-    public void onLazy(){
-        if(isVisibleToUser && isPared){
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshOther(EventRepairRefresh event){
+        initRequest();
+        if(getParentFragment() instanceof RepairFragment){
+            ((RepairFragment)getParentFragment()).updateTitle();
+        }
+    }
+
+    public void onLazy() {
+        if (isVisibleToUser && isPared) {
             initRequest();
         }
+
     }
 
 }

@@ -160,10 +160,23 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
         }
     }
 
+    private boolean checkNull() {
+        boolean pass = false;
+        if(problemKindCode == null || problemKindCode.isEmpty()){
+            ToastWrapper.show("请选故障类型");
+        }else{
+            pass = true;
+        }
+        return pass;
+    }
+
     @OnClick({R.id.mSubmitBtn, R.id.mScanIv,R.id.mSearchIv,R.id.lay3,R.id.lay2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mSubmitBtn://提交
+                if(!checkNull()){
+                    return;
+                }
                 submit();
                 break;
             case R.id.mScanIv:  //扫描

@@ -43,14 +43,16 @@ public class ScanCheckAdapter extends RecyclerView.Adapter<ScanCheckAdapter.View
         holder.tvNum.setText(String.valueOf(position + 1));
         holder.mPrejectTv.setText(bean.getITEMKIND());
         holder.mItemsTv.setText(bean.getITEMS());
-
         String lable = "<"+bean.getPARTS()+">"+bean.getCHECKITEM();
         int preIndex = lable.indexOf(">");
         SpannableString styledText = new SpannableString(lable);
         styledText.setSpan(new TextAppearanceSpan(context, R.style.check_label_style1), 0, preIndex, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         styledText.setSpan(new TextAppearanceSpan(context, R.style.check_label_style2), preIndex+1, lable.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-
-        holder.mPartsTv.setText(styledText);
+        String s = styledText.toString();
+        if(bean.getPARTS().isEmpty()){
+            s = s.substring(2, s.length());
+        }
+        holder.mPartsTv.setText(s);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

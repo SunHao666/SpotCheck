@@ -60,4 +60,5 @@ dependencies {
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation 'com.lxj:xpopup:1.8.10'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.tencent.bugly:crashreport:latest.release'
 }

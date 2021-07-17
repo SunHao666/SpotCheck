@@ -28,6 +28,15 @@ public class RepairDetailBean {
     private int STOPTIME;
     private String FINISH_CHECK_MAN;
     private String FINISH_CHECK_TIME;
+    private String REPAIR_CONTEXT;
+
+    public String getREPAIR_CONTEXT() {
+        return REPAIR_CONTEXT;
+    }
+
+    public void setREPAIR_CONTEXT(String REPAIR_CONTEXT) {
+        this.REPAIR_CONTEXT = REPAIR_CONTEXT;
+    }
 
     public String getREPAIR_HOUR_D() {
         return REPAIR_HOUR_D;

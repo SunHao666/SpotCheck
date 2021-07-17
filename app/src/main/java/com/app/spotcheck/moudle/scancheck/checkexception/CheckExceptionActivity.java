@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,10 +30,13 @@ import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.CheckExceptionBean;
 import com.app.spotcheck.moudle.bean.PROBLEMKINDBean;
 import com.app.spotcheck.moudle.voice.VoiceActivity;
+import com.app.spotcheck.utils.GlobalKey;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.interfaces.OnSelectListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -50,12 +54,6 @@ import okhttp3.RequestBody;
  * 点检异常问题登记
  */
 public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter> implements CheckExceptionView {
-    @BindView(R.id.tv_set_name)
-    TextView tvSetName;
-    @BindView(R.id.tv_set_place)
-    TextView tvSetPlace;
-    //    @BindView(R.id.tv_electric)
-//    TextView tvElectric;
     @BindView(R.id.tv_check_project)
     TextView tvCheckProject;
     @BindView(R.id.tv_check_content)
@@ -67,25 +65,35 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     @BindView(R.id.btn_ex_save)
     Button btnExSave;
     @BindView(R.id.lay_pro_type)
-    RelativeLayout layProType;
+    ConstraintLayout layProType;
     @BindView(R.id.tv_input_voice)
     TextView tv_input_voice;
     @BindView(R.id.mPartsTv)
     TextView mPartsTv;
+    @BindView(R.id.photoLay)
+    RelativeLayout photoLay;
     CheckExceptionBean bean;
     public List<PROBLEMKINDBean> data = new ArrayList<>();
     @BindView(R.id.rv_take_photo)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.epandTv)
+    TextView epandTv;
+
     private int maxSelectNum = 3;//最多到几张还可以选择
     private List<LocalMedia> selectList = new ArrayList<>();
     private int ckId;
     private String taskId;
     private GridImageAdapter adapter;
-
+    private int proKindPostion = 0;
+    private String problemKindCode;
+    private boolean isepand = false;
+    private String departmentname="";
     @Override
     protected void initData() {
         ckId = getIntent().getIntExtra(IntentKeys.CK_ID, 0);
         taskId = getIntent().getStringExtra(IntentKeys.TASK_ID);
+        departmentname = SPUtils.getInstance(this).getString(GlobalKey.KEY_DEPARTMENTNAME);
         mPresenter.fetch(ckId);
     }
 
@@ -115,7 +123,7 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     @Override
     public void showSuccess(CheckExceptionBean bean) {
         this.bean = bean;
-        String lable = bean.getMAINNAME()+"/"+bean.getPARTNAME();
+        String lable = bean.getMAINNAME() + "/" + bean.getPARTNAME();
         int preIndex = lable.indexOf("/");
         SpannableString styledText = new SpannableString(lable);
         styledText.setSpan(new TextAppearanceSpan(this, R.style.exception_part_style1), 0, preIndex, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
@@ -156,19 +164,48 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     }
 
 
-    @OnClick({R.id.lay_pro_type, R.id.btn_ex_save, R.id.tv_input_voice})
+    @OnClick({R.id.lay_pro_type, R.id.btn_ex_save, R.id.tv_input_voice, R.id.epandTv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.lay_pro_type:
                 showPopu();
                 break;
             case R.id.btn_ex_save:
+                if(!checkNull()){
+
+                    return;
+                }
                 save();
                 break;
             case R.id.tv_input_voice:
                 Intent intent1 = new Intent(CheckExceptionActivity.this, VoiceActivity.class);
                 startActivityForResult(intent1, 1000);
                 break;
+            case R.id.epandTv:
+                genrateImg();
+                break;
+        }
+    }
+
+    private boolean checkNull() {
+        boolean pass = false;
+        if(problemKindCode == null || problemKindCode.isEmpty()){
+            ToastWrapper.show("请选择问题类型");
+        }else{
+            pass = true;
+        }
+        return pass;
+    }
+
+    private void genrateImg() {
+        if (!isepand) { //折起
+            isepand = true;
+            photoLay.setVisibility(View.VISIBLE);
+            epandTv.setBackgroundResource(R.drawable.zhankai);
+        } else {
+            isepand = false;
+            photoLay.setVisibility(View.GONE);
+            epandTv.setBackgroundResource(R.drawable.zhedie);
         }
     }
 
@@ -178,27 +215,14 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
             return;
         }
         showLoding();
-//        photoList	照片列表
-//        id	记录编号
-//        mainid	设备编号
-//        partid	部位编号
-//        itemname	点检的项目
-//        execman	点检人
-//        problem	点检出的问题描述
-//        problemkind	问题的类型
-
-        String Loginname = SPUtils.getInstance(this).getString("Loginname");
+        String loginName = SPUtils.getInstance(this).getString(GlobalKey.KEY_LOGINNAME);
         Map<String, RequestBody> map = new HashMap<>();
-        map.put("id", toRequestBody(bean.getID() + ""));
-        map.put("taskId", toRequestBody(taskId));
-        map.put("mainid", toRequestBody(bean.getMAINID()));
-        map.put("partid", toRequestBody(bean.getPARTID()));
-        map.put("execid", toRequestBody(bean.getEXECID()));
-        map.put("itemname", toRequestBody(bean.getITEMNAME()));
-        map.put("execman", toRequestBody(Loginname));
-        map.put("problem", toRequestBody(etInfo.getText().toString()));
-        map.put("problemkind", toRequestBody(tvProType.getText().toString()));
         map.put("ckId", toRequestBody(String.valueOf(ckId)));
+        map.put("taskId", toRequestBody(taskId));
+        map.put("applyMan", toRequestBody(loginName));
+        map.put("applyDepartmentName",toRequestBody(departmentname));
+        map.put("problem", toRequestBody(etInfo.getText().toString()));
+        map.put("problemkindValue", toRequestBody(problemKindCode));
         List<MultipartBody.Part> parts = new ArrayList<>();
         for (int i = 0; i < selectList.size(); i++) {
             if (selectList.get(i).isCompressed()) {
@@ -220,14 +244,24 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
     }
 
     private void showPopu() {
-        PopuwindowListView popu = new PopuwindowListView(this, data);
-        popu.setonPOPClickListener(new PopuwindowListView.onPOPClickListener() {
-            @Override
-            public void onClick(int position) {
-                tvProType.setText(data.get(position).getName());
-            }
-        });
-        popu.showPopupWindow(layProType);
+        String[] sList = new String[data.size()];
+        for (int i = 0; i < data.size(); i++) {
+            sList[i] = data.get(i).getName();
+        }
+
+        new XPopup.Builder(this)
+                .asBottomList("故障类型", sList,
+                        null, proKindPostion,
+                        new OnSelectListener() {
+                            @Override
+                            public void onSelect(int position, String text) {
+                                proKindPostion = position;
+                                problemKindCode = data.get(position).getValue();
+                                tvProType.setText(text);
+                            }
+                        })
+                .show();
+
     }
 
     private void initWidget() {

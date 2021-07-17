@@ -2,17 +2,28 @@ package com.app.spotcheck.moudle.repair.detail5;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.RepairDetailBean;
+import com.app.spotcheck.moudle.bean.RepairDeviceListBean;
+import com.app.spotcheck.moudle.bean.RepairManListBean;
 import com.app.spotcheck.moudle.event.RepairList1Event;
+import com.app.spotcheck.moudle.repair.detail3.adapter.AddDeviceListAdapter;
+import com.app.spotcheck.moudle.repair.detail3.adapter.AddManListAdapter;
 import com.app.spotcheck.utils.GlobalKey;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,7 +33,10 @@ import butterknife.OnClick;
  */
 public class RepairDetail5Activity extends BaseActivity<RepairDetail5Presenter> implements RepairDetail5View {
 
-
+    @BindView(R.id.mRepariHourD)
+    TextView mRepariHourD;
+    @BindView(R.id.mRepariHourF)
+    TextView mRepariHourF;
     @BindView(R.id.mDeviceNumTv)
     TextView mDeviceNumTv;
     @BindView(R.id.mDeviceNameTv)
@@ -46,9 +60,21 @@ public class RepairDetail5Activity extends BaseActivity<RepairDetail5Presenter> 
     @BindView(R.id.mProContentTv)
     TextView mProContentTv;
 
+    @BindView(R.id.mRepairContentTopLine)
+    View mRepairContentTopLine;
+
+    @BindView(R.id.mRepairTv)
+    TextView mRepairTv;
     @BindView(R.id.mStopTimeTv)
     TextView mStopTimeTv;
-
+    @BindView(R.id.mDeviceRv)
+    RecyclerView mDeviceRv;
+    @BindView(R.id.mPersonRv)
+    RecyclerView mPersonRv;
+    @BindView(R.id.mRepairContentLay)
+    RelativeLayout mRepairContentLay;
+    private AddDeviceListAdapter mDeviceAdapter;
+    private AddManListAdapter mManAdapter;
     private String repid;
     private String loginId;
     @Override
@@ -64,6 +90,15 @@ public class RepairDetail5Activity extends BaseActivity<RepairDetail5Presenter> 
         }
 
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.getRepairApareListByRepId(repid);
+        mPresenter.getRepairManListByRepId(repid);
+    }
+
 
     @Override
     protected RepairDetail5Presenter initPresenter() {
@@ -84,6 +119,16 @@ public class RepairDetail5Activity extends BaseActivity<RepairDetail5Presenter> 
                 finish();
             }
         });
+
+        mDeviceAdapter = new AddDeviceListAdapter();
+        mDeviceRv.setLayoutManager(new LinearLayoutManager(this));
+        mDeviceRv.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        mDeviceRv.setAdapter(mDeviceAdapter);
+
+        mManAdapter = new AddManListAdapter();
+        mPersonRv.setLayoutManager(new LinearLayoutManager(this));
+        mPersonRv.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        mPersonRv.setAdapter(mManAdapter);
     }
 
 
@@ -106,7 +151,12 @@ public class RepairDetail5Activity extends BaseActivity<RepairDetail5Presenter> 
         mDateTv.setText(bean.getAPPLY_TIME());
         mProType.setText(bean.getPROBLEM_KIND_VALUE());
         mProContentTv.setText(bean.getPROBLEM());
+        mRepairTv.setText(bean.getREPAIR_CONTEXT());
+        mRepairContentLay.setVisibility(View.VISIBLE);
+        mRepairContentTopLine.setVisibility(View.VISIBLE);
         mStopTimeTv.setText(bean.getSTOPTIME()+"");
+        mRepariHourD.setText(bean.getREPAIR_HOUR_D());
+        mRepariHourF.setText(bean.getREPAIR_HOUR_F());
     }
 
     @Override
@@ -125,4 +175,19 @@ public class RepairDetail5Activity extends BaseActivity<RepairDetail5Presenter> 
         disLoding();
     }
 
+    @Override
+    public void showDeviceList(List<RepairDeviceListBean.SearchListBean> searchList) {
+        if(searchList == null || searchList.isEmpty()){
+            return;
+        }
+        mDeviceAdapter.setData(searchList);
+    }
+
+    @Override
+    public void showManList(List<RepairManListBean.SearchListBean> searchList) {
+        if(searchList == null || searchList.isEmpty()){
+            return;
+        }
+        mManAdapter.setData(searchList);
+    }
 }

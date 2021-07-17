@@ -59,7 +59,6 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
     @Override
     protected void initData() {
         LogUtils.error("check tab=" + tab + ",initData");
-//        initRequest();
         SpotCheckFragment fragment = (SpotCheckFragment) getParentFragment();
         fragment.setCheckClearListener(this);
     }
@@ -179,12 +178,13 @@ public class CheckFragment extends BaseFragment<SpotCheckPresenter> implements S
 //        if(TextUtils.isEmpty(Contant.CHECKQRCODE) && TextUtils.isEmpty(Contant.CHECKSEARCH)){
 //            return;
 //        }
+        String checkType = String.valueOf(Contant.CHECK_TYPE);
         if (tab == 0) {
-            mPresenter.getCheckPlanList(Contant.CHECKQRCODE, Contant.CHECKSEARCH);
+            mPresenter.getCheckPlanList(Contant.CHECKQRCODE, Contant.CHECKSEARCH,checkType);
         } else if (tab == 1) {
-            mPresenter.getUnCheckPlanList(Contant.CHECKQRCODE, Contant.CHECKSEARCH);
+            mPresenter.getUnCheckPlanList(Contant.CHECKQRCODE, Contant.CHECKSEARCH,checkType);
         } else if (tab == 2) {
-            mPresenter.getCheckedPlanList(Contant.CHECKQRCODE, Contant.CHECKSEARCH);
+            mPresenter.getCheckedPlanList(Contant.CHECKQRCODE, Contant.CHECKSEARCH,checkType);
         }
     }
 

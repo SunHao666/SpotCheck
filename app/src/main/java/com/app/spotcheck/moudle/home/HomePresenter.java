@@ -49,6 +49,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
     public void scanCheck(String qrcode){
         Map<String,String> map = new HashMap<>();
         map.put("qrcode",qrcode);
+        map.put("checkkind","1");
         NetManager.getInstance().api().getUnCheckPlanList(convertMapToBody(map))
                 .enqueue(new BaseCallback<SpotCheckAllBean>() {
                     @Override

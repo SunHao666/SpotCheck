@@ -2,7 +2,6 @@ package com.app.spotcheck.moudle.repair.detail2;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.app.spotcheck.R;
@@ -11,10 +10,9 @@ import com.app.spotcheck.base.utils.BasisTimesUtils;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.DepartmentBean;
-import com.app.spotcheck.moudle.bean.ProKindBean;
 import com.app.spotcheck.moudle.bean.RepairDetailBean;
 import com.app.spotcheck.moudle.event.RepairList1Event;
-import com.app.spotcheck.moudle.repair.detail4.RepairDetail4Activity;
+import com.app.spotcheck.moudle.repair.detail2.adddevice.AddDeviceActivity;
 import com.app.spotcheck.utils.GlobalKey;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
@@ -51,7 +49,10 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
     TextView mDateTv;
     @BindView(R.id.mProType)
     TextView mProType;
-
+    @BindView(R.id.mRepariHourD)
+    TextView mRepariHourD;
+    @BindView(R.id.mRepariHourF)
+    TextView mRepariHourF;
     @BindView(R.id.mProContentTv)
     TextView mProContentTv;
 
@@ -113,7 +114,6 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
             case R.id.timeLay:  //时间
                 showDate();
                 break;
-
         }
     }
     private void showDate() {
@@ -151,6 +151,8 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
         mDateTv.setText(bean.getAPPLY_TIME());
         mProType.setText(bean.getPROBLEM_KIND_VALUE());
         mProContentTv.setText(bean.getPROBLEM());
+        mRepariHourD.setText(bean.getREPAIR_HOUR_D());
+        mRepariHourF.setText(bean.getREPAIR_HOUR_F());
     }
 
     @Override

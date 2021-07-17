@@ -15,11 +15,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 class RepairItemPresenter extends BasePresenter<RepairItemView> {
-    public void getRepairItemList(String mainid, String mainname, String state) {
+    public void getRepairItemList(String mainid, String mainname, String state,String repkind) {
         Map<String,String> map = new HashMap<>();
         map.put("mainid",mainid);
         map.put("mainname",mainname);
         map.put("state",state);
+        map.put("repkind",repkind);
         NetManager.getInstance().api().getRecordList(convertMapToBody(map))
                 .enqueue(new BaseCallback<RepairItemBean>() {
                     @Override

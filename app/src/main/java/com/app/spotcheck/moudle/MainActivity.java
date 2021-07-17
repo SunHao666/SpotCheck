@@ -254,4 +254,16 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
             //用户从设置页面返回，
         }
     }
+
+    /**
+     * 目前只用于repair界面
+     * @param tab 选择的tab
+     */
+    public void selectedTab(int tab,int childTab) {
+        if(tab == 4){
+            bottomnavigationview.setSelectedItemId(R.id.tab_four);
+        }else if(tab == 3){
+            bottomnavigationview.setSelectedItemId(R.id.tab_three);
+        }
+    }
 }

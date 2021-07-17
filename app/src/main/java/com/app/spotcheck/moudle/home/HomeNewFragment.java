@@ -18,11 +18,13 @@ import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.MainActivity;
+import com.app.spotcheck.moudle.bean.EventRepairRefresh;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
 import com.app.spotcheck.moudle.bean.RepairReportScanBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
+import com.app.spotcheck.moudle.event.CheckTitleEvent;
 import com.app.spotcheck.moudle.event.HomeEvent;
 import com.app.spotcheck.moudle.patralcheck.PatralCheckActivity;
 import com.app.spotcheck.moudle.report.ReportRepairActivity;
@@ -36,6 +38,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -135,6 +138,7 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
 
     @Override
     public void showScanSuccess(SpotCheckAllBean bean, String qrcode) {
+        Contant.CHECK_TYPE = 1;
         onCheckScanClick.onClick(1);
     }
 
@@ -177,11 +181,50 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
             case R.id.iv_home_lub:
                 startActivityForResult(new Intent(getActivity(), CaptureActivity.class), 1003);
                 break;
-            case R.id.mWeekCheck:
+            case R.id.mDayCheck:
+                Contant.CHECK_TYPE = 1;
+                EventBus.getDefault().post(new CheckTitleEvent());
                 onCheckScanClick.onClick(1);
                 break;
+            case R.id.mWeekCheck:
+                Contant.CHECK_TYPE = 2;
+                EventBus.getDefault().post(new CheckTitleEvent());
+                onCheckScanClick.onClick(1);
+                break;
+            case R.id.mMonthCheck:
+                Contant.CHECK_TYPE = 3;
+                EventBus.getDefault().post(new CheckTitleEvent());
+                onCheckScanClick.onClick(1);
+                break;
+            case R.id.mCheckRepair:
+                Contant.REPAIR_REPKIND = 1;
+                //跳转repair tab
+                if(getActivity() instanceof MainActivity){
+                    ((MainActivity)getActivity()).selectedTab(4,0);
+                }
+                //刷新界面
+                EventBus.getDefault().post(new EventRepairRefresh(1));
+                break;
+            case R.id.mMiddleRepair:
+                Contant.REPAIR_REPKIND = 2;
+                //跳转repair tab
+                if(getActivity() instanceof MainActivity){
+                    ((MainActivity)getActivity()).selectedTab(4,0);
+                }
+                //刷新界面
+                EventBus.getDefault().post(new EventRepairRefresh(2));
+                break;
             case R.id.mBigRepair:
-//                startActivity(new Intent(getActivity(), ReportRepairActivity.class));
+                Contant.REPAIR_REPKIND = 3;
+                if(getActivity() instanceof MainActivity){
+                    ((MainActivity)getActivity()).selectedTab(4,0);
+                }
+                EventBus.getDefault().post(new EventRepairRefresh(3));
+                break;
+            case R.id.mLub:
+                if(getActivity() instanceof MainActivity){
+                    ((MainActivity)getActivity()).selectedTab(3,0);
+                }
                 break;
         }
     }
@@ -197,9 +240,7 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
             showQrcodeDialog();
             return;
         }
-        LogUtils.error("scan before=" + result);
         result = result.substring(7, result.length());
-        LogUtils.error(result);
         if (requestCode == 1001) {
             Contant.CHECKQRCODE = result;
             Contant.CHECKSEARCH = "";
@@ -213,7 +254,7 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
             Contant.LUBQRCODE = result;
             Contant.LUBSEARCH = "";
             if (getActivity() instanceof MainActivity) {
-                ((MainActivity) getActivity()).checkFrom = 1;
+                ((MainActivity) getActivity()).lubFrom = 1;
             }
             mPresenter.scanLub(result);
         } else if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
@@ -226,7 +267,6 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
     public void setOnCheckScanClick(OnCheckScanClick onCheckScanClick) {
         this.onCheckScanClick = onCheckScanClick;
     }
-
 
     public interface OnCheckScanClick {
         public void onClick(int position);
@@ -290,4 +330,5 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
     private void update(HomeEvent event) {
         Contant.TAB_SELECT = 0;
     }
+
 }

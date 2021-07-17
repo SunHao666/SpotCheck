@@ -142,7 +142,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends TransitionAc
         loading.show();
     }
 
-    public void disLoding(){//点击加载并按钮模仿网络请求
+    public void disLoding(){//
         if(loading != null && loading.isShowing()){
             loading.dismiss();
         }

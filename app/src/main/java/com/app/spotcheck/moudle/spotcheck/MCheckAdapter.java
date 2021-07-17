@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
+import com.app.spotcheck.utils.CommonUtils;
 
 import java.util.List;
 
@@ -43,12 +44,11 @@ public class MCheckAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LogUtils.error("viewType="+viewType);
         if(viewType == EMPTTY){
             View inflate = LayoutInflater.from(context).inflate(R.layout.empty, parent, false);
             return new EmptyViewHolder(inflate);
         }else{
-            View inflate = LayoutInflater.from(context).inflate(R.layout.item_check, parent, false);
+            View inflate = LayoutInflater.from(context).inflate(R.layout.item_new_check, parent, false);
             return new ConViewHolder(inflate);
         }
     }
@@ -57,23 +57,17 @@ public class MCheckAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof EmptyViewHolder ){
 
-        }else if(holder instanceof ConViewHolder ){
+        }else if(holder instanceof ConViewHolder){
             ConViewHolder holder1 = (ConViewHolder) holder;
-            holder1.tvTitle.setText(datas.get(position).getMAINNAME());
-            holder1.tvCheckedNum.setText("已点检项目"+datas.get(position).getCHECKNUM()+"项");
-            holder1.tvUncheckNum.setText(datas.get(position).getUNCHECKNUM()+"");
+            SpotCheckAllBean.SearchListBean bean = datas.get(position);
+            String devicePart = CommonUtils.setDevicePart(bean.getMAINNAME(), bean.getPARTNAME(), context);
+            holder1.tvTitle.setText(devicePart);
+            //计划点检时间
             holder1.tvCheckTime.setText(datas.get(position).getEXECSTARTTIME()+"~"+datas.get(position).getEXECENDTIME());
-            holder1.tvCheckPlace.setText(datas.get(position).getPARTNAME());
-            if(tab == 0){
-                holder1.layUncheckNum.setVisibility(View.VISIBLE);
-                holder1.tvCheckedNum.setVisibility(View.VISIBLE);
-            }else if(tab == 1){
-                holder1.layUncheckNum.setVisibility(View.VISIBLE);
-                holder1.tvCheckedNum.setVisibility(View.GONE);
-            }else if(tab == 2){
-                holder1.layUncheckNum.setVisibility(View.GONE);
-                holder1.tvCheckedNum.setVisibility(View.VISIBLE);
-            }
+            //已检项目条数
+            holder1.tvCheckedNum.setText("已检"+datas.get(position).getCHECKNUM()+"项");
+            //待检项目条数
+            holder1.tvUncheckNum.setText(datas.get(position).getUNCHECKNUM()+"");
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -97,7 +91,6 @@ public class MCheckAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemViewType(int position) {
-        LogUtils.error("position="+position);
         if(datas.size() == 0){
             return EMPTTY;
         }else{
@@ -119,20 +112,8 @@ public class MCheckAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView tvCheckedNum;
         @BindView(R.id.tv_uncheck_num)
         TextView tvUncheckNum;
-        @BindView(R.id.lay_uncheck_num)
-        LinearLayout layUncheckNum;
-        @BindView(R.id.lay_check)
-        LinearLayout layCheck;
-        @BindView(R.id.tv_check_place)
-        TextView tvCheckPlace;
-        @BindView(R.id.lay_space)
-        LinearLayout laySpace;
         @BindView(R.id.tv_check_time)
         TextView tvCheckTime;
-        @BindView(R.id.lay_check_plan)
-        LinearLayout layCheckPlan;
-        @BindView(R.id.lay_check_card)
-        RelativeLayout layCheckCard;
 
         public ConViewHolder(@NonNull View itemView) {
             super(itemView);

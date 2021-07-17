@@ -22,12 +22,16 @@ import com.app.spotcheck.base.view.ScrollableViewPager;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.KeyWordsBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
+import com.app.spotcheck.moudle.event.CheckTitleEvent;
 import com.app.spotcheck.moudle.search.SearchActivity;
 import com.app.spotcheck.network.Contant;
 import com.google.android.material.tabs.TabLayout;
 import com.king.zxing.CaptureActivity;
 import com.king.zxing.Intents;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -49,6 +53,8 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     LinearLayout laySearch;
     @BindView(R.id.iv_delete)
     ImageView iv_delete;
+    @BindView(R.id.mCheckTypeTv)
+    TextView mCheckTypeTv;
     public String[] tabNames = {"全部点检部位", "待检部位", "已检部位"};
     public List<Fragment> fragments = new ArrayList<>();
     @BindView(R.id.viewPager)
@@ -96,23 +102,18 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
 
     @Override
     protected int getContentViewLayout() {
-
         return R.layout.fragment_spotcheck;
     }
 
     @Override
     protected void initView() {
-
+        updateTitle();
         initTablayout();
         iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tvSearch.setText("");
                 Contant.CHECKSEARCH = "";
-//                viewPager.setCurrentItem(1);
-//                if(listener != null){
-//                    listener.clear(tablayout.getSelectedTabPosition());
-//                }
                 if(getTab() == 0){
                     viewPager.setCurrentItem(1);
                     viewPager.setCurrentItem(0);
@@ -177,11 +178,6 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     @Override
     public void showSearchSuccess(KeyWordsBean bean) {
         this.bean = bean;
-//        tags.clear();
-//        searchAdapter.notifyDataChanged();
-//        for (int i = 0; i < bean.getSearchList().size(); i++) {
-//            tags.add(bean.getSearchList().get(i).getKEYWORDS());
-//        }
     }
 
     @Override
@@ -216,9 +212,6 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     private void scanCheck() {
         tvSearch.setText("");
         startActivityForResult(new Intent(getActivity(), CaptureActivity.class),1001);
-//        Contant.CHECKQRCODE  = "E002M05P0002";
-//        Contant.CHECKSEARCH = "";
-//        viewPager.setCurrentItem(1);
     }
 
     @Override
@@ -298,8 +291,6 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
                 viewPager.setCurrentItem(1);
                 viewPager.setCurrentItem(2);
             }
-            LogUtils.error("CheckFragment onHiddenChanged");
-//            requestSearch();
         }
     }
 
@@ -319,4 +310,28 @@ public class SpotCheckFragment extends BaseFragment<SpotCheckPresenter> implemen
     public void setCheckClearListener(CheckClearListener listener){
         this.listener = listener;
     };
+
+    public void updateTitle(){
+        if(Contant.CHECK_TYPE == 1){
+            mCheckTypeTv.setText("日检");
+        }else if(Contant.CHECK_TYPE == 2){
+            mCheckTypeTv.setText("周检");
+        }else if(Contant.CHECK_TYPE == 3){
+            mCheckTypeTv.setText("月检");
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getCheckTitleEvent(CheckTitleEvent event){
+        updateTitle();
+    }
+    @Override
+    protected void initEventBus() {
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void destoryEventBus() {
+        EventBus.getDefault().unregister(this);
+    }
 }

@@ -2,6 +2,8 @@ package com.app.spotcheck.moudle.repair.detail5;
 
 import com.app.spotcheck.base.BasePresenter;
 import com.app.spotcheck.moudle.bean.RepairDetailBean;
+import com.app.spotcheck.moudle.bean.RepairDeviceListBean;
+import com.app.spotcheck.moudle.bean.RepairManListBean;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
 
@@ -56,5 +58,45 @@ class RepairDetail5Presenter extends BasePresenter<RepairDetail5View> {
     }
 
 
+    public void getRepairApareListByRepId(String repid) {
+        mView.showLoading();
+        Map<String, String> map = new HashMap<>();
+        map.put("repId", repid);
+        NetManager.getInstance().api().getRepairApareListByRepId(convertMapToBody(map))
+                .enqueue(new BaseCallback<RepairDeviceListBean>() {
+                    @Override
+                    protected void onSuccess(RepairDeviceListBean bean) {
+//                        mView.showSuccess(bean);
+                        mView.showDeviceList(bean.getSearchList());
+                        mView.disLoading();
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        mView.showError(msg);
+                        mView.disLoading();
+                    }
+                });
+    }
+
+    public void getRepairManListByRepId(String repid) {
+        mView.showLoading();
+        Map<String, String> map = new HashMap<>();
+        map.put("repId", repid);
+        NetManager.getInstance().api().getRepairManListByRepId(convertMapToBody(map))
+                .enqueue(new BaseCallback<RepairManListBean>() {
+                    @Override
+                    protected void onSuccess(RepairManListBean bean) {
+                        mView.showManList(bean.getSearchList());
+                        mView.disLoading();
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        mView.showError(msg);
+                        mView.disLoading();
+                    }
+                });
+    }
 
 }

@@ -19,10 +19,11 @@ import java.util.Map;
  */
 public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
 
-    public void getCheckPlanList(String qrcode,String mainname){
+    public void getCheckPlanList(String qrcode,String mainname,String checkkind){
         Map<String,String> map = new HashMap<>();
         map.put("qrcode",qrcode);
         map.put("mainname",mainname);
+        map.put("checkkind",checkkind);
         NetManager.getInstance().api().getCheckPlanList(convertMapToBody(map))
                 .enqueue(new BaseCallback<SpotCheckAllBean>() {
                     @Override
@@ -32,7 +33,7 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
 
                     @Override
                     protected void onFailed(int code, String msg) {
-                        if(code != -1){
+                        if(code != -1 && code != -400){
                             mView.showError(msg);
                         }else{
                             mView.showFinish();
@@ -41,10 +42,11 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
                 });
     }
 
-    public void getUnCheckPlanList(String qrcode,String mainname){
+    public void getUnCheckPlanList(String qrcode,String mainname,String checkkind){
         Map<String,String> map = new HashMap<>();
         map.put("qrcode",qrcode);
         map.put("mainname",mainname);
+        map.put("checkkind",checkkind);
         NetManager.getInstance().api().getUnCheckPlanList(convertMapToBody(map))
             .enqueue(new BaseCallback<SpotCheckAllBean>() {
         @Override
@@ -54,7 +56,7 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
 
         @Override
         protected void onFailed(int code, String msg) {
-            if(code != -1){
+            if(code != -1&& code != -400){
                 mView.showError(msg);
             }else{
                 mView.showFinish();
@@ -64,10 +66,11 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
 }
 
 
-    public void getCheckedPlanList(String qrcode,String mainname){
+    public void getCheckedPlanList(String qrcode,String mainname,String checkkind){
         Map<String,String> map = new HashMap<>();
         map.put("qrcode",qrcode);
         map.put("mainname",mainname);
+        map.put("checkkind",checkkind);
         NetManager.getInstance().api().getCheckedPlanList(convertMapToBody(map))
                 .enqueue(new BaseCallback<SpotCheckAllBean>() {
                     @Override
@@ -77,7 +80,7 @@ public class SpotCheckPresenter extends BasePresenter<SpotCheckView> {
 
                     @Override
                     protected void onFailed(int code, String msg) {
-                        if(code != -1){
+                        if(code != -1&& code != -400){
                             mView.showError(msg);
                         }else{
                             mView.showFinish();

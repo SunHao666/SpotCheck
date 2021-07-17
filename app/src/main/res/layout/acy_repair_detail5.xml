@@ -38,5 +38,7 @@
                 android:layout_alignParentRight="true"
                 />
         </RelativeLayout>
+        <include layout="@layout/add_device_man_copy"
+            />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

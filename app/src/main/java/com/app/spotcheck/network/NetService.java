@@ -1,6 +1,8 @@
 package com.app.spotcheck.network;
 
 
+import com.app.spotcheck.moudle.bean.AddDeviceBean;
+import com.app.spotcheck.moudle.bean.AddPersonBean;
 import com.app.spotcheck.moudle.bean.CheckExceptionBean;
 import com.app.spotcheck.moudle.bean.DepartmentBean;
 import com.app.spotcheck.moudle.bean.DeviceInfoBean;
@@ -13,7 +15,9 @@ import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
 import com.app.spotcheck.moudle.bean.ProKindBean;
 import com.app.spotcheck.moudle.bean.RepairDetailBean;
+import com.app.spotcheck.moudle.bean.RepairDeviceListBean;
 import com.app.spotcheck.moudle.bean.RepairItemBean;
+import com.app.spotcheck.moudle.bean.RepairManListBean;
 import com.app.spotcheck.moudle.bean.RepairReportScanBean;
 import com.app.spotcheck.moudle.bean.ReportSearchBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
@@ -176,4 +180,28 @@ public interface NetService {
     Call<BaseCallModel<RepairDetailBean>> gotoDetail(@Body RequestBody body);
     @POST("repair/getdevParts")
     Call<BaseCallModel<ReportSearchBean>> getdevParts(@Body RequestBody body);
+
+    @POST("spare/getSpareStoreList")
+    Call<BaseCallModel<AddDeviceBean>> getSpareStoreList(@Body RequestBody body);
+
+    @POST("spare/saveRepairSpareUse")
+    Call<BaseCallModel<String>> saveRepairSpareUse(@Body RequestBody body);
+
+    @POST("repair/getRepairApareListByRepId")
+    Call<BaseCallModel<RepairDeviceListBean>> getRepairApareListByRepId(@Body RequestBody body);
+
+    @POST("repair/getWorkerList")
+    Call<BaseCallModel<AddPersonBean>> getWorkerList(@Body RequestBody body);
+
+    @POST("repair/saveRepairMan")
+    Call<BaseCallModel<String>> saveRepairMan(@Body RequestBody body);
+
+    @POST("repair/getRepairManListByRepId")
+    Call<BaseCallModel<RepairManListBean>> getRepairManListByRepId(@Body RequestBody body);
+
+
+    @POST("spare/saveRepairSpareReturn")
+    Call<BaseCallModel<String>> saveRepairSpareReturn(@Body RequestBody body);
+    @POST("repair/deleteRepairMan")
+    Call<BaseCallModel<String>> deleteRepairMan(@Body RequestBody body);
 }

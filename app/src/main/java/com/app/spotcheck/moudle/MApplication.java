@@ -9,6 +9,7 @@ import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.bugly.crashreport.CrashReport;
 
 public class MApplication extends Application {
 
@@ -27,6 +28,7 @@ public class MApplication extends Application {
     public void onCreate() {
         super.onCreate();
         intance = this;
+        CrashReport.initCrashReport(getApplicationContext(), "a6af2c4b90", false);
     }
 
     public static MApplication getIntance() {

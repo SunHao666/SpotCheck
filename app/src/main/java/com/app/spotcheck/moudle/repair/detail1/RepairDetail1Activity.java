@@ -1,6 +1,7 @@
 package com.app.spotcheck.moudle.repair.detail1;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ import com.app.spotcheck.utils.GlobalKey;
 import com.king.zxing.CaptureActivity;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,6 +47,10 @@ public class RepairDetail1Activity extends BaseActivity<RepairDetail1Presenter> 
     TextView mDateTv;
     @BindView(R.id.mProType)
     TextView mProType;
+    @BindView(R.id.mRepariHourD)
+    TextView mRepariHourD;
+    @BindView(R.id.mRepariHourF)
+    TextView mRepariHourF;
 
     @BindView(R.id.mProContentTv)
     TextView mProContentTv;
@@ -98,12 +105,26 @@ public class RepairDetail1Activity extends BaseActivity<RepairDetail1Presenter> 
                 mPresenter.del(repid);
                 break;
             case R.id.mPassBtn:  //通过
-                mPresenter.pass(repid,loginId,"");
+
+                mPresenter.pass(repid,loginId,getYMD());
                 break;
 
         }
     }
 
+    private String getYMD(){
+        Calendar instance = Calendar.getInstance();
+        int year = instance.get(Calendar.YEAR);
+        int month = instance.get(Calendar.MONTH);
+        int day = instance.get(Calendar.DATE);
+        StringBuilder sb = new StringBuilder();
+        sb.append(year);
+        sb.append("-");
+        sb.append(month+1);
+        sb.append("-");
+        sb.append(day);
+        return  sb.toString();
+    }
     @Override
     public void showError(String msg) {
         ToastWrapper.show(msg);
@@ -124,6 +145,8 @@ public class RepairDetail1Activity extends BaseActivity<RepairDetail1Presenter> 
         mDateTv.setText(bean.getAPPLY_TIME());
         mProType.setText(bean.getPROBLEM_KIND_VALUE());
         mProContentTv.setText(bean.getPROBLEM());
+        mRepariHourD.setText(bean.getREPAIR_HOUR_D());
+        mRepariHourF.setText(bean.getREPAIR_HOUR_F());
     }
 
     @Override

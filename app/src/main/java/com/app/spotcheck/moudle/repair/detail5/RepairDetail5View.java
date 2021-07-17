@@ -2,6 +2,10 @@ package com.app.spotcheck.moudle.repair.detail5;
 
 import com.app.spotcheck.base.BaseView;
 import com.app.spotcheck.moudle.bean.RepairDetailBean;
+import com.app.spotcheck.moudle.bean.RepairDeviceListBean;
+import com.app.spotcheck.moudle.bean.RepairManListBean;
+
+import java.util.List;
 
 interface RepairDetail5View extends BaseView {
     void showError(String msg);
@@ -14,4 +18,7 @@ interface RepairDetail5View extends BaseView {
 
     void disLoading();
 
+    void showManList(List<RepairManListBean.SearchListBean> searchList);
+
+    void showDeviceList(List<RepairDeviceListBean.SearchListBean> searchList);
 }

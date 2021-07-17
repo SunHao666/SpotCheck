@@ -16,6 +16,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/mRepairTitleTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="维修记录列表"
@@ -43,7 +44,7 @@
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="fixed"
+        app:tabMode="scrollable"
         app:tabTextColor="#515151"
         app:tabSelectedTextColor="#5099F8"
         app:tabIndicatorColor="#5099F8"

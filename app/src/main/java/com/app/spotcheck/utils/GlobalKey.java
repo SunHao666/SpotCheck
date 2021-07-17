@@ -10,4 +10,7 @@ public class GlobalKey {
     public static String KEY_REPID ="repId";
     public static String KEY_PARTID ="partid";
 
+    public static String KEY_ADDDEVICE ="addDeviceBean";
+
+
 }

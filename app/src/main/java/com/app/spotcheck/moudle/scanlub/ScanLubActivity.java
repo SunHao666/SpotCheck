@@ -32,6 +32,8 @@ public class ScanLubActivity extends BaseActivity<ScanLubPresenter> implements S
     TextView tvLubName;
     @BindView(R.id.tv_lub_plantime)
     TextView tvLubPlantime;
+    @BindView(R.id.tv_lub_point)
+    TextView tvLubPoint;
     @BindView(R.id.tv_lub_type)
     TextView tvLubType;
     @BindView(R.id.tv_use_zhi)
@@ -106,6 +108,7 @@ public class ScanLubActivity extends BaseActivity<ScanLubPresenter> implements S
         tvSetName.setText(bean.getMAINNAME());
         tvLubName.setText(bean.getPARTNAME());
         tvLubPlantime.setText(bean.getPLANTIME());
+        tvLubPoint.setText(bean.getPOINTNAME());
         tvLubType.setText(bean.getLUBTYPE());
         tvUseZhi.setText(bean.getLUBRICANT());
         tvUseZhitype.setText(bean.getOILTYPE());

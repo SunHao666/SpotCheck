@@ -75,6 +75,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="专检"
+            android:visibility="invisible"
             android:textSize="@dimen/sp_13"
             android:textColor="#1F1F1F"
             android:drawableTop="@drawable/zhuanjian"
