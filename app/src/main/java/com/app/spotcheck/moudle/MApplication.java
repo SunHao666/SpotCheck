@@ -2,6 +2,7 @@ package com.app.spotcheck.moudle;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.app.spotcheck.R;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -10,6 +11,8 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.tencent.bugly.crashreport.CrashReport;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class MApplication extends Application {
 
@@ -29,6 +32,9 @@ public class MApplication extends Application {
         super.onCreate();
         intance = this;
         CrashReport.initCrashReport(getApplicationContext(), "a6af2c4b90", false);
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+
     }
 
     public static MApplication getIntance() {
