@@ -22,6 +22,69 @@ public class LoginBean implements Serializable {
     private String Loginname;
     private String DepartmentId;	//部门ID
     private String DepartmentName;	//部门名称
+    private String uuAdminUser;
+    private String RepairDispatch;
+    private String RepairFinishRefirm;
+    private String RepairRecordRefirm;
+    private String Tel;
+    private String RepairApplyCheck;
+    private String WorkClassNo;
+
+    public String getUuAdminUser() {
+        return uuAdminUser;
+    }
+
+    public void setUuAdminUser(String uuAdminUser) {
+        this.uuAdminUser = uuAdminUser;
+    }
+
+    public String getRepairDispatch() {
+        return RepairDispatch;
+    }
+
+    public void setRepairDispatch(String repairDispatch) {
+        RepairDispatch = repairDispatch;
+    }
+
+    public String getRepairFinishRefirm() {
+        return RepairFinishRefirm;
+    }
+
+    public void setRepairFinishRefirm(String repairFinishRefirm) {
+        RepairFinishRefirm = repairFinishRefirm;
+    }
+
+    public String getRepairRecordRefirm() {
+        return RepairRecordRefirm;
+    }
+
+    public void setRepairRecordRefirm(String repairRecordRefirm) {
+        RepairRecordRefirm = repairRecordRefirm;
+    }
+
+    public String getTel() {
+        return Tel;
+    }
+
+    public void setTel(String tel) {
+        Tel = tel;
+    }
+
+    public String getRepairApplyCheck() {
+        return RepairApplyCheck;
+    }
+
+    public void setRepairApplyCheck(String repairApplyCheck) {
+        RepairApplyCheck = repairApplyCheck;
+    }
+
+    public String getWorkClassNo() {
+        return WorkClassNo;
+    }
+
+    public void setWorkClassNo(String workClassNo) {
+        WorkClassNo = workClassNo;
+    }
 
     public String getDepartmentId() {
         return DepartmentId;

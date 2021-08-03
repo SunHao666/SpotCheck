@@ -113,7 +113,7 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
         });
         initDate();
         initRepairInfo();
-        applyman = SPUtils.getInstance(this).getString(GlobalKey.KEY_LOGINID);
+        applyman = SPUtils.getInstance(this).getString(GlobalKey.KEY_UUADMINUSER);
         applyDepartmentName = SPUtils.getInstance(this).getString(GlobalKey.KEY_DEPARTMENTNAME);
     }
 
@@ -254,8 +254,8 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
         map.put("mainid", toRequestBody(mainID));
         map.put("partid", toRequestBody(partID));
         map.put("applyman", toRequestBody(applyman));
-        map.put("applytime", toRequestBody(mRepairDateTv.getText().toString()));
-        map.put("applyDepartmentName", toRequestBody(applyDepartmentName));
+//        map.put("applytime", toRequestBody(mRepairDateTv.getText().toString()));
+//        map.put("applyDepartmentName", toRequestBody(applyDepartmentName));
         map.put("problem", toRequestBody(mExceptionInfoEt.getText().toString()));
         map.put("problemKindCode", toRequestBody(problemKindCode));
 

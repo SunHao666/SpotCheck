@@ -36,7 +36,7 @@ class RepairDetail4Presenter extends BasePresenter<RepairDetail4View> {
         Map<String, String> map = new HashMap<>();
         map.put("repId", repid);
         map.put("finishcheckman", finishcheckman);
-        map.put("finishchecktime", finishchecktime);
+//        map.put("finishchecktime", finishchecktime);
         NetManager.getInstance().api().saveRepairRecRefirm(convertMapToBody(map))
                 .enqueue(new BaseCallback<String>() {
                     @Override

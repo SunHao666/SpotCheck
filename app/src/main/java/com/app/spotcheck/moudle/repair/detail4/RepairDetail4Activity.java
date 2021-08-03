@@ -2,6 +2,7 @@ package com.app.spotcheck.moudle.repair.detail4;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -66,13 +67,16 @@ public class RepairDetail4Activity extends BaseActivity<RepairDetail4Presenter> 
     RecyclerView mDeviceRv;
     @BindView(R.id.mPersonRv)
     RecyclerView mPersonRv;
+    @BindView(R.id.mSureOverBtn)
+    Button mSureOverBtn;
     private String repid;
     private String loginId;
     private AddDeviceListAdapter mDeviceAdapter;
     private AddManListAdapter mManAdapter;
+    private String repairFinishRefirm;
     @Override
     protected void initData() {
-        loginId = SPUtils.getInstance(this).getString(GlobalKey.KEY_LOGINID);
+        loginId = SPUtils.getInstance(this).getString(GlobalKey.KEY_UUADMINUSER);
         Intent intent = getIntent();
         if (intent != null) {
             repid = intent.getStringExtra(GlobalKey.KEY_REPID);
@@ -120,6 +124,13 @@ public class RepairDetail4Activity extends BaseActivity<RepairDetail4Presenter> 
         mPersonRv.setLayoutManager(new LinearLayoutManager(this));
         mPersonRv.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         mPersonRv.setAdapter(mManAdapter);
+
+        repairFinishRefirm = SPUtils.getInstance(this).getString(GlobalKey.KEY_REPAIRFINISHREFIRM);
+        if(!repairFinishRefirm.isEmpty()&& repairFinishRefirm.equals("1")){
+            mSureOverBtn.setVisibility(View.VISIBLE);
+        }else{
+            mSureOverBtn.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.mSureOverBtn, R.id.overTimeLay})

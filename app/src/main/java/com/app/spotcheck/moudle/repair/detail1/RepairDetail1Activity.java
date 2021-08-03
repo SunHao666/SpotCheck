@@ -63,9 +63,11 @@ public class RepairDetail1Activity extends BaseActivity<RepairDetail1Presenter> 
 
     private String repid;
     private String loginId;
+    private String repairApplyCheck;
     @Override
     protected void initData() {
-        loginId = SPUtils.getInstance(this).getString(GlobalKey.KEY_LOGINID);
+        loginId = SPUtils.getInstance(this).getString(GlobalKey.KEY_UUADMINUSER);
+
         Intent intent = getIntent();
         if (intent != null) {
             repid = intent.getStringExtra(GlobalKey.KEY_REPID);
@@ -96,6 +98,14 @@ public class RepairDetail1Activity extends BaseActivity<RepairDetail1Presenter> 
                 finish();
             }
         });
+        repairApplyCheck = SPUtils.getInstance(this).getString(GlobalKey.KEY_REPAIRAPPLYCHECK);
+        if(!repairApplyCheck.isEmpty()&&repairApplyCheck.equals("1")){
+            mPassBtn.setVisibility(View.VISIBLE);
+            mCancleBtn.setVisibility(View.VISIBLE);
+        }else{
+            mPassBtn.setVisibility(View.GONE);
+            mCancleBtn.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.mCancleBtn, R.id.mPassBtn})

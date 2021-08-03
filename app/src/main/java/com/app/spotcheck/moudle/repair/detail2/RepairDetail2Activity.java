@@ -2,6 +2,7 @@ package com.app.spotcheck.moudle.repair.detail2;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.app.spotcheck.R;
@@ -61,13 +62,17 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
 
     @BindView(R.id.mDateSelTv)
     TextView mDateSelTv;
+
+    @BindView(R.id.mRepairDispatchBtn)
+    Button mRepairDispatchBtn;
     private int proKindPostion = 0;
     private String problemKindCode;
     private String repid;
     private String loginId;
+    private String repairDispatch;
     @Override
     protected void initData() {
-        loginId = SPUtils.getInstance(this).getString(GlobalKey.KEY_LOGINID);
+        loginId = SPUtils.getInstance(this).getString(GlobalKey.KEY_UUADMINUSER);
         Intent intent = getIntent();
         if (intent != null) {
             repid = intent.getStringExtra(GlobalKey.KEY_REPID);
@@ -98,6 +103,12 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
                 finish();
             }
         });
+        repairDispatch = SPUtils.getInstance(this).getString(GlobalKey.KEY_REPAIRDISPATCH);
+        if(!repairDispatch.isEmpty()&& repairDispatch.equals("1")){
+            mRepairDispatchBtn.setVisibility(View.VISIBLE);
+        }else{
+            mRepairDispatchBtn.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.mRepairDispatchBtn, R.id.companyLay,R.id.timeLay})

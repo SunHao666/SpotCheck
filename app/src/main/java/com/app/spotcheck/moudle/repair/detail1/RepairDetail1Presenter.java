@@ -60,7 +60,7 @@ class RepairDetail1Presenter extends BasePresenter<RepairDetail1View> {
         Map<String,String> map = new HashMap<>();
         map.put("repId",repid);
         map.put("applyCheckman",applyCheckman);
-        map.put("applyChecktime",applyChecktime);
+//        map.put("applyChecktime",applyChecktime);
 
         NetManager.getInstance().api().saveApplyCommit(convertMapToBody(map))
                 .enqueue(new BaseCallback<String>() {

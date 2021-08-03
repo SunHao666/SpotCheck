@@ -37,7 +37,7 @@ class RepairDetail2Presenter extends BasePresenter<RepairDetail2View> {
         Map<String, String> map = new HashMap<>();
         map.put("repId", repid);
         map.put("dispatchman", dispatchman);
-        map.put("dispatchtime", dispatchtime);
+//        map.put("dispatchtime", dispatchtime);
         map.put("reptime",reptime);
         map.put("repcompany", repcompany);
         NetManager.getInstance().api().saveDispatch(convertMapToBody(map))
