@@ -73,7 +73,6 @@ public class RepairDetail4Activity extends BaseActivity<RepairDetail4Presenter> 
     private String loginId;
     private AddDeviceListAdapter mDeviceAdapter;
     private AddManListAdapter mManAdapter;
-    private String repairFinishRefirm;
     @Override
     protected void initData() {
         loginId = SPUtils.getInstance(this).getString(GlobalKey.KEY_UUADMINUSER);
@@ -124,13 +123,6 @@ public class RepairDetail4Activity extends BaseActivity<RepairDetail4Presenter> 
         mPersonRv.setLayoutManager(new LinearLayoutManager(this));
         mPersonRv.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         mPersonRv.setAdapter(mManAdapter);
-
-        repairFinishRefirm = SPUtils.getInstance(this).getString(GlobalKey.KEY_REPAIRFINISHREFIRM);
-        if(!repairFinishRefirm.isEmpty()&& repairFinishRefirm.equals("1")){
-            mSureOverBtn.setVisibility(View.VISIBLE);
-        }else{
-            mSureOverBtn.setVisibility(View.GONE);
-        }
     }
 
     @OnClick({R.id.mSureOverBtn, R.id.overTimeLay})

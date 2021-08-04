@@ -21,7 +21,91 @@ class RepairItemPresenter extends BasePresenter<RepairItemView> {
         map.put("mainname",mainname);
         map.put("state",state);
         map.put("repkind",repkind);
-        NetManager.getInstance().api().getRecordList(convertMapToBody(map))
+        if (state.equals("1")){
+            getApplyCheckList(map);
+        }else if(state.equals("2")){
+            getDispatchList(map);
+        }else if(state.equals("3")){
+            geWorkRefirmList(map);
+        }else if(state.equals("4")){
+            geFinishRefirmList(map);
+        }else if(state.equals("5")){
+            getFinishList(map);
+        }
+
+    }
+
+    private void getApplyCheckList(Map<String, String> map) {
+        NetManager.getInstance().api().getApplyCheckList(convertMapToBody(map))
+                .enqueue(new BaseCallback<RepairItemBean>() {
+                    @Override
+                    protected void onSuccess(RepairItemBean repairItemBean) {
+                        mView.showSuccess(repairItemBean);
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        if(code != -1){
+                            mView.showError(msg);
+                        }
+                    }
+                });
+    }
+
+    private void getDispatchList(Map<String, String> map) {
+        NetManager.getInstance().api().getDispatchList(convertMapToBody(map))
+                .enqueue(new BaseCallback<RepairItemBean>() {
+                    @Override
+                    protected void onSuccess(RepairItemBean repairItemBean) {
+                        mView.showSuccess(repairItemBean);
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        if(code != -1){
+                            mView.showError(msg);
+                        }
+                    }
+                });
+    }
+
+    private void geWorkRefirmList(Map<String, String> map) {
+        NetManager.getInstance().api().geWorkRefirmList(convertMapToBody(map))
+                .enqueue(new BaseCallback<RepairItemBean>() {
+                    @Override
+                    protected void onSuccess(RepairItemBean repairItemBean) {
+                        mView.showSuccess(repairItemBean);
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        if(code != -1){
+                            mView.showError(msg);
+                        }
+                    }
+                });
+    }
+
+    private void geFinishRefirmList(Map<String, String> map) {
+        NetManager.getInstance().api().geFinishRefirmList(convertMapToBody(map))
+                .enqueue(new BaseCallback<RepairItemBean>() {
+                    @Override
+                    protected void onSuccess(RepairItemBean repairItemBean) {
+                        mView.showSuccess(repairItemBean);
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        if(code != -1){
+                            mView.showError(msg);
+                        }
+                    }
+                });
+    }
+
+
+    private void getFinishList(Map<String, String> map) {
+        NetManager.getInstance().api().getFinishList(convertMapToBody(map))
                 .enqueue(new BaseCallback<RepairItemBean>() {
                     @Override
                     protected void onSuccess(RepairItemBean repairItemBean) {

@@ -138,6 +138,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         SPUtils.getInstance(this).put(GlobalKey.KEY_REPAIRDISPATCH,bean.getRepairDispatch());
         SPUtils.getInstance(this).put(GlobalKey.KEY_REPAIRRECORDREFIRM,bean.getRepairRecordRefirm());
         SPUtils.getInstance(this).put(GlobalKey.KEY_REPAIRFINISHREFIRM,bean.getRepairFinishRefirm());
+
+        SPUtils.getInstance(this).put(GlobalKey.KEY_RepairApplyCheckNum,bean.getRepairApplyCheckNum());
+        SPUtils.getInstance(this).put(GlobalKey.KEY_RepairDispatchNum,bean.getRepairDispatchNum());
+        SPUtils.getInstance(this).put(GlobalKey.KEY_RepairRecordRefirmNum,bean.getRepairRecordRefirmNum());
+        SPUtils.getInstance(this).put(GlobalKey.KEY_RepairFinishRefirmNum,bean.getRepairFinishRefirmNum());
         disLoding();
         ToastWrapper.show(success);
         MainActivity.show(LoginActivity.this,MainActivity.class);

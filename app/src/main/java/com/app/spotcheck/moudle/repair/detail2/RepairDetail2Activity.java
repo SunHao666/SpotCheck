@@ -69,7 +69,6 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
     private String problemKindCode;
     private String repid;
     private String loginId;
-    private String repairDispatch;
     @Override
     protected void initData() {
         loginId = SPUtils.getInstance(this).getString(GlobalKey.KEY_UUADMINUSER);
@@ -103,12 +102,7 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
                 finish();
             }
         });
-        repairDispatch = SPUtils.getInstance(this).getString(GlobalKey.KEY_REPAIRDISPATCH);
-        if(!repairDispatch.isEmpty()&& repairDispatch.equals("1")){
-            mRepairDispatchBtn.setVisibility(View.VISIBLE);
-        }else{
-            mRepairDispatchBtn.setVisibility(View.GONE);
-        }
+
     }
 
     @OnClick({R.id.mRepairDispatchBtn, R.id.companyLay,R.id.timeLay})
@@ -186,7 +180,7 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
 
         new XPopup.Builder(this)
 //                .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
-                .asBottomList("故障类型", sList,
+                .asBottomList("维修单位", sList,
                         null, proKindPostion,
                         new OnSelectListener() {
                             @Override

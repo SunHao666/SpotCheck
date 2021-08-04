@@ -164,6 +164,8 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
         boolean pass = false;
         if(problemKindCode == null || problemKindCode.isEmpty()){
             ToastWrapper.show("请选故障类型");
+        }else if(TextUtils.isEmpty(mDeviceNameTv.getText().toString())){
+            ToastWrapper.show("请选择设备");
         }else{
             pass = true;
         }

@@ -35,7 +35,7 @@ import butterknife.BindView;
  */
 public class RepairFragment extends BaseFragment<RepairPresenter> implements RepairView, TabLayout.OnTabSelectedListener {
     private static RepairFragment instance;
-    public String[] tabNames = {"待审核", "待派工", "维修中", "待完工", "已完工", "全部"};
+    public String[] tabNames = {"待审核", "待派工", "维修中", "待完工", "已完工"};
     public List<Fragment> fragments = new ArrayList<>();
     private int currentTab = 0;
     private MViewPagerAdapter adapter;

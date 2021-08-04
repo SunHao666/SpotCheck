@@ -142,6 +142,25 @@ public interface NetService {
 
     @POST("repair/getRecordList")
     Call<BaseCallModel<RepairItemBean>> getRecordList(@Body RequestBody body);
+    //待审核
+    @POST("repair/getApplyCheckList")
+    Call<BaseCallModel<RepairItemBean>> getApplyCheckList(@Body RequestBody body);
+
+    //待派工
+    @POST("repair/getDispatchList")
+    Call<BaseCallModel<RepairItemBean>> getDispatchList(@Body RequestBody body);
+
+    //维修中
+    @POST("repair/getWorkRefirmList")
+    Call<BaseCallModel<RepairItemBean>> geWorkRefirmList(@Body RequestBody body);
+
+    //待完工t
+    @POST("repair/getFinishRefirmList")
+    Call<BaseCallModel<RepairItemBean>> geFinishRefirmList(@Body RequestBody body);
+
+    //已完工
+    @POST("repair/getFinishList")
+    Call<BaseCallModel<RepairItemBean>> getFinishList(@Body RequestBody body);
 
     @POST("repair/gotoApplyCheck")
     Call<BaseCallModel<RepairDetailBean>> gotoApplyCheck(@Body RequestBody body);

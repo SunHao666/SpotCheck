@@ -14,6 +14,12 @@ public class GlobalKey {
     //当RepairFinishRefirm='1',有“待完工”的tab，否则没有）
     public static String KEY_REPAIRFINISHREFIRM ="RepairFinishRefirm";
 
+    public static String KEY_RepairApplyCheckNum ="RepairApplyCheckNum";
+    public static String KEY_RepairDispatchNum ="RepairDispatchNum";
+    public static String KEY_RepairRecordRefirmNum ="RepairRecordRefirmNum";
+    public static String KEY_RepairFinishRefirmNum ="RepairFinishRefirmNum";
+
+
     public static String KEY_DEVICE_NAME ="deviceName";
     public static String KEY_PART_NAME ="partName";
     public static String KEY_MAINID ="mainid";

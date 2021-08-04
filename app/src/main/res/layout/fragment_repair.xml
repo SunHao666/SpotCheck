@@ -30,13 +30,13 @@
                 android:id="@+id/mRepairAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/repair_add"
-                android:padding="@dimen/dp_5"
-                android:layout_gravity="center_vertical"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/dp_18"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_11"
-                />
+                android:layout_marginRight="@dimen/dp_18"
+                android:visibility="gone"
+                android:padding="@dimen/dp_5"
+                android:src="@drawable/repair_add" />
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
@@ -44,7 +44,7 @@
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="scrollable"
+        app:tabMode="fixed"
         app:tabTextColor="#515151"
         app:tabSelectedTextColor="#5099F8"
         app:tabIndicatorColor="#5099F8"

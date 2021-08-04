@@ -88,7 +88,6 @@ public class RepairDetail3Activity extends BaseActivity<RepairDetail3Presenter> 
     private boolean isPersonFold = false;
     private AddDeviceListAdapter mDeviceAdapter;
     private AddManListAdapter mManAdapter;
-    private String repairRecordRefirm;
     @Override
     protected void initData() {
         Intent intent = getIntent();
@@ -156,13 +155,6 @@ public class RepairDetail3Activity extends BaseActivity<RepairDetail3Presenter> 
                 manDialog(bean);
             }
         });
-
-        repairRecordRefirm = SPUtils.getInstance(this).getString(GlobalKey.KEY_REPAIRRECORDREFIRM);
-        if(!repairRecordRefirm.isEmpty()&& repairRecordRefirm.equals("1")){
-            mRepairOverBtn.setVisibility(View.VISIBLE);
-        }else{
-            mRepairOverBtn.setVisibility(View.GONE);
-        }
     }
 
     private void manDialog(RepairManListBean.SearchListBean bean) {

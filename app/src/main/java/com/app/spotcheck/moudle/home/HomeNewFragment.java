@@ -77,6 +77,18 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
     @BindView(R.id.mLub)
     TextView mLub;
 
+    @BindView(R.id.mWarning1Num)
+    TextView mWarning1Num;
+
+    @BindView(R.id.mWarning2Num)
+    TextView mWarning2Num;
+
+    @BindView(R.id.mWarning3Num)
+    TextView mWarning3Num;
+
+    @BindView(R.id.mWarning4Num)
+    TextView mWarning4Num;
+
     HomeBean bean;
     private boolean isVisible = true;
 
@@ -119,7 +131,14 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
 
     @Override
     protected void initView() {
-
+        String string = SPUtils.getInstance(getActivity()).getString(GlobalKey.KEY_RepairApplyCheckNum);
+        String string1 = SPUtils.getInstance(getActivity()).getString(GlobalKey.KEY_RepairDispatchNum);
+        String string2 = SPUtils.getInstance(getActivity()).getString(GlobalKey.KEY_RepairRecordRefirmNum);
+        String string3 = SPUtils.getInstance(getActivity()).getString(GlobalKey.KEY_RepairFinishRefirmNum);
+        mWarning1Num.setText(string.isEmpty() ? "0":string+"\n待审核");
+        mWarning2Num.setText(string1.isEmpty() ? "0":string1+"\n待派工");
+        mWarning3Num.setText(string2.isEmpty() ? "0":string2+"\n待完成");
+        mWarning4Num.setText(string3.isEmpty() ? "0":string3+"\n待确认");
     }
 
     @Override
@@ -166,7 +185,7 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
 
     @OnClick({R.id.iv_home_check, R.id.iv_home_setpro, R.id.iv_home_lub, R.id.mDayCheck, R.id.mWeekCheck,
             R.id.mMonthCheck, R.id.mSpecialCheck, R.id.mCheckRepair, R.id.mMiddleRepair, R.id.mBigRepair
-            , R.id.mLub})
+            , R.id.mLub,R.id.iv_home_setpro2})
     public void onViewClicked(View view) {
         if (!checkPression()) {
             return;
@@ -177,6 +196,9 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
                 break;
             case R.id.iv_home_setpro:
                 startActivityForResult(new Intent(getActivity(), CaptureActivity.class), 1002);
+                break;
+            case R.id.iv_home_setpro2:
+                startActivity(new Intent(getActivity(), ReportRepairActivity.class));
                 break;
             case R.id.iv_home_lub:
                 startActivityForResult(new Intent(getActivity(), CaptureActivity.class), 1003);
@@ -199,8 +221,8 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
             case R.id.mCheckRepair:
                 Contant.REPAIR_REPKIND = 1;
                 //跳转repair tab
-                if(getActivity() instanceof MainActivity){
-                    ((MainActivity)getActivity()).selectedTab(4,0);
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).selectedTab(4, 0);
                 }
                 //刷新界面
                 EventBus.getDefault().post(new EventRepairRefresh(1));
@@ -208,22 +230,22 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
             case R.id.mMiddleRepair:
                 Contant.REPAIR_REPKIND = 2;
                 //跳转repair tab
-                if(getActivity() instanceof MainActivity){
-                    ((MainActivity)getActivity()).selectedTab(4,0);
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).selectedTab(4, 0);
                 }
                 //刷新界面
                 EventBus.getDefault().post(new EventRepairRefresh(2));
                 break;
             case R.id.mBigRepair:
                 Contant.REPAIR_REPKIND = 3;
-                if(getActivity() instanceof MainActivity){
-                    ((MainActivity)getActivity()).selectedTab(4,0);
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).selectedTab(4, 0);
                 }
                 EventBus.getDefault().post(new EventRepairRefresh(3));
                 break;
             case R.id.mLub:
-                if(getActivity() instanceof MainActivity){
-                    ((MainActivity)getActivity()).selectedTab(3,0);
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).selectedTab(3, 0);
                 }
                 break;
         }

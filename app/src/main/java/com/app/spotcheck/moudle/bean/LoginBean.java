@@ -20,8 +20,8 @@ public class LoginBean implements Serializable {
     private String Loginid;
     private long logtime;
     private String Loginname;
-    private String DepartmentId;	//部门ID
-    private String DepartmentName;	//部门名称
+    private String DepartmentId;    //部门ID
+    private String DepartmentName;    //部门名称
     private String uuAdminUser;
     private String RepairDispatch;
     private String RepairFinishRefirm;
@@ -29,6 +29,43 @@ public class LoginBean implements Serializable {
     private String Tel;
     private String RepairApplyCheck;
     private String WorkClassNo;
+
+    private String RepairApplyCheckNum;
+    private String RepairDispatchNum;
+    private String RepairRecordRefirmNum;
+    private String RepairFinishRefirmNum;
+
+    public String getRepairApplyCheckNum() {
+        return RepairApplyCheckNum;
+    }
+
+    public void setRepairApplyCheckNum(String repairApplyCheckNum) {
+        RepairApplyCheckNum = repairApplyCheckNum;
+    }
+
+    public String getRepairDispatchNum() {
+        return RepairDispatchNum;
+    }
+
+    public void setRepairDispatchNum(String repairDispatchNum) {
+        RepairDispatchNum = repairDispatchNum;
+    }
+
+    public String getRepairRecordRefirmNum() {
+        return RepairRecordRefirmNum;
+    }
+
+    public void setRepairRecordRefirmNum(String repairRecordRefirmNum) {
+        RepairRecordRefirmNum = repairRecordRefirmNum;
+    }
+
+    public String getRepairFinishRefirmNum() {
+        return RepairFinishRefirmNum;
+    }
+
+    public void setRepairFinishRefirmNum(String repairFinishRefirmNum) {
+        RepairFinishRefirmNum = repairFinishRefirmNum;
+    }
 
     public String getUuAdminUser() {
         return uuAdminUser;

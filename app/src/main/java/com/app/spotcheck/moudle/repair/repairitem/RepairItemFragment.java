@@ -78,11 +78,7 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
 
         state = String.valueOf(tab);
         String repairRepkind = String.valueOf(Contant.REPAIR_REPKIND);
-        if(tab != 6){
-            mPresenter.getRepairItemList(mainid, mainname, state,repairRepkind);
-        }else{
-            mPresenter.getRepairItemList(mainid, mainname, "",repairRepkind);
-        }
+        mPresenter.getRepairItemList(mainid, mainname, state, repairRepkind);
     }
 
     public void setTab(int tab) {
@@ -131,7 +127,7 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
                     Intent intent = new Intent(getActivity(), RepairDetail4Activity.class);
                     intent.putExtra(GlobalKey.KEY_REPID, datas.get(position).getREPID());
                     startActivity(intent);
-                } else if (state == 5 ) {
+                } else if (state == 5) {
                     Intent intent = new Intent(getActivity(), RepairDetail5Activity.class);
                     intent.putExtra(GlobalKey.KEY_REPID, datas.get(position).getREPID());
                     startActivity(intent);
@@ -202,10 +198,10 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void refreshOther(EventRepairRefresh event){
+    public void refreshOther(EventRepairRefresh event) {
         initRequest();
-        if(getParentFragment() instanceof RepairFragment){
-            ((RepairFragment)getParentFragment()).updateTitle();
+        if (getParentFragment() instanceof RepairFragment) {
+            ((RepairFragment) getParentFragment()).updateTitle();
         }
     }
 
