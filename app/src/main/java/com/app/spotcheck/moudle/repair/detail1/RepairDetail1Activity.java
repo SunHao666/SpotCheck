@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.spotcheck.R;
@@ -60,6 +61,10 @@ public class RepairDetail1Activity extends BaseActivity<RepairDetail1Presenter> 
 
     @BindView(R.id.mPassBtn)
     Button mPassBtn;
+    @BindView(R.id.mFixedTimeLay)
+    RelativeLayout mFixedTimeLay;
+    @BindView(R.id.mTotalTimeLay)
+    RelativeLayout mTotalTimeLay;
 
     private String repid;
     private String loginId;
@@ -98,6 +103,8 @@ public class RepairDetail1Activity extends BaseActivity<RepairDetail1Presenter> 
             }
         });
 
+        mFixedTimeLay.setVisibility(View.GONE);
+        mTotalTimeLay.setVisibility(View.GONE);
     }
 
     @OnClick({R.id.mCancleBtn, R.id.mPassBtn})

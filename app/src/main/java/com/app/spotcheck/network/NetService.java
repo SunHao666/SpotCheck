@@ -14,6 +14,7 @@ import com.app.spotcheck.moudle.bean.LoginBean;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
 import com.app.spotcheck.moudle.bean.ProKindBean;
+import com.app.spotcheck.moudle.bean.RefreshWarnBean;
 import com.app.spotcheck.moudle.bean.RepairDetailBean;
 import com.app.spotcheck.moudle.bean.RepairDeviceListBean;
 import com.app.spotcheck.moudle.bean.RepairItemBean;
@@ -223,4 +224,7 @@ public interface NetService {
     Call<BaseCallModel<String>> saveRepairSpareReturn(@Body RequestBody body);
     @POST("repair/deleteRepairMan")
     Call<BaseCallModel<String>> deleteRepairMan(@Body RequestBody body);
+
+    @POST("login/refreshwarn")
+    Call<BaseCallModel<RefreshWarnBean>> refreshwarn(@Body RequestBody body);
 }

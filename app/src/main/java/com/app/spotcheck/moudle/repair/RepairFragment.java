@@ -1,27 +1,27 @@
 package com.app.spotcheck.moudle.repair;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.app.spotcheck.R;
 import com.app.spotcheck.base.BaseFragment;
 import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.view.ScrollableViewPager;
+import com.app.spotcheck.moudle.bean.EventRepairChildRefresh;
 import com.app.spotcheck.moudle.bean.EventRepairRefresh;
 import com.app.spotcheck.moudle.repair.repairitem.RepairItemFragment;
 import com.app.spotcheck.moudle.report.ReportRepairActivity;
-import com.app.spotcheck.moudle.spotcheck.CheckFragment;
 import com.app.spotcheck.moudle.spotcheck.MViewPagerAdapter;
 import com.app.spotcheck.network.Contant;
-import com.baidu.speech.utils.LogUtil;
 import com.google.android.material.tabs.TabLayout;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -47,7 +47,7 @@ public class RepairFragment extends BaseFragment<RepairPresenter> implements Rep
     ScrollableViewPager viewPager;
     @BindView(R.id.mRepairTitleTv)
     TextView mRepairTitleTv;
-
+    private boolean isInit = false;
 
     public static RepairFragment getInstance() {
         if (instance == null) {
@@ -73,6 +73,7 @@ public class RepairFragment extends BaseFragment<RepairPresenter> implements Rep
 
     @Override
     protected void initView() {
+        isInit = true;
         updateTitle();
         initTablayout();
         mRepairAdd.setOnClickListener(new View.OnClickListener() {
@@ -120,12 +121,31 @@ public class RepairFragment extends BaseFragment<RepairPresenter> implements Rep
 
 
     public void updateTitle() {
-        if(Contant.REPAIR_REPKIND == 1){
+        if (Contant.REPAIR_REPKIND == 1) {
             mRepairTitleTv.setText("检修维修记录列表");
-        }else if(Contant.REPAIR_REPKIND == 2){
+        } else if (Contant.REPAIR_REPKIND == 2) {
             mRepairTitleTv.setText("中修维修记录列表");
-        }else if(Contant.REPAIR_REPKIND == 3){
+        } else if (Contant.REPAIR_REPKIND == 3) {
             mRepairTitleTv.setText("大修维修记录列表");
         }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshOther(EventRepairChildRefresh event) {
+        Handler handler = new Handler();
+        viewPager.setCurrentItem(event.childTab);
+    }
+
+    @Override
+    protected void initEventBus() {
+        super.initEventBus();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void destoryEventBus() {
+        super.destoryEventBus();
+        EventBus.getDefault().unregister(this);
     }
 }

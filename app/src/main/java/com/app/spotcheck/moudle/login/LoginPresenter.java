@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -29,10 +30,11 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
 
 
-    public void login(String userid,String userpwd){
+    public void login(String userid, String userpwd, String registrationID){
         Map<String,String> map = new HashMap<>();
         map.put("userid",userid);
         map.put("userpwd",userpwd);
+        map.put("token",registrationID);
         NetManager.getInstance().api().login(convertMapToBody(map))
                 .enqueue(new BaseCallback<LoginBean>() {
                     @Override

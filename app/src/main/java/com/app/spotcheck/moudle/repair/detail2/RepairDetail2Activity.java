@@ -3,6 +3,7 @@ package com.app.spotcheck.moudle.repair.detail2;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.spotcheck.R;
@@ -62,6 +63,10 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
 
     @BindView(R.id.mDateSelTv)
     TextView mDateSelTv;
+    @BindView(R.id.mFixedTimeLay)
+    RelativeLayout mFixedTimeLay;
+    @BindView(R.id.mTotalTimeLay)
+    RelativeLayout mTotalTimeLay;
 
     @BindView(R.id.mRepairDispatchBtn)
     Button mRepairDispatchBtn;
@@ -102,7 +107,8 @@ public class RepairDetail2Activity extends BaseActivity<RepairDetail2Presenter> 
                 finish();
             }
         });
-
+        mFixedTimeLay.setVisibility(View.GONE);
+        mTotalTimeLay.setVisibility(View.GONE);
     }
 
     @OnClick({R.id.mRepairDispatchBtn, R.id.companyLay,R.id.timeLay})

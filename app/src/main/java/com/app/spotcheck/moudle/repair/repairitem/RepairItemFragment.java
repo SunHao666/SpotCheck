@@ -141,12 +141,14 @@ public class RepairItemFragment extends BaseFragment<RepairItemPresenter> implem
 
     @Override
     public void showSuccess(RepairItemBean bean) {
-        datas.clear();
-        adapter.notifyDataSetChanged();
-        datas.addAll(bean.getSearchList());
-        adapter.notifyDataSetChanged();
         if (refreshLayout != null) {
             refreshLayout.finishRefresh();
+        }
+        datas.clear();
+        adapter.notifyDataSetChanged();
+        if(bean != null&&bean.getSearchList() !=null){
+            datas.addAll(bean.getSearchList());
+            adapter.notifyDataSetChanged();
         }
     }
 

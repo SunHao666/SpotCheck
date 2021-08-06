@@ -20,6 +20,7 @@ import com.app.spotcheck.moudle.MainActivity;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
+import com.app.spotcheck.moudle.bean.RefreshWarnBean;
 import com.app.spotcheck.moudle.bean.RepairReportScanBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.event.HomeEvent;
@@ -218,6 +219,11 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
 
     @Override
     public void showRepairSuccess(RepairReportScanBean bean, String qrcode) {
+
+    }
+
+    @Override
+    public void showWarn(RefreshWarnBean bean) {
 
     }
 

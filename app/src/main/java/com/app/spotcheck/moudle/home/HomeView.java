@@ -5,6 +5,7 @@ import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
+import com.app.spotcheck.moudle.bean.RefreshWarnBean;
 import com.app.spotcheck.moudle.bean.RepairReportScanBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.luck.picture.lib.tools.ValueOf;
@@ -29,4 +30,5 @@ public interface HomeView {
     void showRepairSuccess(RepairReportScanBean bean, String qrcode);
 
 
+    void showWarn(RefreshWarnBean bean);
 }

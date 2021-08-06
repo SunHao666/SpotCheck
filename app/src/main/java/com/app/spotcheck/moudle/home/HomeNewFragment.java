@@ -22,6 +22,7 @@ import com.app.spotcheck.moudle.bean.EventRepairRefresh;
 import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
+import com.app.spotcheck.moudle.bean.RefreshWarnBean;
 import com.app.spotcheck.moudle.bean.RepairReportScanBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.event.CheckTitleEvent;
@@ -89,9 +90,12 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
     @BindView(R.id.mWarning4Num)
     TextView mWarning4Num;
 
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
+
     HomeBean bean;
     private boolean isVisible = true;
-
+    private String loginName;
     private static HomeNewFragment instance;
 
     public static HomeNewFragment newInstance() {
@@ -117,6 +121,7 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
     protected void initData() {
         LogUtils.error("HomeFragment initData");
         Contant.TAB_SELECT = 0;
+        requestWarn();
     }
 
     @Override
@@ -131,14 +136,19 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
 
     @Override
     protected void initView() {
-        String string = SPUtils.getInstance(getActivity()).getString(GlobalKey.KEY_RepairApplyCheckNum);
-        String string1 = SPUtils.getInstance(getActivity()).getString(GlobalKey.KEY_RepairDispatchNum);
-        String string2 = SPUtils.getInstance(getActivity()).getString(GlobalKey.KEY_RepairRecordRefirmNum);
-        String string3 = SPUtils.getInstance(getActivity()).getString(GlobalKey.KEY_RepairFinishRefirmNum);
-        mWarning1Num.setText(string.isEmpty() ? "0":string+"\n待审核");
-        mWarning2Num.setText(string1.isEmpty() ? "0":string1+"\n待派工");
-        mWarning3Num.setText(string2.isEmpty() ? "0":string2+"\n待完成");
-        mWarning4Num.setText(string3.isEmpty() ? "0":string3+"\n待确认");
+
+        loginName = SPUtils.getInstance(getActivity()).getString(GlobalKey.KEY_LOGINID);
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                requestWarn();
+            }
+        });
+    }
+
+    private void requestWarn() {
+        mPresenter.refresh(loginName);
     }
 
     @Override
@@ -148,6 +158,9 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
 
     @Override
     public void showError(int code, String error) {
+        if (refreshLayout != null) {
+            refreshLayout.finishRefresh();
+        }
         if (code == -3000) {
             showQrcodeDialog();
         } else {
@@ -183,9 +196,28 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
         startActivity(intent);
     }
 
+    @Override
+    public void showWarn(RefreshWarnBean bean) {
+        if (refreshLayout != null) {
+            refreshLayout.finishRefresh();
+        }
+
+        if(bean  == null){
+            return;
+        }
+        String string = bean.getRepairApplyCheckNum();
+        String string1 = bean.getRepairDispatchNum();
+        String string2 = bean.getRepairRecordRefirmNum();
+        String string3 = bean.getRepairFinishRefirmNum();
+        mWarning1Num.setText(string.isEmpty() ? "0\n待审核":string+"\n待审核");
+        mWarning2Num.setText(string1.isEmpty() ? "0\n待派工":string1+"\n待派工");
+        mWarning3Num.setText(string2.isEmpty() ? "0\n待完成":string2+"\n待完成");
+        mWarning4Num.setText(string3.isEmpty() ? "0\n待确认":string3+"\n待确认");
+    }
+
     @OnClick({R.id.iv_home_check, R.id.iv_home_setpro, R.id.iv_home_lub, R.id.mDayCheck, R.id.mWeekCheck,
             R.id.mMonthCheck, R.id.mSpecialCheck, R.id.mCheckRepair, R.id.mMiddleRepair, R.id.mBigRepair
-            , R.id.mLub,R.id.iv_home_setpro2})
+            , R.id.mLub,R.id.iv_home_setpro2,R.id.mWarning1Num,R.id.mWarning2Num,R.id.mWarning3Num,R.id.mWarning4Num})
     public void onViewClicked(View view) {
         if (!checkPression()) {
             return;
@@ -246,6 +278,26 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
             case R.id.mLub:
                 if (getActivity() instanceof MainActivity) {
                     ((MainActivity) getActivity()).selectedTab(3, 0);
+                }
+                break;
+            case R.id.mWarning1Num:
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).skipRepairChild( 0);
+                }
+                break;
+            case R.id.mWarning2Num:
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).skipRepairChild( 1);
+                }
+                break;
+            case R.id.mWarning3Num:
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).skipRepairChild( 2);
+                }
+                break;
+            case R.id.mWarning4Num:
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).skipRepairChild( 3);
                 }
                 break;
         }

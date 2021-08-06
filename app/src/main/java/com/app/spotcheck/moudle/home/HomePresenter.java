@@ -7,6 +7,7 @@ import com.app.spotcheck.moudle.bean.HomeBean;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
+import com.app.spotcheck.moudle.bean.RefreshWarnBean;
 import com.app.spotcheck.moudle.bean.RepairReportScanBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
@@ -108,6 +109,23 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     @Override
                     protected void onSuccess(LubAllBean bean) {
                         mView.showLubSuccess(bean,qrcode);
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        mView.showError(code,msg);
+                    }
+                });
+    }
+
+    public void refresh(String userid){
+        Map<String,Object> map = new HashMap<>();
+        map.put("userid",userid);
+        NetManager.getInstance().api().refreshwarn(convertMapToBody(map))
+                .enqueue(new BaseCallback<RefreshWarnBean>() {
+                    @Override
+                    protected void onSuccess(RefreshWarnBean bean) {
+                        mView.showWarn(bean);
                     }
 
                     @Override

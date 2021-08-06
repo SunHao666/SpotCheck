@@ -2,6 +2,7 @@ package com.app.spotcheck.moudle;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.BasePresenter;
 import com.app.spotcheck.base.utils.LogUtils;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
+import com.app.spotcheck.moudle.bean.EventRepairChildRefresh;
+import com.app.spotcheck.moudle.bean.EventRepairRefresh;
 import com.app.spotcheck.moudle.home.HomeNewFragment;
 import com.app.spotcheck.moudle.lubrication.LubricationFragment;
 import com.app.spotcheck.moudle.mine.MineFragment;
@@ -24,6 +27,8 @@ import com.app.spotcheck.moudle.repair.RepairFragment;
 import com.app.spotcheck.moudle.spotcheck.SpotCheckFragment;
 import com.app.spotcheck.network.Contant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -256,7 +261,6 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
     }
 
     /**
-     * 目前只用于repair界面
      * @param tab 选择的tab
      */
     public void selectedTab(int tab,int childTab) {
@@ -265,5 +269,18 @@ public class MainActivity extends BaseActivity<BasePresenter> implements BottomN
         }else if(tab == 3){
             bottomnavigationview.setSelectedItemId(R.id.tab_three);
         }
+    }
+
+    public void skipRepairChild(int childIndex){
+        bottomnavigationview.setSelectedItemId(R.id.tab_four);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                EventBus.getDefault().post(new EventRepairChildRefresh(childIndex));
+                EventBus.getDefault().post(new EventRepairRefresh(childIndex));
+            }
+        },200);
+
     }
 }

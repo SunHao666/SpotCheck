@@ -123,7 +123,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             return;
         }
         showLoding();
-        mPresenter.login(etUsername.getText().toString(),etPwd.getText().toString());
+        String registrationID = JPushInterface.getRegistrationID(this);
+        mPresenter.login(etUsername.getText().toString(),etPwd.getText().toString(),registrationID);
 
     }
 
