@@ -18,6 +18,7 @@ import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.moudle.event.HomeEvent;
 import com.app.spotcheck.moudle.scancheck.checkexception.CheckExceptionActivity;
 import com.app.spotcheck.moudle.scancheck.scanresult.ScanCheckResultActivity;
+import com.app.spotcheck.utils.GlobalKey;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -95,8 +96,8 @@ public class ScanCheckActivity extends BaseActivity<ScanCheckPresenter> implemen
 
     @OnClick(R.id.btn_check_ok)
     public void onViewClicked() {
-        String loginname = SPUtils.getInstance(this).getString("Loginname");
-        mPresenter.saveCheckReult(taskId,loginname,execids);
+        String loginName = SPUtils.getInstance(this).getString(GlobalKey.KEY_UUADMINUSER);
+        mPresenter.saveCheckReult(taskId,loginName,execids);
     }
 
 

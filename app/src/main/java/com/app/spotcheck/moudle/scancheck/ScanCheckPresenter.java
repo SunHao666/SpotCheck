@@ -1,12 +1,14 @@
 package com.app.spotcheck.moudle.scancheck;
 
 import com.app.spotcheck.base.BasePresenter;
+import com.app.spotcheck.base.utils.SPUtils;
 import com.app.spotcheck.moudle.bean.HomeScanBean;
 import com.app.spotcheck.moudle.bean.LoginBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.network.BaseCallModel;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
+import com.app.spotcheck.utils.GlobalKey;
 
 import java.util.ArrayList;
 import java.util.HashMap;

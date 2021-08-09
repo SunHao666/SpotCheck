@@ -215,7 +215,7 @@ public class CheckExceptionActivity extends BaseActivity<CheckExceptionPresenter
             return;
         }
         showLoding();
-        String loginName = SPUtils.getInstance(this).getString(GlobalKey.KEY_LOGINNAME);
+        String loginName = SPUtils.getInstance(this).getString(GlobalKey.KEY_UUADMINUSER);
         Map<String, RequestBody> map = new HashMap<>();
         map.put("ckId", toRequestBody(String.valueOf(ckId)));
         map.put("taskId", toRequestBody(taskId));
