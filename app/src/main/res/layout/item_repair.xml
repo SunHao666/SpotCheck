@@ -86,26 +86,26 @@
         android:id="@+id/mEndTimeTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_5"
         android:textColor="#1F1F1F"
         android:textSize="@dimen/sp_12"
-        app:layout_constraintBottom_toBottomOf="@+id/mStartTime"
-        app:layout_constraintTop_toTopOf="@id/mStartTime"
-        app:layout_constraintRight_toLeftOf="@id/guideline6"
-        android:layout_marginLeft="@dimen/dp_5"
+        app:layout_constraintBottom_toBottomOf="@+id/mEndTime"
+        app:layout_constraintTop_toTopOf="@+id/mEndTime"
+        app:layout_constraintLeft_toRightOf="@id/mEndTime"
         />
 
     <TextView
         android:id="@+id/mEndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5"
         android:text="完工时间"
         android:textColor="#727272"
         android:textSize="@dimen/sp_11"
-        app:layout_constraintBottom_toBottomOf="@+id/mStartTime"
-        app:layout_constraintTop_toTopOf="@id/mStartTime"
         app:layout_constraintRight_toLeftOf="@id/mEndTimeTv"
-        android:layout_marginRight="@dimen/dp_5"
-        />
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/mStartTime" />
 
     <TextView
         android:id="@+id/mRepairContent"
@@ -114,10 +114,9 @@
         android:text="报修内容"
         android:textColor="#727272"
         android:textSize="@dimen/sp_11"
-        app:layout_constraintTop_toBottomOf="@id/mStartTime"
+        android:layout_marginTop="@dimen/dp_5"
         app:layout_constraintLeft_toLeftOf="@id/mStartTime"
-        android:layout_marginTop="@dimen/dp_10"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/mEndTime" />
 
     <TextView
         android:id="@+id/mRepairContentTv"

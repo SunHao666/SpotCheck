@@ -13,6 +13,7 @@ import com.app.spotcheck.moudle.bean.KeyWordsBean;
 import com.app.spotcheck.moudle.bean.LoginBean;
 import com.app.spotcheck.moudle.bean.LubAllBean;
 import com.app.spotcheck.moudle.bean.PatralCheckBean;
+import com.app.spotcheck.moudle.bean.PersonSearchBean;
 import com.app.spotcheck.moudle.bean.ProKindBean;
 import com.app.spotcheck.moudle.bean.RefreshWarnBean;
 import com.app.spotcheck.moudle.bean.RepairDetailBean;
@@ -23,6 +24,8 @@ import com.app.spotcheck.moudle.bean.RepairReportScanBean;
 import com.app.spotcheck.moudle.bean.ReportSearchBean;
 import com.app.spotcheck.moudle.bean.ScanCheckBean;
 import com.app.spotcheck.moudle.bean.ScanLubBean;
+import com.app.spotcheck.moudle.bean.SpecialItemBean;
+import com.app.spotcheck.moudle.bean.SpecialSearchBean;
 import com.app.spotcheck.moudle.bean.SpotCheckAllBean;
 import com.app.spotcheck.moudle.bean.MineBean;
 
@@ -227,4 +230,16 @@ public interface NetService {
 
     @POST("login/refreshwarn")
     Call<BaseCallModel<RefreshWarnBean>> refreshwarn(@Body RequestBody body);
+
+    @POST("specialcheck/getList")
+    Call<BaseCallModel<SpecialItemBean>> getSpecialCheckList(@Body RequestBody body);
+
+    @POST("specialcheck/getDevMainList")
+    Call<BaseCallModel<SpecialSearchBean>> getDevMainList(@Body RequestBody body);
+
+    @POST("specialcheck/saveAdd")
+    Call<BaseCallModel> saveSpecialcheck(@Body RequestBody body);
+
+    @POST("repair/getWorkerList")
+    Call<BaseCallModel<PersonSearchBean>> getWorkerList2(@Body RequestBody body);
 }

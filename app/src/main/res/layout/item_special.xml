@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/shape_white_five"
+    android:layout_marginLeft="@dimen/dp_15"
+    android:layout_marginTop="@dimen/dp_15"
+    android:layout_marginRight="@dimen/dp_15"
+    android:paddingBottom="@dimen/dp_15"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/dp_17" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/dp_14" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/dp_14" />
+
+    <TextView
+        android:id="@+id/mDeviceNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="600门式起重机"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="#E0E0E0"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline5"
+        app:layout_constraintRight_toRightOf="@id/guideline6"
+        app:layout_constraintTop_toBottomOf="@+id/mDeviceNameTv" />
+
+    <TextView
+        android:id="@+id/timeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="#727272"
+        android:textSize="@dimen/sp_11"
+        tools:text="报修时间"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@id/line1"
+        tools:layout_editor_absoluteY="165dp" />
+
+    <TextView
+        android:id="@+id/partTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#727272"
+        android:textSize="@dimen/sp_11"
+        tools:text="报修时间"
+        android:maxLines="2"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintLeft_toLeftOf="@id/timeTv"
+        app:layout_constraintTop_toBottomOf="@+id/timeTv" />
+    <TextView
+        android:id="@+id/topCheckTv"
+        android:layout_width="@dimen/dp_57"
+        android:layout_height="@dimen/dp_20"
+        android:text="高空检查"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="@dimen/sp_11"
+        android:maxLines="1"
+        android:background="@drawable/sp_solid_4f9_corner_5"
+        app:layout_constraintTop_toTopOf="@id/mDeviceNameTv"
+        app:layout_constraintBottom_toBottomOf="@id/mDeviceNameTv"
+        app:layout_constraintRight_toRightOf="@id/guideline6"
+        />
+    <TextView
+        android:id="@+id/noExceptionTv"
+        android:layout_width="@dimen/dp_57"
+        android:layout_height="@dimen/dp_20"
+        android:text="无异常"
+        android:textColor="#1AE08A"
+        android:gravity="center"
+        android:textSize="@dimen/sp_11"
+        android:background="@drawable/sp_stroke_1ae_corner_5"
+        app:layout_constraintTop_toTopOf="@id/timeTv"
+        app:layout_constraintBottom_toBottomOf="@id/timeTv"
+        app:layout_constraintRight_toRightOf="@id/guideline6"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
+    <TextView
+        android:id="@+id/exceptionTv"
+        android:layout_width="@dimen/dp_57"
+        android:layout_height="@dimen/dp_20"
+        android:text="异常"
+        android:textColor="#F6082F"
+        android:gravity="center"
+        android:textSize="@dimen/sp_11"
+        android:background="@drawable/sp_stroke_f60_corner_5"
+        app:layout_constraintTop_toTopOf="@id/timeTv"
+        app:layout_constraintBottom_toBottomOf="@id/timeTv"
+        app:layout_constraintRight_toRightOf="@id/guideline6"
+        android:visibility="gone"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

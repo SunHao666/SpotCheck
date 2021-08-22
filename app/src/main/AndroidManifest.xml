@@ -43,15 +43,16 @@
         <activity android:name=".moudle.device.devicesave.DeviceInfoSaveActivity" android:screenOrientation="portrait"/>
         <activity android:name=".moudle.voice.VoiceActivity" android:screenOrientation="portrait"/>
         <activity android:name=".moudle.report.ReportRepairActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".moudle.repair.detail1.RepairDetail1Activity" />
-        <activity android:name=".moudle.repair.detail2.RepairDetail2Activity" />
-        <activity android:name=".moudle.repair.detail3.RepairDetail3Activity" />
-        <activity android:name=".moudle.repair.detail4.RepairDetail4Activity" />
-        <activity android:name=".moudle.repair.detail5.RepairDetail5Activity" />
-        <activity android:name=".moudle.repair.detail2.adddevice.AddDeviceActivity" />
-        <activity android:name=".moudle.repair.detail2.adddevice.time.AddDeviceTimeActivity" />
-        <activity android:name=".moudle.repair.detail2.addperson.AddPersonActivity" />
-
+        <activity android:name=".moudle.repair.detail1.RepairDetail1Activity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.repair.detail2.RepairDetail2Activity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.repair.detail3.RepairDetail3Activity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.repair.detail4.RepairDetail4Activity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.repair.detail5.RepairDetail5Activity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.repair.detail2.adddevice.AddDeviceActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.repair.detail2.adddevice.time.AddDeviceTimeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".moudle.repair.detail2.addperson.AddPersonActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.spotcheck.specialcheck.SpecialCheckActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".moudle.spotcheck.specialcheck.report.ReportSpecialActivity" android:screenOrientation="portrait"/>
         <!-- Since JCore2.0.0 Required SDK核心功能-->
         <!-- 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false -->
         <!-- 这个是自定义Service，要继承极光JCommonService，可以在更多手机平台上使得推送通道保持的更稳定 -->

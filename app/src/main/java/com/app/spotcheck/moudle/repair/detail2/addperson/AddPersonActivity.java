@@ -16,7 +16,10 @@ import com.app.spotcheck.base.BaseActivity;
 import com.app.spotcheck.base.wrapper.ToastWrapper;
 import com.app.spotcheck.moudle.bean.AddPersonBean;
 import com.app.spotcheck.moudle.bean.DepartmentBean;
+import com.app.spotcheck.moudle.bean.PersonSearchBean;
 import com.app.spotcheck.utils.GlobalKey;
+import com.app.spotcheck.widgets.BottomPersonSearchView;
+import com.app.spotcheck.widgets.BottomSearchView;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 
@@ -47,6 +50,7 @@ public class AddPersonActivity extends BaseActivity<AddPersonPresenter> implemen
     private int personPostion = 0;
     private String workNo;
     private String repid;
+    BottomPersonSearchView bottomFullDialog;
     @Override
     public void showLoading() {
         showLoding();
@@ -94,6 +98,11 @@ public class AddPersonActivity extends BaseActivity<AddPersonPresenter> implemen
     }
 
     @Override
+    public void showSearchList(PersonSearchBean bean) {
+        bottomFullDialog.setData(bean);
+    }
+
+    @Override
     protected void initData() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -137,9 +146,50 @@ public class AddPersonActivity extends BaseActivity<AddPersonPresenter> implemen
                 mPresenter.saveRepairMan(repid,workNo,fixd,trend);
                 break;
             case R.id.personSelLay:  //选择人员
-                mPresenter.getWorkerList();
+                showPersonDialog();
                 break;
         }
+    }
+
+    /**
+     * 显示人员搜索dialog
+     */
+    private void showPersonDialog() {
+        BottomPersonSearchView bottomTextView = new BottomPersonSearchView(this, 1);
+        if(bottomFullDialog == null){
+            bottomFullDialog = (BottomPersonSearchView) new XPopup.Builder(this)
+                    .asCustom(bottomTextView);
+        }
+//        bottomFullDialog.setSearchHint("查找维修人员");
+//        bottomFullDialog.setTitleTv("维修人员选择");
+        if(!bottomFullDialog.isShow()){
+            bottomFullDialog.show();
+        }
+        bottomFullDialog.findViewById(R.id.closeIV).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomFullDialog.dismiss();
+            }
+        });
+        bottomFullDialog.setDeviceOnClickListener(new BottomPersonSearchView.PersonOnClickListener() {
+            @Override
+            public void onClick(String workName, String workNo) {
+                setPersonName(workName,workNo);
+                bottomFullDialog.dismiss();
+            }
+        });
+        EditText serarchEt = bottomFullDialog.findViewById(R.id.serarchEt);
+        bottomFullDialog.findViewById(R.id.searchTv).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                mPresenter.search(serarchEt.getText().toString());
+            }
+        });
+    }
+
+    private void setPersonName(String workName, String workNo) {
+        mPersonSelTv.setText(workName);
+        this.workNo = workNo;
     }
 
     private boolean checkNull() {

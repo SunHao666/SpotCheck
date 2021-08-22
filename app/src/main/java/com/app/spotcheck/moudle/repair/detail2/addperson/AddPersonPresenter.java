@@ -4,6 +4,8 @@ import com.app.spotcheck.base.BasePresenter;
 import com.app.spotcheck.moudle.bean.AddDeviceBean;
 import com.app.spotcheck.moudle.bean.AddPersonBean;
 import com.app.spotcheck.moudle.bean.DepartmentBean;
+import com.app.spotcheck.moudle.bean.PersonSearchBean;
+import com.app.spotcheck.moudle.bean.ReportSearchBean;
 import com.app.spotcheck.network.BaseCallback;
 import com.app.spotcheck.network.NetManager;
 
@@ -49,6 +51,26 @@ public class AddPersonPresenter extends BasePresenter<AddPersonView> {
                     protected void onFailed(int code, String msg) {
                         mView.hideLoading();
                         mView.showError(msg);
+                    }
+                });
+    }
+
+    public void search(String person) {
+        mView.showLoading();
+        Map<String,String> map = new HashMap<>();
+        map.put("departmentname",person);
+        NetManager.getInstance().api().getWorkerList2(convertMapToBody(map))
+                .enqueue(new BaseCallback<PersonSearchBean>() {
+                    @Override
+                    protected void onSuccess(PersonSearchBean bean) {
+                        mView.showSearchList(bean);
+                        mView.hideLoading();
+                    }
+
+                    @Override
+                    protected void onFailed(int code, String msg) {
+                        mView.showError(msg);
+                        mView.hideLoading();
                     }
                 });
     }

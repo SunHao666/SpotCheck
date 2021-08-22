@@ -2,7 +2,9 @@ package com.app.spotcheck.widgets;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,8 @@ public class BottomSearchView extends BottomView {
     private ExpandableListView expandableListView;
     private List<List<ReportSearchBean.SearchListDTO.PartslistDTO>> childList;
     private List<String> groupList;
+    private EditText serarchEt;
+    private TextView titleTv;
     private MExpandableListAdapter mAdapter;
     private Context context;
 
@@ -42,6 +46,8 @@ public class BottomSearchView extends BottomView {
     protected void onCreate() {
         super.onCreate();
         expandableListView = findViewById(R.id.mSearchList);
+        serarchEt = findViewById(R.id.serarchEt);
+        titleTv = findViewById(R.id.titleTv);
         setListener();
     }
 
@@ -78,7 +84,6 @@ public class BottomSearchView extends BottomView {
             for (int i1 = 0; i1 < bean.getSearchList().get(i).getPARTSLIST().size(); i1++) {
                 childList.add(bean.getSearchList().get(i).getPARTSLIST());
             }
-
         }
         mAdapter = new MExpandableListAdapter(context, groupList, childList);
         expandableListView.setAdapter(mAdapter);
@@ -92,5 +97,13 @@ public class BottomSearchView extends BottomView {
 
     public void setDeviceOnClickListener(DeviceOnClickListener mDeviceListener) {
         this.mDeviceListener = mDeviceListener;
+    }
+
+    public void setSearchHint(String hint){
+        serarchEt.setHint(hint);
+    }
+
+    public void setTitleTv(String title){
+        titleTv.setText(title);
     }
 }

@@ -207,7 +207,6 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
         BottomSearchView bottomTextView = new BottomSearchView(this, 1);
         if(bottomFullDialog == null){
              bottomFullDialog = (BottomSearchView) new XPopup.Builder(this)
-
                     .asCustom(bottomTextView);
         }
         if(!bottomFullDialog.isShow()){
@@ -328,7 +327,6 @@ public class ReportRepairActivity extends BaseActivity<ReportRepairPresenter> im
     @Override
     public void showSearchList(ReportSearchBean bean) {
         bottomFullDialog.setData(bean);
-
     }
 
     public void setDeviceWithPart(String mainName, String partName, String mainId, String partId){

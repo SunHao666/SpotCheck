@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/dp_30" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/dp_30" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/dp_23" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lay1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:background="@drawable/shape_blue_five"
+            android:padding="@dimen/dp_15"
+            app:layout_constraintLeft_toLeftOf="@id/guideline"
+            app:layout_constraintRight_toRightOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/guideline3">
+
+
+            <TextView
+                android:id="@+id/mDeviceInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设备信息"
+                android:textColor="#1F1F1F"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/mSearchIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/report_search"
+                app:layout_constraintBottom_toBottomOf="@id/mDeviceInfo"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/mDeviceInfo" />
+
+            <TextView
+                android:id="@+id/mDeviceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:text="设备名称"
+                android:textColor="#727272"
+                android:textSize="@dimen/sp_13"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mDeviceInfo" />
+
+            <TextView
+                android:id="@+id/mDeviceNameTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textColor="#1F1F1F"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintLeft_toLeftOf="@+id/barrier"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/mDeviceName"
+                tools:text="XXX" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="right"
+                app:constraint_referenced_ids="mDeviceInfo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lay2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:background="@drawable/shape_blue_five"
+            android:visibility="gone"
+            android:padding="@dimen/dp_15"
+            app:layout_constraintLeft_toLeftOf="@id/guideline"
+            app:layout_constraintRight_toRightOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/lay1">
+
+            <TextView
+                android:id="@+id/mRepairDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="报修时间"
+                android:textColor="#727272"
+                android:textSize="@dimen/sp_13"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/mRepairDateTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/arrpw_right"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="right"
+                android:textColor="#1F1F1F"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintLeft_toRightOf="@id/mRepairDate"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="XXX" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lay3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:background="@drawable/shape_blue_five"
+            android:padding="@dimen/dp_15"
+            app:layout_constraintLeft_toLeftOf="@id/guideline"
+            app:layout_constraintRight_toRightOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/lay2">
+
+            <TextView
+                android:id="@+id/mExceptionType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="检查项目"
+                android:textColor="#727272"
+                android:textSize="@dimen/sp_13"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/mCheckItemET"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_10"
+                android:background="@null"
+                android:gravity="right"
+                android:hint="请填写"
+                android:textColor="#1F1F1F"
+                android:maxLines="1"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintLeft_toRightOf="@id/mExceptionType"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="XXX" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/mExceptionInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:text="检查内容"
+            android:textColor="#727272"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintLeft_toLeftOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/lay3" />
+
+        <EditText
+            android:id="@+id/mCheckContentEt"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_95"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="@drawable/shape_blue_five"
+            android:gravity="top"
+            android:hint="请输入"
+            android:padding="@dimen/dp_9"
+            android:textColor="#515151"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintLeft_toLeftOf="@id/guideline"
+            app:layout_constraintRight_toRightOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/mExceptionInfo" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lay4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:background="@drawable/shape_blue_five"
+            android:padding="@dimen/dp_15"
+            app:layout_constraintLeft_toLeftOf="@id/guideline"
+            app:layout_constraintRight_toRightOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/mCheckContentEt">
+
+            <TextView
+                android:id="@+id/mResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="结论"
+                android:textColor="#727272"
+                android:textSize="@dimen/sp_13"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/mResultEt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/arrpw_right"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="right"
+                android:hint="请选择"
+                android:textColor="#1F1F1F"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintLeft_toRightOf="@id/mResult"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="XXX" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/mSaveBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_25"
+            android:background="@drawable/login_btn_bg"
+            android:text="保存"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintLeft_toLeftOf="@id/guideline"
+            app:layout_constraintRight_toRightOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/lay4"
+             />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

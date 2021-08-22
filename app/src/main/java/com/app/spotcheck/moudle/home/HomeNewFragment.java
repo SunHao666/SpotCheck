@@ -31,6 +31,7 @@ import com.app.spotcheck.moudle.patralcheck.PatralCheckActivity;
 import com.app.spotcheck.moudle.report.ReportRepairActivity;
 import com.app.spotcheck.moudle.scancheck.ScanCheckActivity;
 import com.app.spotcheck.moudle.scanlub.ScanLubActivity;
+import com.app.spotcheck.moudle.spotcheck.specialcheck.SpecialCheckActivity;
 import com.app.spotcheck.network.Contant;
 import com.app.spotcheck.utils.GlobalKey;
 import com.king.zxing.CaptureActivity;
@@ -249,6 +250,9 @@ public class HomeNewFragment extends BaseFragment<HomePresenter> implements Home
                 Contant.CHECK_TYPE = 3;
                 EventBus.getDefault().post(new CheckTitleEvent());
                 onCheckScanClick.onClick(1);
+                break;
+            case R.id.mSpecialCheck:
+                startActivity(new Intent(getActivity(), SpecialCheckActivity.class));
                 break;
             case R.id.mCheckRepair:
                 Contant.REPAIR_REPKIND = 1;
